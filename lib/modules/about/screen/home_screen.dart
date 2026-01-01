@@ -2,12 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:portfolio/modules/projects/widgets/animated_skills_marquee.dart';
 import '../../../core/core.dart';
 import '../controller/controller.dart';
 import '../widgets/widgets.dart';
-import '../../services/screen/screen.dart';
+import '../../personal_info/screen/screen.dart';
 import '../../experience/screen/screen.dart';
 import '../../skills/screen/screen.dart';
+import '../../projects/screen/screen.dart';
+import '../../services/screen/screen.dart';
+import '../../contact_me/screen/contact_me_section.dart';
+import '../../footer/screen/footer_section.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -20,21 +25,21 @@ class HomeScreen extends StatelessWidget {
       backgroundColor: AppColors.backgroundLight,
       body: LayoutBuilder(
         builder: (context, constraints) {
+          final isMobile = ResponsiveUtils.isMobile(context);
+          final isTablet = ResponsiveUtils.isTablet(context);
+
           return SingleChildScrollView(
             child: Column(
               children: [
-                // About Section
+                // Hero Section
                 Container(
                   // decoration: BoxDecoration(color: Colors.amberAccent),
                   key: controller.aboutKey,
-                  child: _buildAboutSection(context, controller, constraints),
+                  child: _buildHeroSection(context, controller, constraints),
                 ),
 
-                // My Services Section
-                Container(
-                  key: controller.servicesKey,
-                  child: const ServicesSection(),
-                ),
+                // About Section
+                const PersonalInfoSection(),
 
                 const SizedBox(height: 40),
 
@@ -52,7 +57,35 @@ class HomeScreen extends StatelessWidget {
                   child: const SkillsSection(),
                 ),
 
+                // SizedBox(height: isMobile ? 20 : 30),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: isMobile ? 24 : (isTablet ? 60 : 80),
+                    vertical: isMobile ? 20 : (isTablet ? 30 : 40),
+                  ),
+                  child: _buildAnimatedSkillsBanner(),
+                ),
+
+                // const SizedBox(he  ight: 40),
+
+                // Projects Section
+                const ProjectsSection(),
+
+                const SizedBox(height: 40),
+
+                // My Services Section
+                Container(
+                  key: controller.servicesKey,
+                  child: const ServicesSection(),
+                ),
+
                 const SizedBox(height: 60),
+
+                // Contact Me Section
+                const ContactMeSection(),
+
+                // Footer Section
+                const FooterSection(),
               ],
             ),
           );
@@ -61,7 +94,30 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildAboutSection(
+  Widget _buildAnimatedSkillsBanner() {
+    return Container(
+      height: 100,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [AppColors.primaryOrange, const Color(0xFFFB6514)],
+        ),
+        // borderRadius: const BorderRadius.only(
+        //   topLeft: Radius.circular(24),
+        //   bottomRight: Radius.circular(24),
+        // ),
+        borderRadius: const BorderRadius.all(Radius.circular(24)),
+      ),
+      child: ClipRRect(
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(24),
+          bottomRight: Radius.circular(24),
+        ),
+        child: const AnimatedSkillsMarquee(),
+      ),
+    );
+  }
+
+  Widget _buildHeroSection(
     BuildContext context,
     AboutController controller,
     BoxConstraints constraints,
@@ -95,7 +151,7 @@ class HomeScreen extends StatelessWidget {
                 padding: EdgeInsets.symmetric(
                   horizontal: isMobile ? 16 : (isTablet ? 40 : 71),
                 ),
-                child: _buildHeroSection(context, controller),
+                child: _buildOnlyHeroSection(context, controller),
               ),
             ],
           ),
@@ -421,7 +477,10 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildHeroSection(BuildContext context, AboutController controller) {
+  Widget _buildOnlyHeroSection(
+    BuildContext context,
+    AboutController controller,
+  ) {
     final isDesktop = ResponsiveUtils.isDesktop(context);
     final isMobile = ResponsiveUtils.isMobile(context);
 
@@ -612,12 +671,12 @@ class HomeScreen extends StatelessWidget {
           height: isMobile ? 1.2 : 1.0,
         ),
         children: const [
-          TextSpan(text: "I'm "),
+          TextSpan(text: "It's "),
           TextSpan(
             text: 'Labibur',
             style: TextStyle(color: AppColors.primaryOrange),
           ),
-          TextSpan(text: ',\nFlutter Developer'),
+          TextSpan(text: ',\nJr. Flutter Developer'),
         ],
       ),
     );
@@ -892,7 +951,7 @@ class HomeScreen extends StatelessWidget {
           ),
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(60)),
           child: Text(
-            AppStrings.myWorkBtn,
+            isMobile ? AppStrings.workBtn : AppStrings.myWorkBtn,
             style: TextStyle(
               fontFamily: 'Urbanist',
               fontSize: isMobile ? 18 : 22, // Figma: 25.692px

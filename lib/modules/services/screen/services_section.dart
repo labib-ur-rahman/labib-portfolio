@@ -242,28 +242,28 @@ class _ServicesSectionState extends State<ServicesSection> {
 
     if (isMobile) {
       // Show one card at a time on mobile with PageView
-      return Obx(
-        () => Container(
-          height: 400,
-          child: PageView.builder(
-            onPageChanged: controller.changePage,
-            itemCount: controller.services.length,
-            itemBuilder: (context, index) {
-              return Center(
-                child: ServiceCard(
-                  title: controller.services[index].title,
-                  imagePath: controller.services[index].imagePath,
-                ),
-              );
-            },
-          ),
+      return Container(
+        height: 400,
+        child: PageView.builder(
+          onPageChanged: controller.changePage,
+          itemCount: controller.services.length,
+          itemBuilder: (context, index) {
+            return Center(
+              child: ServiceCard(
+                title: controller.services[index].title,
+                imagePath: controller.services[index].imagePath,
+              ),
+            );
+          },
         ),
       );
     }
 
     // Auto-scrolling horizontal carousel for tablet and desktop
-    return Obx(
-      () => SizedBox(
+    return Obx(() {
+      final currentPage =
+          controller.currentPage.value; // Access observable here
+      return SizedBox(
         height: isTablet ? 520 : 540,
         child: Stack(
           alignment: Alignment.center,
@@ -314,7 +314,7 @@ class _ServicesSectionState extends State<ServicesSection> {
                 );
               },
               child: Container(
-                key: ValueKey<int>(controller.currentPage.value),
+                key: ValueKey<int>(currentPage),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: _buildVisibleCardsWithBlur(
@@ -327,8 +327,8 @@ class _ServicesSectionState extends State<ServicesSection> {
             ),
           ],
         ),
-      ),
-    );
+      );
+    });
   }
 
   List<Widget> _buildVisibleCardsWithBlur(

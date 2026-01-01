@@ -38,10 +38,10 @@ class AppAssets {
       'assets/vectors/service-item-arow-icon.svg';
   static const String rectangle7 =
       'assets/images/Rectangle-7.jpg'; // Service Cover Image use in same image for the five services cards
-  static const String rectangle8 =
-      'assets/images/Rectangle-8.jpg';
-  static const String itemServiceCover =
-      'assets/images/item-service-cover.png';
+  static const String rectangle8 = 'assets/images/Rectangle-8.jpg';
+  static const String itemServiceCover = 'assets/images/item-service-cover.png';
   static const String itemServiceCoverArrow =
       'assets/images/item-service-cover-border.png';
+
+  static const String project1 = 'assets/images/project1.png';
 }

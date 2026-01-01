@@ -35,11 +35,15 @@ class SkillsSection extends StatelessWidget {
                 horizontal: isMobile ? 24 : 71,
                 vertical: isMobile ? 60 : 122,
               ),
-              child: SizedBox(
-                width: isMobile ? double.infinity : 1299,
-                child: isMobile
-                    ? _buildMobileLayout(context, controller)
-                    : _buildDesktopLayout(context, controller, isTablet),
+              child: Column(
+                children: [
+                  SizedBox(
+                    width: isMobile ? double.infinity : 1299,
+                    child: isMobile
+                        ? _buildMobileLayout(context, controller)
+                        : _buildDesktopLayout(context, controller, isTablet),
+                  ),
+                ],
               ),
             ),
           ),
@@ -59,8 +63,6 @@ class SkillsSection extends StatelessWidget {
         _buildStats(context, controller),
         const SizedBox(height: 40),
         _buildSkillsGrid(context, controller),
-        const SizedBox(height: 40),
-        _buildHireButton(context),
       ],
     );
   }
@@ -93,8 +95,6 @@ class SkillsSection extends StatelessWidget {
               _buildStats(context, controller),
               const SizedBox(height: 47),
               _buildSkillsGrid(context, controller),
-              const SizedBox(height: 40),
-              _buildHireButton(context),
             ],
           ),
         ),
@@ -315,50 +315,6 @@ class SkillsSection extends StatelessWidget {
           category: skill.category,
           index: index,
           icon: skill.icon,
-        );
-      },
-    );
-  }
-
-  Widget _buildHireButton(BuildContext context) {
-    final isMobile = ResponsiveUtils.isMobile(context);
-
-    return TweenAnimationBuilder(
-      tween: Tween<double>(begin: 0, end: 1),
-      duration: const Duration(milliseconds: 800),
-      curve: Curves.easeOutCubic,
-      builder: (context, double value, child) {
-        return Transform.scale(
-          scale: value,
-          child: MouseRegion(
-            cursor: SystemMouseCursors.click,
-            child: GestureDetector(
-              onTap: () {
-                // Handle hire me action
-              },
-              child: Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: isMobile ? 40 : 59,
-                  vertical: isMobile ? 20 : 33,
-                ),
-                decoration: BoxDecoration(
-                  border: Border.all(color: const Color(0xFF151515), width: 1),
-                  borderRadius: BorderRadius.circular(32),
-                ),
-                child: Text(
-                  'Hire me',
-                  style: TextStyle(
-                    fontFamily: 'Urbanist',
-                    fontSize: isMobile ? 24 : 32,
-                    fontWeight: FontWeight.w600,
-                    color: const Color(0xFF151515),
-                    letterSpacing: -0.48,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ),
-          ),
         );
       },
     );
