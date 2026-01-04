@@ -92,7 +92,7 @@ class _PersonalInfoSectionState extends State<PersonalInfoSection>
             right: isMobile ? 0 : 20,
           ),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(isMobile ? 0 : 40),
+            borderRadius: BorderRadius.circular(isMobile ? 20 : 40),
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -369,7 +369,7 @@ class _PersonalInfoSectionState extends State<PersonalInfoSection>
             final clampedValue = value.clamp(0.0, 1.0);
             return Transform.scale(
               scale: 0.7 + (clampedValue * 0.3),
-              child: Opacity(opacity: value, child: child),
+              child: Opacity(opacity: clampedValue, child: child),
             );
           },
           child: _buildDetailCard(detail, isMobile),

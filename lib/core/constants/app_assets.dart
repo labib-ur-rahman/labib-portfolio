@@ -44,4 +44,19 @@ class AppAssets {
       'assets/images/item-service-cover-border.png';
 
   static const String project1 = 'assets/images/project1.png';
+
+
+
+
+
+
+  /// -- Project 1 : Deep Quran App --
+  static const String deepQuranSS01 = 'assets/screenshorts/DeepQuranSS-01.png';
+  static const String deepQuranSS02 = 'assets/screenshorts/DeepQuranSS-02.png';
+  static const String deepQuranSS03 = 'assets/screenshorts/DeepQuranSS-03.png';
+  static const String deepQuranSS04 = 'assets/screenshorts/DeepQuranSS-04.png';
+  static const String deepQuranSS05 = 'assets/screenshorts/DeepQuranSS-05.png';
+  static const String deepQuranSS06 = 'assets/screenshorts/DeepQuranSS-06.png';
+  static const String deepQuranSS07 = 'assets/screenshorts/DeepQuranSS-07.png';
+
 }

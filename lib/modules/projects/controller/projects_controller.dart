@@ -7,6 +7,7 @@ class ProjectModel {
   final List<String> platforms;
   final List<String> technologies;
   final String image;
+  final List<String> screenshots;
   final String? link;
 
   ProjectModel({
@@ -15,12 +16,14 @@ class ProjectModel {
     required this.platforms,
     required this.technologies,
     required this.image,
+    required this.screenshots,
     this.link,
   });
 }
 
 class ProjectsController extends GetxController {
   final currentPage = 0.obs;
+  final selectedProjectIndex = 0.obs;
   final RxBool showContent = false.obs;
   Timer? _autoScrollTimer;
   int maxPages = 9; // Default to mobile (1 item per page)
@@ -72,31 +75,22 @@ class ProjectsController extends GetxController {
 
   final List<ProjectModel> projects = [
     ProjectModel(
-      title: '*Design Unraveled*: Behind the Scenes of UI/UX Magic',
+      title: '*Deep Quran*: All-in-one platform for Quran reading',
       description:
-          'A comprehensive design exploration showcasing modern UI/UX principles and creative workflows',
+          'Comprehensive Islamic app featuring Quran reading, translations, audio recitations, and daily prayers',
       platforms: ['Android', 'iOS'],
-      technologies: ['Flutter', 'Firebase', 'Dart'],
+      technologies: ['Flutter', 'Firebase', 'Dart', 'SQLite'],
       image: 'assets/images/project1.png',
-      link: 'https://example.com/project1',
-    ),
-    ProjectModel(
-      title: '*Sugee*: Loan Management System for Rural Sector',
-      description:
-          'Revolutionary loan management platform designed specifically for rural banking operations',
-      platforms: ['Android'],
-      technologies: ['Flutter', 'Dart', 'RestAPI'],
-      image: 'assets/images/project2.png',
-      link: 'https://example.com/project2',
-    ),
-    ProjectModel(
-      title: '*Cinetrade*: Innovative way to invest in Digital Media',
-      description:
-          'Investment platform connecting digital media creators with investors through blockchain',
-      platforms: ['Android', 'iOS', 'Web'],
-      technologies: ['Flutter', 'Kotlin', 'Dart'],
-      image: 'assets/images/project3.png',
-      link: 'https://example.com/project3',
+      screenshots: [
+        'assets/screenshorts/DeepQuranSS-01.png',
+        'assets/screenshorts/DeepQuranSS-02.png',
+        'assets/screenshorts/DeepQuranSS-03.png',
+        'assets/screenshorts/DeepQuranSS-04.png',
+        'assets/screenshorts/DeepQuranSS-05.png',
+        'assets/screenshorts/DeepQuranSS-06.png',
+        'assets/screenshorts/DeepQuranSS-07.png',
+      ],
+      link: 'https://example.com/deep-quran',
     ),
     ProjectModel(
       title: '*FoodHub*: Restaurant Delivery Platform',
@@ -104,26 +98,30 @@ class ProjectsController extends GetxController {
           'On-demand food delivery app connecting restaurants with hungry customers',
       platforms: ['Android', 'iOS', 'Web'],
       technologies: ['Flutter', 'Firebase', 'Dart', 'RestAPI'],
-      image: 'assets/images/project4.png',
-      link: 'https://example.com/project4',
+      image: 'assets/images/project1.png',
+      screenshots: [
+        'assets/screenshorts/DeepQuranSS-01.png',
+        'assets/screenshorts/DeepQuranSS-02.png',
+        'assets/screenshorts/DeepQuranSS-03.png',
+        'assets/screenshorts/DeepQuranSS-04.png',
+        'assets/screenshorts/DeepQuranSS-05.png',
+      ],
+      link: 'https://example.com/foodhub',
     ),
     ProjectModel(
-      title: '*HealthTrack*: Medical Record Management System',
+      title: '*HealthTrack*: Medical Record Management',
       description:
           'Digital health records platform for hospitals and clinics with secure data management',
-      platforms: ['Android', 'iOS', 'Linux', 'Windows'],
+      platforms: ['Android', 'iOS', 'Web'],
       technologies: ['Flutter', 'SQL', 'Dart', 'PHP'],
-      image: 'assets/images/project5.png',
-      link: 'https://example.com/project5',
-    ),
-    ProjectModel(
-      title: '*EduLearn*: Online Learning Platform',
-      description:
-          'Interactive e-learning platform with live classes and course management',
-      platforms: ['Android', 'iOS', 'Web', 'MacOS'],
-      technologies: ['Flutter', 'Firebase', 'Dart', 'RestAPI'],
-      image: 'assets/images/project6.png',
-      link: 'https://example.com/project6',
+      image: 'assets/images/project1.png',
+      screenshots: [
+        'assets/screenshorts/DeepQuranSS-02.png',
+        'assets/screenshorts/DeepQuranSS-03.png',
+        'assets/screenshorts/DeepQuranSS-04.png',
+        'assets/screenshorts/DeepQuranSS-05.png',
+      ],
+      link: 'https://example.com/healthtrack',
     ),
     ProjectModel(
       title: '*ShopEase*: E-commerce Mobile App',
@@ -131,26 +129,44 @@ class ProjectsController extends GetxController {
           'Full-featured shopping app with payment integration and inventory management',
       platforms: ['Android', 'iOS'],
       technologies: ['Flutter', 'Kotlin', 'Dart', 'SQL'],
-      image: 'assets/images/project7.png',
-      link: 'https://example.com/project7',
+      image: 'assets/images/project1.png',
+      screenshots: [
+        'assets/screenshorts/DeepQuranSS-03.png',
+        'assets/screenshorts/DeepQuranSS-04.png',
+        'assets/screenshorts/DeepQuranSS-05.png',
+        'assets/screenshorts/DeepQuranSS-06.png',
+      ],
+      link: 'https://example.com/shopease',
     ),
     ProjectModel(
-      title: '*TravelMate*: Trip Planning & Booking App',
+      title: '*TravelMate*: Trip Planning & Booking',
       description:
           'Comprehensive travel companion with booking, itinerary planning, and local recommendations',
       platforms: ['Android', 'iOS', 'Web'],
       technologies: ['Flutter', 'Firebase', 'Dart', 'RestAPI'],
-      image: 'assets/images/project8.png',
-      link: 'https://example.com/project8',
+      image: 'assets/images/project1.png',
+      screenshots: [
+        'assets/screenshorts/DeepQuranSS-04.png',
+        'assets/screenshorts/DeepQuranSS-05.png',
+        'assets/screenshorts/DeepQuranSS-06.png',
+        'assets/screenshorts/DeepQuranSS-07.png',
+      ],
+      link: 'https://example.com/travelmate',
     ),
     ProjectModel(
-      title: '*FitnessPro*: Workout & Nutrition Tracker',
+      title: '*ShopEase*: E-commerce Mobile App',
       description:
-          'Personal fitness coach app with workout plans, nutrition tracking, and progress analytics',
-      platforms: ['Android', 'iOS', 'Windows', 'MacOS'],
-      technologies: ['Flutter', 'SQL', 'Dart', 'PHP', 'RestAPI'],
-      image: 'assets/images/project9.png',
-      link: 'https://example.com/project9',
+          'Full-featured shopping app with payment integration and inventory management',
+      platforms: ['Android', 'iOS'],
+      technologies: ['Flutter', 'Kotlin', 'Dart', 'SQL'],
+      image: 'assets/images/project1.png',
+      screenshots: [
+        'assets/screenshorts/DeepQuranSS-03.png',
+        'assets/screenshorts/DeepQuranSS-04.png',
+        'assets/screenshorts/DeepQuranSS-05.png',
+        'assets/screenshorts/DeepQuranSS-06.png',
+      ],
+      link: 'https://example.com/shopease',
     ),
   ];
 
@@ -174,5 +190,9 @@ class ProjectsController extends GetxController {
       currentPage.value--;
     }
     resumeAutoScroll();
+  }
+
+  void selectProject(int index) {
+    selectedProjectIndex.value = index;
   }
 }
