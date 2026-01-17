@@ -16,6 +16,9 @@ dependencies:
   iconsax: ^0.0.8
   google_fonts: ^6.2.1
   flutter_svg: ^2.0.17
+  url_launcher: ^6.3.2
+  font_awesome_flutter: ^10.8.0
+  http: ^1.2.2
 
 dev_dependencies:
   flutter_test:

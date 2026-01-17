@@ -127,8 +127,8 @@ class _PersonalInfoSectionState extends State<PersonalInfoSection>
               // Decorative Gradient Orbs
               if (!isMobile) ...[
                 Positioned(
-                  top: -100,
-                  left: -100,
+                  top: -30,
+                  left: -20,
                   child: Container(
                     width: 300,
                     height: 300,
@@ -136,7 +136,7 @@ class _PersonalInfoSectionState extends State<PersonalInfoSection>
                       shape: BoxShape.circle,
                       gradient: RadialGradient(
                         colors: [
-                          AppColors.primaryOrange.withValues(alpha: 0.15),
+                          AppColors.primaryOrange.withValues(alpha: 0.3),
                           Colors.transparent,
                         ],
                       ),
@@ -144,8 +144,8 @@ class _PersonalInfoSectionState extends State<PersonalInfoSection>
                   ),
                 ),
                 Positioned(
-                  bottom: -150,
-                  right: -100,
+                  bottom: -70,
+                  right: -50,
                   child: Container(
                     width: 400,
                     height: 400,
@@ -153,7 +153,7 @@ class _PersonalInfoSectionState extends State<PersonalInfoSection>
                       shape: BoxShape.circle,
                       gradient: RadialGradient(
                         colors: [
-                          AppColors.primaryOrange.withValues(alpha: 0.1),
+                          AppColors.primaryOrange.withValues(alpha: 0.2),
                           Colors.transparent,
                         ],
                       ),

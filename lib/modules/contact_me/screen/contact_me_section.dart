@@ -23,6 +23,10 @@ class ContactMeSection extends StatelessWidget {
           end: Alignment.bottomCenter,
           colors: [Colors.black, AppColors.gray900],
         ),
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(60),
+          topRight: Radius.circular(60),
+        ),
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(
@@ -58,7 +62,7 @@ class ContactMeSection extends StatelessWidget {
             text: TextSpan(
               children: [
                 TextSpan(
-                  text: 'Contact ',
+                  text: 'Get ',
                   style: TextStyle(
                     fontSize: isMobile ? 36 : (isTablet ? 48 : 64),
                     fontWeight: FontWeight.bold,
@@ -67,7 +71,7 @@ class ContactMeSection extends StatelessWidget {
                   ),
                 ),
                 TextSpan(
-                  text: 'Me',
+                  text: 'In Touch',
                   style: TextStyle(
                     fontSize: isMobile ? 36 : (isTablet ? 48 : 64),
                     fontWeight: FontWeight.bold,
@@ -80,7 +84,7 @@ class ContactMeSection extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            'Let\'s work together on your next project',
+            'Let\'s discuss your next project',
             style: TextStyle(
               fontSize: isMobile ? 14 : 16,
               color: AppColors.gray400,
@@ -314,6 +318,7 @@ class ContactMeSection extends StatelessWidget {
               'Your Name',
               Iconsax.user,
               false,
+              controller.nameTextController,
               (value) => controller.setName(value),
               isMobile,
             ),
@@ -322,7 +327,17 @@ class ContactMeSection extends StatelessWidget {
               'Your Email',
               Iconsax.sms,
               false,
+              controller.emailTextController,
               (value) => controller.setEmail(value),
+              isMobile,
+            ),
+            const SizedBox(height: 24),
+            _buildInputField(
+              'Subject',
+              Iconsax.note,
+              false,
+              controller.subjectTextController,
+              (value) => controller.setSubject(value),
               isMobile,
             ),
             const SizedBox(height: 24),
@@ -330,6 +345,7 @@ class ContactMeSection extends StatelessWidget {
               'Your Message',
               Iconsax.message_text,
               true,
+              controller.messageTextController,
               (value) => controller.setMessage(value),
               isMobile,
             ),
@@ -345,6 +361,7 @@ class ContactMeSection extends StatelessWidget {
     String hint,
     IconData icon,
     bool isMultiLine,
+    TextEditingController controller,
     Function(String) onChanged,
     bool isMobile,
   ) {
@@ -354,8 +371,12 @@ class ContactMeSection extends StatelessWidget {
         color: AppColors.gray900.withOpacity(0.5),
       ),
       child: TextField(
+        controller: controller,
         onChanged: onChanged,
         maxLines: isMultiLine ? 5 : 1,
+        keyboardType: hint == 'Your Email'
+            ? TextInputType.emailAddress
+            : TextInputType.text,
         style: const TextStyle(color: Colors.white, fontSize: 16),
         decoration: InputDecoration(
           hintText: hint,

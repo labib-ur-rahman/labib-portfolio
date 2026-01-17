@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../core/core.dart';
 import '../controller/controller.dart';
 
@@ -17,6 +19,8 @@ class _ProjectsSectionState extends State<ProjectsSection> {
   final PageController _screenshotController = PageController();
   Timer? _autoScrollTimer;
   bool _isVisible = false;
+  int _currentScreenshotIndex = 0;
+  int? _hoveredLinkIndex;
 
   @override
   void initState() {
@@ -36,6 +40,9 @@ class _ProjectsSectionState extends State<ProjectsSection> {
       if (_screenshotController.hasClients) {
         _screenshotController.jumpToPage(0);
         _startAutoScroll(); // Restart auto-scroll
+      }
+      if (mounted) {
+        setState(() => _currentScreenshotIndex = 0);
       }
     });
   }
@@ -92,6 +99,10 @@ class _ProjectsSectionState extends State<ProjectsSection> {
               Color(0xFFFFF3E8), // Slightly darker peach
               AppColors.primaryOrange.withValues(alpha: 0.08),
             ],
+          ),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(60),
+            topRight: Radius.circular(60),
           ),
         ),
         child: Stack(
@@ -399,6 +410,7 @@ class _ProjectsSectionState extends State<ProjectsSection> {
                   isMobile
                       ? _buildMobileLayout()
                       : _buildDesktopLayout(isTablet),
+                  SizedBox(height: isMobile ? 40 : 30),
                 ],
               ),
             ),
@@ -447,6 +459,8 @@ class _ProjectsSectionState extends State<ProjectsSection> {
     return Column(
       children: [
         _buildPhoneMockup(true, false),
+        const SizedBox(height: 16),
+        _buildScreenshotIndicators(true, false),
         const SizedBox(height: 40),
         _buildProjectsList(true, false, isLeft: true),
       ],
@@ -464,7 +478,16 @@ class _ProjectsSectionState extends State<ProjectsSection> {
             child: _buildProjectsList(false, isTablet, isLeft: true),
           ),
           SizedBox(width: 40),
-          Expanded(flex: 1, child: _buildPhoneMockup(false, isTablet)),
+          Expanded(
+            flex: 1,
+            child: Column(
+              children: [
+                _buildPhoneMockup(false, isTablet),
+                const SizedBox(height: 20),
+                _buildScreenshotIndicators(false, isTablet),
+              ],
+            ),
+          ),
         ],
       );
     }
@@ -480,7 +503,16 @@ class _ProjectsSectionState extends State<ProjectsSection> {
         ),
         SizedBox(width: 60),
         // Center phone mockup
-        Expanded(flex: 2, child: _buildPhoneMockup(false, isTablet)),
+        Expanded(
+          flex: 2,
+          child: Column(
+            children: [
+              _buildPhoneMockup(false, isTablet),
+              const SizedBox(height: 20),
+              _buildScreenshotIndicators(false, isTablet),
+            ],
+          ),
+        ),
         SizedBox(width: 60),
         // Right projects
         Expanded(
@@ -597,38 +629,13 @@ class _ProjectsSectionState extends State<ProjectsSection> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  if (project.isPublished) ...[
+                    _buildPublishedBadge(isMobile),
+                    const SizedBox(height: 10),
+                  ],
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        width: 48,
-                        height: 48,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              AppColors.primaryOrange,
-                              AppColors.primaryOrange.withValues(alpha: 0.7),
-                            ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          ),
-                          borderRadius: BorderRadius.circular(14),
-                          boxShadow: [
-                            BoxShadow(
-                              color: AppColors.primaryOrange.withValues(
-                                alpha: 0.3,
-                              ),
-                              blurRadius: 12,
-                              offset: const Offset(0, 4),
-                            ),
-                          ],
-                        ),
-                        child: const Icon(
-                          Iconsax.mobile,
-                          color: Colors.white,
-                          size: 24,
-                        ),
-                      ),
-                      const SizedBox(width: 16),
                       Expanded(
                         child: _buildProjectTitle(
                           project.title,
@@ -636,12 +643,12 @@ class _ProjectsSectionState extends State<ProjectsSection> {
                           isTablet,
                         ),
                       ),
+                      const SizedBox(width: 12),
+                      _buildProjectLink(project, index, isMobile),
                     ],
                   ),
                   const SizedBox(height: 16),
                   _buildTechStackHorizontal(project.technologies, isMobile),
-                  const SizedBox(height: 12),
-                  _buildPlatformBadgesHorizontal(project.platforms, isMobile),
                 ],
               ),
             ),
@@ -738,51 +745,123 @@ class _ProjectsSectionState extends State<ProjectsSection> {
     );
   }
 
-  Widget _buildPlatformBadgesHorizontal(List<String> platforms, bool isMobile) {
-    return Wrap(
-      spacing: 8,
-      runSpacing: 8,
-      children: platforms.map((platform) {
-        return Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              _getPlatformIcon(platform),
-              size: isMobile ? 14 : 16,
-              color: AppColors.gray700,
+  Widget _buildProjectLink(ProjectModel project, int index, bool isMobile) {
+    final linkUrl = project.link;
+    final linkLabel = project.linkLabel;
+    if (linkUrl == null ||
+        linkUrl.isEmpty ||
+        linkLabel == null ||
+        linkLabel.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
+    final isHovered = _hoveredLinkIndex == index;
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      onEnter: (_) {
+        if (!isMobile) {
+          setState(() => _hoveredLinkIndex = index);
+        }
+      },
+      onExit: (_) {
+        if (!isMobile) {
+          setState(() => _hoveredLinkIndex = null);
+        }
+      },
+      child: GestureDetector(
+        onTap: () => _openProjectLink(linkUrl),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          curve: Curves.easeOutCubic,
+          transform: isHovered
+              ? Matrix4.translationValues(0, -2, 0)
+              : Matrix4.identity(),
+          padding: EdgeInsets.symmetric(
+            horizontal: isMobile ? 14 : 16,
+            vertical: isMobile ? 8 : 10,
+          ),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                AppColors.primaryOrange.withValues(alpha: 0.95),
+                AppColors.primaryOrange.withValues(alpha: 0.75),
+              ],
             ),
-            const SizedBox(width: 6),
-            Text(
-              platform,
-              style: TextStyle(
-                fontSize: isMobile ? 12 : 14,
-                fontWeight: FontWeight.w400,
-                color: AppColors.gray700,
+            shape: BoxShape.circle,
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.primaryOrange.withValues(
+                  alpha: isHovered ? 0.35 : 0.2,
+                ),
+                blurRadius: isHovered ? 18 : 12,
+                offset: Offset(0, isHovered ? 8 : 5),
               ),
-            ),
-          ],
-        );
-      }).toList(),
+            ],
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              FaIcon(
+                _getProjectLinkIcon(linkLabel),
+                size: isMobile ? 14 : 16,
+                color: Colors.white,
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
-  IconData _getPlatformIcon(String platform) {
-    switch (platform.toLowerCase()) {
-      case 'android':
-        return Iconsax.mobile;
-      case 'ios':
-        return Iconsax.mobile;
-      case 'web':
-        return Iconsax.global;
-      case 'windows':
-        return Iconsax.monitor;
-      case 'macos':
-        return Iconsax.monitor;
-      case 'linux':
-        return Iconsax.code_circle;
+  Widget _buildPublishedBadge(bool isMobile) {
+    return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: isMobile ? 10 : 12,
+        vertical: isMobile ? 4 : 6,
+      ),
+      decoration: BoxDecoration(
+        color: AppColors.primaryOrange.withValues(alpha: 0.12),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: AppColors.primaryOrange.withValues(alpha: 0.4),
+          width: 1,
+        ),
+      ),
+      child: Text(
+        'Published App',
+        style: TextStyle(
+          fontSize: isMobile ? 11 : 12,
+          fontWeight: FontWeight.w600,
+          color: AppColors.primaryOrange,
+        ),
+      ),
+    );
+  }
+
+  IconData _getProjectLinkIcon(String label) {
+    switch (label.toLowerCase()) {
+      case 'github':
+        return FontAwesomeIcons.github;
+      case 'play store':
+      case 'playstore':
+      case 'google play':
+        return FontAwesomeIcons.googlePlay;
+      case 'app store':
+      case 'appstore':
+      case 'ios app store':
+        return FontAwesomeIcons.appStoreIos;
       default:
-        return Iconsax.mobile;
+        return FontAwesomeIcons.link;
     }
+  }
+
+  Future<void> _openProjectLink(String url) async {
+    final uri = Uri.tryParse(url);
+    if (uri == null) {
+      return;
+    }
+
+    await launchUrl(uri, mode: LaunchMode.externalApplication);
   }
 
   Widget _buildViewAllButton(bool isMobile) {
@@ -914,6 +993,11 @@ class _ProjectsSectionState extends State<ProjectsSection> {
             controller: _screenshotController,
             itemCount: screenshots.length,
             physics: const ClampingScrollPhysics(),
+            onPageChanged: (index) {
+              if (mounted) {
+                setState(() => _currentScreenshotIndex = index);
+              }
+            },
             itemBuilder: (context, index) {
               return Container(
                 decoration: BoxDecoration(color: AppColors.gray100),
@@ -960,6 +1044,59 @@ class _ProjectsSectionState extends State<ProjectsSection> {
             },
           ),
         ),
+      );
+    });
+  }
+
+  Widget _buildScreenshotIndicators(bool isMobile, bool isTablet) {
+    return Obx(() {
+      final selectedProject =
+          controller.projects[controller.selectedProjectIndex.value];
+      final screenshots = selectedProject.screenshots;
+      if (screenshots.length <= 1) {
+        return const SizedBox.shrink();
+      }
+
+      return Wrap(
+        spacing: 8,
+        children: List.generate(screenshots.length, (index) {
+          final isActive = _currentScreenshotIndex == index;
+          return MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: GestureDetector(
+              onTap: () {
+                _screenshotController.animateToPage(
+                  index,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
+                );
+              },
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 250),
+                curve: Curves.easeOutCubic,
+                width: isActive ? 30 : 10,
+                height: 10,
+                decoration: BoxDecoration(
+                  color: isActive
+                      ? AppColors.primaryOrange
+                      : AppColors.primaryOrange.withValues(alpha: 0.3),
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: isActive
+                      ? [
+                          BoxShadow(
+                            color: AppColors.primaryOrange.withValues(
+                              alpha: 0.4,
+                            ),
+                            blurRadius: 10,
+                            offset: const Offset(0, 4),
+                          ),
+                        ]
+                      : [],
+                ),
+              ),
+            ),
+          );
+        }),
       );
     });
   }

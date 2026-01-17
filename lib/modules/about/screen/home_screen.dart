@@ -10,16 +10,48 @@ import '../../personal_info/screen/screen.dart';
 import '../../experience/screen/screen.dart';
 import '../../skills/screen/screen.dart';
 import '../../projects/screen/screen.dart';
-import '../../services/screen/screen.dart';
 import '../../contact_me/screen/contact_me_section.dart';
 import '../../footer/screen/footer_section.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  static const double _contactOverlap = 40;
+  final GlobalKey _contactKey = GlobalKey();
+  double _contactHeight = 0;
+  late final AboutController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = Get.put(AboutController());
+  }
+
+  void _measureContact(Duration _) {
+    final context = _contactKey.currentContext;
+    if (context == null) {
+      return;
+    }
+    final renderObject = context.findRenderObject();
+    if (renderObject is! RenderBox) {
+      return;
+    }
+    final height = renderObject.size.height;
+    if ((height - _contactHeight).abs() > 1) {
+      setState(() => _contactHeight = height);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final controller = Get.put(AboutController());
+    WidgetsBinding.instance.addPostFrameCallback(_measureContact);
+    final controller = _controller;
+    final contactHeight = _contactHeight > 0 ? _contactHeight : 800.0;
 
     return Scaffold(
       backgroundColor: AppColors.backgroundLight,
@@ -71,18 +103,37 @@ class HomeScreen extends StatelessWidget {
                 // Projects Section
                 const ProjectsSection(),
 
-                const SizedBox(height: 40),
+                // const SizedBox(height: 40),
 
                 // My Services Section
-                Container(
-                  key: controller.servicesKey,
-                  child: const ServicesSection(),
+                // Transform.translate(
+                //   offset: Offset(0, isMobile ? -40 : -40),
+                //   child: Container(
+                //     key: controller.servicesKey,
+                //     child: const ContactMeSection(),
+                //   ),
+                // ),
+
+                // const SizedBox(height: 60),
+
+                // Contact Me Section (overlap Projects by 40)
+                SizedBox(
+                  height: contactHeight - _contactOverlap,
+                  child: Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      Positioned(
+                        top: -_contactOverlap,
+                        left: 0,
+                        right: 0,
+                        child: KeyedSubtree(
+                          key: _contactKey,
+                          child: const ContactMeSection(),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-
-                const SizedBox(height: 60),
-
-                // Contact Me Section
-                const ContactMeSection(),
 
                 // Footer Section
                 const FooterSection(),

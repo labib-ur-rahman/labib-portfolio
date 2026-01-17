@@ -4,20 +4,22 @@ import 'package:get/get.dart';
 class ProjectModel {
   final String title;
   final String description;
-  final List<String> platforms;
   final List<String> technologies;
   final String image;
   final List<String> screenshots;
   final String? link;
+  final String? linkLabel;
+  final bool isPublished;
 
   ProjectModel({
     required this.title,
     required this.description,
-    required this.platforms,
     required this.technologies,
     required this.image,
     required this.screenshots,
     this.link,
+    this.linkLabel,
+    this.isPublished = false,
   });
 }
 
@@ -78,7 +80,6 @@ class ProjectsController extends GetxController {
       title: '*Deep Quran*: All-in-one platform for Quran reading',
       description:
           'Comprehensive Islamic app featuring Quran reading, translations, audio recitations, and daily prayers',
-      platforms: ['Android', 'iOS'],
       technologies: ['Flutter', 'Firebase', 'Dart', 'SQLite'],
       image: 'assets/images/project1.png',
       screenshots: [
@@ -91,12 +92,13 @@ class ProjectsController extends GetxController {
         'assets/screenshorts/DeepQuranSS-07.png',
       ],
       link: 'https://example.com/deep-quran',
+      linkLabel: 'Play Store',
+      isPublished: true,
     ),
     ProjectModel(
       title: '*FoodHub*: Restaurant Delivery Platform',
       description:
           'On-demand food delivery app connecting restaurants with hungry customers',
-      platforms: ['Android', 'iOS', 'Web'],
       technologies: ['Flutter', 'Firebase', 'Dart', 'RestAPI'],
       image: 'assets/images/project1.png',
       screenshots: [
@@ -107,12 +109,12 @@ class ProjectsController extends GetxController {
         'assets/screenshorts/DeepQuranSS-05.png',
       ],
       link: 'https://example.com/foodhub',
+      linkLabel: 'GitHub',
     ),
     ProjectModel(
       title: '*HealthTrack*: Medical Record Management',
       description:
           'Digital health records platform for hospitals and clinics with secure data management',
-      platforms: ['Android', 'iOS', 'Web'],
       technologies: ['Flutter', 'SQL', 'Dart', 'PHP'],
       image: 'assets/images/project1.png',
       screenshots: [
@@ -122,12 +124,12 @@ class ProjectsController extends GetxController {
         'assets/screenshorts/DeepQuranSS-05.png',
       ],
       link: 'https://example.com/healthtrack',
+      linkLabel: 'GitHub',
     ),
     ProjectModel(
       title: '*ShopEase*: E-commerce Mobile App',
       description:
           'Full-featured shopping app with payment integration and inventory management',
-      platforms: ['Android', 'iOS'],
       technologies: ['Flutter', 'Kotlin', 'Dart', 'SQL'],
       image: 'assets/images/project1.png',
       screenshots: [
@@ -137,12 +139,12 @@ class ProjectsController extends GetxController {
         'assets/screenshorts/DeepQuranSS-06.png',
       ],
       link: 'https://example.com/shopease',
+      linkLabel: 'GitHub',
     ),
     ProjectModel(
       title: '*TravelMate*: Trip Planning & Booking',
       description:
           'Comprehensive travel companion with booking, itinerary planning, and local recommendations',
-      platforms: ['Android', 'iOS', 'Web'],
       technologies: ['Flutter', 'Firebase', 'Dart', 'RestAPI'],
       image: 'assets/images/project1.png',
       screenshots: [
@@ -152,12 +154,12 @@ class ProjectsController extends GetxController {
         'assets/screenshorts/DeepQuranSS-07.png',
       ],
       link: 'https://example.com/travelmate',
+      linkLabel: 'GitHub',
     ),
     ProjectModel(
       title: '*ShopEase*: E-commerce Mobile App',
       description:
           'Full-featured shopping app with payment integration and inventory management',
-      platforms: ['Android', 'iOS'],
       technologies: ['Flutter', 'Kotlin', 'Dart', 'SQL'],
       image: 'assets/images/project1.png',
       screenshots: [
@@ -167,6 +169,7 @@ class ProjectsController extends GetxController {
         'assets/screenshorts/DeepQuranSS-06.png',
       ],
       link: 'https://example.com/shopease',
+      linkLabel: 'GitHub',
     ),
   ];
 
