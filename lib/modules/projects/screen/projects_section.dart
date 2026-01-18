@@ -100,10 +100,7 @@ class _ProjectsSectionState extends State<ProjectsSection> {
               AppColors.primaryOrange.withValues(alpha: 0.08),
             ],
           ),
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(60),
-            topRight: Radius.circular(60),
-          ),
+          borderRadius: BorderRadius.circular(50),
         ),
         child: Stack(
           children: [

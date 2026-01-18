@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -8,7 +9,7 @@ import '../controller/controller.dart';
 import '../widgets/widgets.dart';
 import '../../personal_info/screen/screen.dart';
 import '../../experience/screen/screen.dart';
-import '../../skills/screen/screen.dart';
+import '../../skills/screen/modern_skills_section.dart';
 import '../../projects/screen/screen.dart';
 import '../../contact_me/screen/contact_me_section.dart';
 import '../../footer/screen/footer_section.dart';
@@ -22,14 +23,25 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   static const double _contactOverlap = 40;
+  static const double _cursorFollowerSize = 48;
+  final GlobalKey _cursorRegionKey = GlobalKey();
   final GlobalKey _contactKey = GlobalKey();
   double _contactHeight = 0;
   late final AboutController _controller;
+  final ScrollController _scrollController = ScrollController();
+  Offset _cursorPosition = Offset.zero;
+  bool _showCursorFollower = false;
 
   @override
   void initState() {
     super.initState();
     _controller = Get.put(AboutController());
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   void _measureContact(Duration _) {
@@ -47,6 +59,21 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  void _updateCursorFollower(PointerEvent event) {
+    final renderObject = _cursorRegionKey.currentContext?.findRenderObject();
+    if (renderObject is! RenderBox) {
+      return;
+    }
+    final localPosition = renderObject.globalToLocal(event.position);
+    final size = renderObject.size;
+    final dx = localPosition.dx.clamp(0.0, size.width);
+    final dy = localPosition.dy.clamp(0.0, size.height);
+    setState(() {
+      _cursorPosition = Offset(dx, dy);
+      _showCursorFollower = true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback(_measureContact);
@@ -60,84 +87,99 @@ class _HomeScreenState extends State<HomeScreen> {
           final isMobile = ResponsiveUtils.isMobile(context);
           final isTablet = ResponsiveUtils.isTablet(context);
 
-          return SingleChildScrollView(
-            child: Column(
-              children: [
-                // Hero Section
-                Container(
-                  // decoration: BoxDecoration(color: Colors.amberAccent),
-                  key: controller.aboutKey,
-                  child: _buildHeroSection(context, controller, constraints),
-                ),
-
-                // About Section
-                const PersonalInfoSection(),
-
-                const SizedBox(height: 40),
-
-                // Work Experience Section
-                Container(
-                  key: controller.experienceKey,
-                  child: const ExperienceSection(),
-                ),
-
-                const SizedBox(height: 40),
-
-                // Skills Section
-                Container(
-                  key: controller.skillsKey,
-                  child: const SkillsSection(),
-                ),
-
-                // SizedBox(height: isMobile ? 20 : 30),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: isMobile ? 24 : (isTablet ? 60 : 80),
-                    vertical: isMobile ? 20 : (isTablet ? 30 : 40),
-                  ),
-                  child: _buildAnimatedSkillsBanner(),
-                ),
-
-                // const SizedBox(he  ight: 40),
-
-                // Projects Section
-                const ProjectsSection(),
-
-                // const SizedBox(height: 40),
-
-                // My Services Section
-                // Transform.translate(
-                //   offset: Offset(0, isMobile ? -40 : -40),
-                //   child: Container(
-                //     key: controller.servicesKey,
-                //     child: const ContactMeSection(),
-                //   ),
-                // ),
-
-                // const SizedBox(height: 60),
-
-                // Contact Me Section (overlap Projects by 40)
-                SizedBox(
-                  height: contactHeight - _contactOverlap,
-                  child: Stack(
-                    clipBehavior: Clip.none,
+          return MouseRegion(
+            onExit: (_) => setState(() => _showCursorFollower = false),
+            child: Listener(
+              key: _cursorRegionKey,
+              behavior: HitTestBehavior.translucent,
+              onPointerHover: _updateCursorFollower,
+              onPointerMove: _updateCursorFollower,
+              onPointerDown: _updateCursorFollower,
+              child: Stack(
+                children: [
+                SingleChildScrollView(
+                  controller: _scrollController,
+                  child: Column(
                     children: [
-                      Positioned(
-                        top: -_contactOverlap,
-                        left: 0,
-                        right: 0,
-                        child: KeyedSubtree(
-                          key: _contactKey,
-                          child: const ContactMeSection(),
+                      // Hero Section
+                      Container(
+                        // decoration: BoxDecoration(color: Colors.amberAccent),
+                        key: controller.aboutKey,
+                        child: _buildHeroSection(context, controller, constraints),
+                      ),
+
+                      // About Section
+                      const PersonalInfoSection(),
+
+                      const SizedBox(height: 40),
+
+                      // Work Experience Section
+                      Container(
+                        key: controller.experienceKey,
+                        child: const ExperienceSection(),
+                      ),
+
+                      const SizedBox(height: 40),
+
+                      // Skills Section
+                      Container(
+                        key: controller.skillsKey,
+                        child: const ProjectsSection(),
+                      ),
+
+                      // SizedBox(height: isMobile ? 20 : 30),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: isMobile ? 12 : (isTablet ? 30 : 40),
+                          vertical: isMobile ? 20 : (isTablet ? 30 : 40),
+                        ),
+                        child: _buildAnimatedSkillsBanner(),
+                      ),
+
+                      // Projects Section
+                      const ModernSkillsSection(),
+
+                      // Contact Me Section (overlap Projects by 40)
+                      SizedBox(
+                        height: contactHeight - _contactOverlap,
+                        child: Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            Positioned(
+                              top: -_contactOverlap,
+                              left: 0,
+                              right: 0,
+                              child: KeyedSubtree(
+                                key: _contactKey,
+                                child: const ContactMeSection(),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
+
+                      // Footer Section
+                      const FooterSection(),
                     ],
                   ),
                 ),
-
-                // Footer Section
-                const FooterSection(),
-              ],
+                Positioned(
+                  right: isMobile ? 16 : 32,
+                  bottom: isMobile ? 24 : 32,
+                  child: SafeArea(
+                    child: BackToTopFloatingButton(
+                      scrollController: _scrollController,
+                    ),
+                  ),
+                ),
+                if (!isMobile)
+                  _CursorFollower(
+                    position: _cursorPosition,
+                    size: _cursorFollowerSize,
+                    isVisible: _showCursorFollower,
+                  ),
+                ],
+              ),
             ),
           );
         },
@@ -147,7 +189,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildAnimatedSkillsBanner() {
     return Container(
-      height: 100,
+      height: 130,
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [AppColors.primaryOrange, const Color(0xFFFB6514)],
@@ -1009,6 +1051,66 @@ class _HomeScreenState extends State<HomeScreen> {
               fontWeight: FontWeight.w300,
               color: AppColors.textWhite,
               letterSpacing: -0.3854,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _CursorFollower extends StatelessWidget {
+  const _CursorFollower({
+    required this.position,
+    required this.size,
+    required this.isVisible,
+  });
+
+  final Offset position;
+  final double size;
+  final bool isVisible;
+
+  @override
+  Widget build(BuildContext context) {
+    final left = position.dx - size / 2;
+    final top = position.dy - size / 2;
+
+    return AnimatedPositioned(
+      duration: const Duration(milliseconds: 120),
+      curve: Curves.easeOutCubic,
+      left: left,
+      top: top,
+      child: IgnorePointer(
+        child: AnimatedOpacity(
+          duration: const Duration(milliseconds: 150),
+          opacity: isVisible ? 1 : 0,
+          child: Container(
+            width: size,
+            height: size,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: AppColors.primaryOrange.withOpacity(0.12),
+              border: Border.all(
+                color: AppColors.primaryOrange.withOpacity(0.55),
+                width: 1.2,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.primaryOrange.withOpacity(0.25),
+                  blurRadius: 22,
+                  spreadRadius: 2,
+                ),
+              ],
+            ),
+            child: Center(
+              child: Container(
+                width: size * 0.3,
+                height: size * 0.3,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: AppColors.primaryOrange.withOpacity(0.85),
+                ),
+              ),
             ),
           ),
         ),

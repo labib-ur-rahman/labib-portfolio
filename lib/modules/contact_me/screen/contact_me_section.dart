@@ -130,19 +130,19 @@ class ContactMeSection extends StatelessWidget {
       {
         'icon': Iconsax.call,
         'title': 'Phone',
-        'value': '+880 1234567890',
+        'value': '+880 1602475999',
         'delay': 0,
       },
       {
         'icon': Iconsax.sms,
         'title': 'Email',
-        'value': 'contact@portfolio.com',
+        'value': 'contact.labibur@gmail.com',
         'delay': 100,
       },
       {
         'icon': Iconsax.location,
         'title': 'Address',
-        'value': 'Dhaka, Bangladesh',
+        'value': 'Nikunja 2, Khilkhet, Dhaka, Bangladesh',
         'delay': 200,
       },
     ];
@@ -365,36 +365,13 @@ class ContactMeSection extends StatelessWidget {
     Function(String) onChanged,
     bool isMobile,
   ) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        color: AppColors.gray900.withOpacity(0.5),
-      ),
-      child: TextField(
-        controller: controller,
-        onChanged: onChanged,
-        maxLines: isMultiLine ? 5 : 1,
-        keyboardType: hint == 'Your Email'
-            ? TextInputType.emailAddress
-            : TextInputType.text,
-        style: const TextStyle(color: Colors.white, fontSize: 16),
-        decoration: InputDecoration(
-          hintText: hint,
-          hintStyle: TextStyle(color: AppColors.gray400, fontSize: 16),
-          prefixIcon: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Icon(icon, color: AppColors.primaryOrange, size: 20),
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16),
-            borderSide: BorderSide.none,
-          ),
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 20,
-            vertical: 20,
-          ),
-        ),
-      ),
+    return _ContactInputField(
+      hint: hint,
+      icon: icon,
+      isMultiLine: isMultiLine,
+      controller: controller,
+      onChanged: onChanged,
+      isMobile: isMobile,
     );
   }
 
@@ -438,14 +415,137 @@ class ContactMeSection extends StatelessWidget {
                       valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                     ),
                   )
-                : const Text(
-                    'Send Message',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
+                : const Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Iconsax.send_2, size: 18, color: Colors.white),
+                      SizedBox(width: 10),
+                      Text(
+                        'Send Message',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
                   ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ContactInputField extends StatefulWidget {
+  const _ContactInputField({
+    required this.hint,
+    required this.icon,
+    required this.isMultiLine,
+    required this.controller,
+    required this.onChanged,
+    required this.isMobile,
+  });
+
+  final String hint;
+  final IconData icon;
+  final bool isMultiLine;
+  final TextEditingController controller;
+  final Function(String) onChanged;
+  final bool isMobile;
+
+  @override
+  State<_ContactInputField> createState() => _ContactInputFieldState();
+}
+
+class _ContactInputFieldState extends State<_ContactInputField> {
+  final FocusNode _focusNode = FocusNode();
+  bool _isHovering = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode.addListener(_handleFocusChange);
+  }
+
+  @override
+  void dispose() {
+    _focusNode.removeListener(_handleFocusChange);
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  void _handleFocusChange() {
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isActive = _isHovering || _focusNode.hasFocus;
+
+    return MouseRegion(
+      cursor: SystemMouseCursors.text,
+      onEnter: (_) => setState(() => _isHovering = true),
+      onExit: (_) => setState(() => _isHovering = false),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          color: AppColors.gray900.withOpacity(0.55),
+          border: Border.all(
+            color: isActive
+                ? AppColors.primaryOrange
+                : AppColors.gray700.withOpacity(0.5),
+            width: 1.2,
+          ),
+          boxShadow: isActive
+              ? [
+                  BoxShadow(
+                    color: AppColors.primaryOrange.withOpacity(0.2),
+                    blurRadius: 18,
+                    offset: const Offset(0, 8),
+                  ),
+                ]
+              : [],
+        ),
+        child: TextField(
+          focusNode: _focusNode,
+          controller: widget.controller,
+          onChanged: widget.onChanged,
+          maxLines: widget.isMultiLine ? 3 : 1,
+          keyboardType: widget.hint == 'Your Email'
+              ? TextInputType.emailAddress
+              : TextInputType.text,
+          style: const TextStyle(color: Colors.white, fontSize: 16),
+          decoration: InputDecoration(
+            hintText: widget.hint,
+            hintStyle: TextStyle(color: AppColors.gray400, fontSize: 16),
+            prefixIcon: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Icon(
+                widget.icon,
+                color: AppColors.primaryOrange,
+                size: 20,
+              ),
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide.none,
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide.none,
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide.none,
+            ),
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: widget.isMobile ? 18 : 20,
+              vertical: widget.isMultiLine ? 18 : 20,
+            ),
           ),
         ),
       ),

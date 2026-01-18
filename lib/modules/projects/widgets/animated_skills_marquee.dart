@@ -14,21 +14,23 @@ class _AnimatedSkillsMarqueeState extends State<AnimatedSkillsMarquee> {
   Timer? _scrollTimer;
 
   final List<String> skills = [
-    'UX Design',
-    'App Design',
-    'Dashboard',
-    'Wireframe',
-    'User Research',
-    'UX Design',
-    'App Design',
-    'Dashboard',
-    'Wireframe',
-    'User Research',
-    'UX Design',
-    'App Design',
-    'Dashboard',
-    'Wireframe',
-    'User Research',
+    'Play Store',
+    'App Store',
+    'Google Maps',
+    'Flutter',
+    'Dart',
+    'REST APIs',
+    'Firebase',
+    'Firestore',
+    'Realtime Database',
+    'Cloud Functions',
+    'FCM',
+    'Kotlin',
+    'Java',
+    'XML',
+    'Git',
+    'GitHub',
+    'Figma',
   ];
 
   @override

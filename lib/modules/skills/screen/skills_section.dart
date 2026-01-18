@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'dart:ui';
+import 'package:lottie/lottie.dart';
 import '../../../core/core.dart';
 import '../controller/controller.dart';
 import '../widgets/widgets.dart';
@@ -31,9 +31,15 @@ class SkillsSection extends StatelessWidget {
               color: const Color(0xFFF2F4F7),
             ),
             child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: isMobile ? 24 : 71,
-                vertical: isMobile ? 60 : 122,
+              padding: EdgeInsets.only(
+                left: isMobile ? 24 : 71,
+                right: isMobile ? 24 : 71,
+                top: isMobile ? 60 : 122,
+                bottom: isMobile
+                    ? 0
+                    : isTablet
+                    ? 0
+                    : 122,
               ),
               child: Column(
                 children: [
@@ -63,6 +69,14 @@ class SkillsSection extends StatelessWidget {
         _buildStats(context, controller),
         const SizedBox(height: 40),
         _buildSkillsGrid(context, controller),
+        Center(
+          child: Positioned(
+            child: Lottie.asset(
+              'assets/lottie/Programming-Computer.json',
+              fit: BoxFit.contain,
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -72,131 +86,78 @@ class SkillsSection extends StatelessWidget {
     SkillsController controller,
     bool isTablet,
   ) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        // Left side - Decorative circles and image placeholder
-        Expanded(
-          flex: isTablet ? 2 : 3,
-          child: _buildDecorativeSection(context),
-        ),
-        SizedBox(width: isTablet ? 40 : 96),
-
-        // Right side - Content
-        Expanded(
-          flex: isTablet ? 8 : 7,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildTitle(context),
-              const SizedBox(height: 47),
-              _buildDescription(context),
-              const SizedBox(height: 40),
-              _buildStats(context, controller),
-              const SizedBox(height: 47),
-              _buildSkillsGrid(context, controller),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildDecorativeSection(BuildContext context) {
-    return Container(
-      height: 600,
-      child: Stack(
-        alignment: Alignment.center,
+    /// -- Tablet Layout --
+    if (isTablet) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Concentric circles with blur effect
-          ..._buildConcentricCircles(),
-
-          // Center content - Profile image placeholder
+          _buildTitle(context),
+          const SizedBox(height: 47),
+          _buildDescription(context),
+          const SizedBox(height: 40),
+          _buildStats(context, controller),
+          const SizedBox(height: 47),
+          _buildSkillsGrid(context, controller),
           Center(
-            child: Container(
-              width: 300,
-              height: 300,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(150),
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    AppColors.primaryOrange.withValues(alpha: 0.3),
-                    AppColors.primaryOrangeLight.withValues(alpha: 0.2),
-                  ],
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.primaryOrange.withValues(alpha: 0.2),
-                    blurRadius: 40,
-                    spreadRadius: 10,
-                  ),
-                ],
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(150),
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.1),
-                    ),
-                    // Skils Icons
-                    child: Icon(
-                      Icons.code,
-                      size: 80,
-                      color: AppColors.primaryOrange,
-                    ),
-                  ),
-                ),
+            child: Positioned(
+              child: Lottie.asset(
+                'assets/lottie/Programming-Computer.json',
+                fit: BoxFit.contain,
               ),
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  List<Widget> _buildConcentricCircles() {
-    final circles = <Widget>[];
-    final sizes = [314.0, 314.0, 294.0, 270.0, 244.0, 218.0, 192.0];
-    final colors = [
-      AppColors.primaryOrange.withValues(alpha: 0.05),
-      AppColors.primaryOrange.withValues(alpha: 0.08),
-      AppColors.primaryOrange.withValues(alpha: 0.1),
-      AppColors.primaryOrange.withValues(alpha: 0.12),
-      AppColors.primaryOrange.withValues(alpha: 0.15),
-      AppColors.primaryOrange.withValues(alpha: 0.18),
-      AppColors.primaryOrange.withValues(alpha: 0.2),
-    ];
-
-    for (int i = 0; i < sizes.length; i++) {
-      circles.add(
-        Center(
-          child: TweenAnimationBuilder(
-            tween: Tween<double>(begin: 0, end: 1),
-            duration: Duration(milliseconds: 800 + (i * 100)),
-            curve: Curves.easeOutCubic,
-            builder: (context, double value, child) {
-              return Transform.scale(
-                scale: value,
-                child: Container(
-                  width: sizes[i],
-                  height: sizes[i],
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(color: colors[i], width: 2),
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
       );
     }
 
-    return circles;
+    /// -- Desktop Layout --
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final gap = isTablet ? 28.0 : 48.0;
+        final contentWidth = constraints.maxWidth * 0.6;
+        final lottieWidth = isTablet ? constraints.maxWidth * 0.6 : 650.0;
+
+        return Stack(
+          clipBehavior: Clip.none,
+          children: [
+            // Left side - Decorative circles and image placeholder
+            Positioned(
+              left: -100,
+              child: SizedBox(
+                width: lottieWidth,
+                child: Lottie.asset(
+                  'assets/lottie/Programming-Computer.json',
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+
+            // Right side - Content (60%)
+            Align(
+              alignment: Alignment.centerRight,
+              child: Padding(
+                padding: EdgeInsets.only(left: gap),
+                child: SizedBox(
+                  width: contentWidth,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildTitle(context),
+                      const SizedBox(height: 47),
+                      _buildDescription(context),
+                      const SizedBox(height: 40),
+                      _buildStats(context, controller),
+                      const SizedBox(height: 47),
+                      _buildSkillsGrid(context, controller),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   Widget _buildTitle(BuildContext context) {
