@@ -895,7 +895,7 @@ class _HomeScreenState extends State<HomeScreen> {
         : (isTablet ? 250.0 : 405.889);
 
     // Responsive bottom positioning for profile image
-    final profileBottom = isMobile ? -70.0 : (isTablet ? -120.0 : -230.0);
+    final profileBottom = isMobile ? -70.0 : (isTablet ? -120.0 : -350.0);
 
     return SizedBox(
       width: profileWidth,
@@ -903,7 +903,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ? profileHeight + 80
           : (isTablet)
           ? profileHeight - 150
-          : profileHeight - 180,
+          : profileHeight - 320, // Old 180
       child: Stack(
         alignment: Alignment.bottomCenter,
         clipBehavior: Clip.none,
@@ -925,7 +925,6 @@ class _HomeScreenState extends State<HomeScreen> {
           // Profile Image from assets
           Positioned(
             bottom: profileBottom,
-            // bottom: -230,
             child: SizedBox(
               width: profileWidth,
               height: profileHeight,
