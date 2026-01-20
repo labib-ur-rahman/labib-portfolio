@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -12,7 +11,7 @@ import '../../experience/screen/screen.dart';
 import '../../skills/screen/modern_skills_section.dart';
 import '../../projects/screen/screen.dart';
 import '../../contact_me/screen/contact_me_section.dart';
-import '../../footer/screen/footer_section.dart';
+import '../../contact_me/screen/footer_section.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -97,87 +96,91 @@ class _HomeScreenState extends State<HomeScreen> {
               onPointerDown: _updateCursorFollower,
               child: Stack(
                 children: [
-                SingleChildScrollView(
-                  controller: _scrollController,
-                  child: Column(
-                    children: [
-                      // Hero Section
-                      Container(
-                        // decoration: BoxDecoration(color: Colors.amberAccent),
-                        key: controller.aboutKey,
-                        child: _buildHeroSection(context, controller, constraints),
-                      ),
-
-                      // About Section
-                      const PersonalInfoSection(),
-
-                      const SizedBox(height: 40),
-
-                      // Work Experience Section
-                      Container(
-                        key: controller.experienceKey,
-                        child: const ExperienceSection(),
-                      ),
-
-                      const SizedBox(height: 40),
-
-                      // Skills Section
-                      Container(
-                        key: controller.skillsKey,
-                        child: const ProjectsSection(),
-                      ),
-
-                      // SizedBox(height: isMobile ? 20 : 30),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: isMobile ? 12 : (isTablet ? 30 : 40),
-                          vertical: isMobile ? 20 : (isTablet ? 30 : 40),
+                  SingleChildScrollView(
+                    controller: _scrollController,
+                    child: Column(
+                      children: [
+                        // Hero Section
+                        Container(
+                          // decoration: BoxDecoration(color: Colors.amberAccent),
+                          key: controller.aboutKey,
+                          child: _buildHeroSection(
+                            context,
+                            controller,
+                            constraints,
+                          ),
                         ),
-                        child: _buildAnimatedSkillsBanner(),
-                      ),
 
-                      // Projects Section
-                      const ModernSkillsSection(),
+                        // About Section
+                        const PersonalInfoSection(),
 
-                      // Contact Me Section (overlap Projects by 40)
-                      SizedBox(
-                        height: contactHeight - _contactOverlap,
-                        child: Stack(
-                          clipBehavior: Clip.none,
-                          children: [
-                            Positioned(
-                              top: -_contactOverlap,
-                              left: 0,
-                              right: 0,
-                              child: KeyedSubtree(
-                                key: _contactKey,
-                                child: const ContactMeSection(),
+                        const SizedBox(height: 40),
+
+                        // Work Experience Section
+                        Container(
+                          key: controller.experienceKey,
+                          child: const ExperienceSection(),
+                        ),
+
+                        const SizedBox(height: 40),
+
+                        // Skills Section
+                        Container(
+                          key: controller.skillsKey,
+                          child: const ProjectsSection(),
+                        ),
+
+                        // SizedBox(height: isMobile ? 20 : 30),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: isMobile ? 12 : (isTablet ? 30 : 40),
+                            vertical: isMobile ? 20 : (isTablet ? 30 : 40),
+                          ),
+                          child: _buildAnimatedSkillsBanner(),
+                        ),
+
+                        // Projects Section
+                        const ModernSkillsSection(),
+
+                        // Contact Me Section (overlap Projects by 40)
+                        SizedBox(
+                          height: contactHeight - _contactOverlap,
+                          child: Stack(
+                            clipBehavior: Clip.none,
+                            children: [
+                              Positioned(
+                                top: -_contactOverlap,
+                                left: 0,
+                                right: 0,
+                                child: KeyedSubtree(
+                                  key: _contactKey,
+                                  child: const ContactMeSection(),
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
 
-                      // Footer Section
-                      const FooterSection(),
-                    ],
-                  ),
-                ),
-                Positioned(
-                  right: isMobile ? 16 : 32,
-                  bottom: isMobile ? 24 : 32,
-                  child: SafeArea(
-                    child: BackToTopFloatingButton(
-                      scrollController: _scrollController,
+                        // Footer Section
+                        const FooterSection(),
+                      ],
                     ),
                   ),
-                ),
-                if (!isMobile)
-                  _CursorFollower(
-                    position: _cursorPosition,
-                    size: _cursorFollowerSize,
-                    isVisible: _showCursorFollower,
+                  Positioned(
+                    right: isMobile ? 16 : 32,
+                    bottom: isMobile ? 24 : 32,
+                    child: SafeArea(
+                      child: BackToTopFloatingButton(
+                        scrollController: _scrollController,
+                      ),
+                    ),
                   ),
+                  if (!isMobile)
+                    _CursorFollower(
+                      position: _cursorPosition,
+                      size: _cursorFollowerSize,
+                      isVisible: _showCursorFollower,
+                    ),
                 ],
               ),
             ),
@@ -539,30 +542,18 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Container(
-            width: isMobile ? 36 : 46,
-            height: isMobile ? 36 : 46,
-            decoration: BoxDecoration(
-              color: AppColors.primaryOrange,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Center(
-              child: SvgPicture.asset(
-                AppAssets.vector,
-                width: isMobile ? 20 : 24,
-                height: isMobile ? 20 : 24,
+          Image.asset(AppAssets.logoImage, width: 25, height: 25),
+          Transform.translate(
+            offset: const Offset(0, 1),
+            child: Text(
+              'ABIB',
+              style: TextStyle(
+                fontFamily: 'Urbanist',
+                fontSize: isMobile ? 16 : 23,
+                fontWeight: FontWeight.w900,
+                color: AppColors.primaryOrange,
+                letterSpacing: 2,
               ),
-            ),
-          ),
-          const SizedBox(width: 10),
-          Text(
-            'LABIB',
-            style: TextStyle(
-              fontFamily: 'Urbanist',
-              fontSize: isMobile ? 16 : 20,
-              fontWeight: FontWeight.w700,
-              color: AppColors.textWhite,
-              letterSpacing: 2,
             ),
           ),
         ],
@@ -583,75 +574,89 @@ class _HomeScreenState extends State<HomeScreen> {
         alignment: Alignment.center,
         clipBehavior: Clip.none,
         children: [
-          Column(
+          Stack(
             children: [
               // Hello Badge and Title
-              Stack(
-                children: [
-                  Obx(
-                    () => AnimatedOpacity(
-                      opacity: controller.showContent.value ? 1.0 : 0.0,
-                      duration: const Duration(milliseconds: 600),
-                      child: AnimatedSlide(
-                        offset: controller.showContent.value
-                            ? Offset.zero
-                            : const Offset(0, 0.3),
+              Center(
+                child: Stack(
+                  children: [
+                    Obx(
+                      () => AnimatedOpacity(
+                        opacity: controller.showContent.value ? 1.0 : 0.0,
                         duration: const Duration(milliseconds: 600),
-                        curve: Curves.easeOutCubic,
-                        child: Column(
-                          children: [
-                            SizedBox(height: isMobile ? 30 : 10),
-                            _buildHelloBadge(context),
-                            SizedBox(height: isMobile ? 24 : 10),
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: isMobile ? 20 : 60,
-                              ),
-                              child: _buildMainTitle(context),
-                            ),
-                            SizedBox(height: isMobile ? 30 : 50),
-                          ],
+                        child: AnimatedSlide(
+                          offset: controller.showContent.value
+                              ? Offset.zero
+                              : const Offset(0, 0.3),
+                          duration: const Duration(milliseconds: 600),
+                          curve: Curves.easeOutCubic,
+                          child: Column(
+                            children: [
+                              SizedBox(height: isMobile ? 30 : 10),
+                              _buildHelloBadge(context),
+                              SizedBox(height: isMobile ? 24 : 10),
+                              isMobile
+                                  ? Transform.translate(
+                                      offset: const Offset(0, -15),
+                                      child: Padding(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: isMobile ? 20 : 60,
+                                        ),
+                                        child: _buildMainTitle(context),
+                                      ),
+                                    )
+                                  : Padding(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: isMobile ? 20 : 60,
+                                      ),
+                                      child: _buildMainTitle(context),
+                                    ),
+                              SizedBox(height: isMobile ? 30 : 50),
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
 
-                  // Decorative sparkle
-                  // if (!isMobile)
-                  Positioned(
-                    bottom: isMobile ? 10 : 0,
-                    left: isMobile ? 20 : null,
-                    // top: 20,
-                    child: Obx(
-                      () => AnimatedOpacity(
-                        opacity: controller.showDecorations.value ? 1.0 : 0.0,
-                        duration: const Duration(milliseconds: 800),
-                        child: _buildDecorativeSparkle(context),
+                    // Decorative sparkle
+                    // if (!isMobile)
+                    Positioned(
+                      bottom: isMobile ? 10 : 0,
+                      left: isMobile ? 20 : null,
+                      // top: 20,
+                      child: Obx(
+                        () => AnimatedOpacity(
+                          opacity: controller.showDecorations.value ? 1.0 : 0.0,
+                          duration: const Duration(milliseconds: 800),
+                          child: _buildDecorativeSparkle(context),
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
 
               // Profile Image with Orange Background
-              SizedBox(height: isMobile ? 40 : 50),
-              Stack(
-                children: [
-                  Obx(
-                    () => AnimatedOpacity(
-                      opacity: controller.showProfile.value ? 1.0 : 0.0,
-                      duration: const Duration(milliseconds: 800),
-                      child: AnimatedSlide(
-                        offset: controller.showProfile.value
-                            ? Offset.zero
-                            : const Offset(0, 0.2),
+              // SizedBox(height: isMobile ? 40 : 50),
+              Center(
+                child: Stack(
+                  children: [
+                    Obx(
+                      () => AnimatedOpacity(
+                        opacity: controller.showProfile.value ? 1.0 : 0.0,
                         duration: const Duration(milliseconds: 800),
-                        curve: Curves.easeOutCubic,
-                        child: _buildProfileSection(context, controller),
+                        child: AnimatedSlide(
+                          offset: controller.showProfile.value
+                              ? Offset.zero
+                              : const Offset(0, 0.2),
+                          duration: const Duration(milliseconds: 800),
+                          curve: Curves.easeOutCubic,
+                          child: _buildProfileSection(context, controller),
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),
@@ -880,19 +885,22 @@ class _HomeScreenState extends State<HomeScreen> {
         ? screenWidth * 0.9
         : (isTablet ? 600.0 : 952.402);
     final profileHeight = isMobile
-        ? screenWidth * 0.9 * 0.667
-        : (isTablet ? 400.0 : 636.0);
+        ? screenWidth * 1.1
+        : (isTablet ? 870.0 : 1236.0);
     final ellipseWidth = isMobile
-        ? screenWidth * 0.7
+        ? screenWidth * 0.85
         : (isTablet ? 500.0 : 811.779);
     final ellipseHeight = isMobile
-        ? screenWidth * 0.35
+        ? screenWidth * 0.45
         : (isTablet ? 250.0 : 405.889);
+
+    // Responsive bottom positioning for profile image
+    final profileBottom = isMobile ? -70.0 : (isTablet ? -120.0 : -230.0);
 
     return SizedBox(
       width: profileWidth,
       height: isMobile
-          ? profileHeight - 120
+          ? profileHeight + 80
           : (isTablet)
           ? profileHeight - 150
           : profileHeight - 180,
@@ -916,21 +924,22 @@ class _HomeScreenState extends State<HomeScreen> {
 
           // Profile Image from assets
           Positioned(
-            bottom: 0,
+            bottom: profileBottom,
+            // bottom: -230,
             child: SizedBox(
               width: profileWidth,
               height: profileHeight,
               child: Image.asset(
-                AppAssets.youngPrettyWoman,
+                AppAssets.labibPortfolio,
                 fit: BoxFit.contain,
                 alignment: Alignment.bottomCenter,
                 errorBuilder: (context, error, stackTrace) {
                   return Container(
                     color: AppColors.gray300,
-                    child: const Center(
+                    child: Center(
                       child: Icon(
                         Iconsax.user,
-                        size: 200,
+                        size: isMobile ? 100 : (isTablet ? 150 : 200),
                         color: AppColors.gray700,
                       ),
                     ),
@@ -942,7 +951,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
           // CTA Buttons at bottom
           Positioned(
-            bottom: isMobile ? 20 : 40,
+            bottom: isMobile ? 20 : (isTablet ? 30 : 40),
             child: Obx(
               () => AnimatedOpacity(
                 opacity: controller.showContent.value ? 1.0 : 0.0,
@@ -1089,14 +1098,14 @@ class _CursorFollower extends StatelessWidget {
             height: size,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: AppColors.primaryOrange.withOpacity(0.12),
+              color: AppColors.primaryOrange.withValues(alpha: 0.12),
               border: Border.all(
-                color: AppColors.primaryOrange.withOpacity(0.55),
+                color: AppColors.primaryOrange.withValues(alpha: 0.55),
                 width: 1.2,
               ),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.primaryOrange.withOpacity(0.25),
+                  color: AppColors.primaryOrange.withValues(alpha: 0.25),
                   blurRadius: 22,
                   spreadRadius: 2,
                 ),
@@ -1108,7 +1117,7 @@ class _CursorFollower extends StatelessWidget {
                 height: size * 0.3,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: AppColors.primaryOrange.withOpacity(0.85),
+                  color: AppColors.primaryOrange.withValues(alpha: 0.85),
                 ),
               ),
             ),

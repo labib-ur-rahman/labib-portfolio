@@ -17,7 +17,8 @@ class AppStrings {
 
   // Testimonial
   static const String testimonialText =
-      "Labibur's Exceptional Flutter apps\nensure our project's success.\nHighly Recommended";
+      "Well-crafted software balances \nperformance, simplicity, \nand user experience.";
+  // "Labibur's Exceptional Flutter apps\nensure our project's success.\nHighly Recommended";
 
   // Navigation
   static const String navHome = "Home";

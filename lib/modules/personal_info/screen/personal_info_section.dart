@@ -55,25 +55,6 @@ class _PersonalInfoSectionState extends State<PersonalInfoSection>
     super.dispose();
   }
 
-  IconData _getIconData(String iconName) {
-    switch (iconName) {
-      case 'user':
-        return Iconsax.user;
-      case 'sms':
-        return Iconsax.sms;
-      case 'call':
-        return Iconsax.call;
-      case 'location':
-        return Iconsax.location;
-      case 'medal_star':
-        return Iconsax.medal_star;
-      case 'briefcase':
-        return Iconsax.briefcase;
-      default:
-        return Iconsax.info_circle;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(PersonalInfoController());
@@ -105,7 +86,7 @@ class _PersonalInfoSectionState extends State<PersonalInfoSection>
                 ? []
                 : [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.3),
+                      color: Colors.black.withValues(alpha: 0.3),
                       blurRadius: 40,
                       offset: const Offset(0, 20),
                     ),
@@ -164,9 +145,11 @@ class _PersonalInfoSectionState extends State<PersonalInfoSection>
 
               // Main Content
               Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: isMobile ? 24 : (isTablet ? 50 : 80),
-                  vertical: isMobile ? 50 : (isTablet ? 70 : 90),
+                padding: EdgeInsets.only(
+                  left: isMobile ? 24 : (isTablet ? 50 : 80),
+                  right: isMobile ? 24 : (isTablet ? 50 : 80),
+                  top: isMobile ? 50 : (isTablet ? 70 : 90),
+                  bottom: isMobile ? 30 : (isTablet ? 50 : 70),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -245,7 +228,7 @@ class _PersonalInfoSectionState extends State<PersonalInfoSection>
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildAboutMe(controller, true),
-        const SizedBox(height: 40),
+        const SizedBox(height: 20),
         _buildPersonalDetailsGrid(controller, true, false),
       ],
     );
@@ -349,121 +332,9 @@ class _PersonalInfoSectionState extends State<PersonalInfoSection>
     bool isMobile,
     bool isTablet,
   ) {
-    return GridView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: isMobile ? 1 : 2,
-        crossAxisSpacing: 16,
-        mainAxisSpacing: 16,
-        mainAxisExtent: isMobile ? 90 : 105,
-      ),
-      itemCount: controller.details.length,
-      itemBuilder: (context, index) {
-        final detail = controller.details[index];
-        return TweenAnimationBuilder<double>(
-          duration: Duration(milliseconds: 700 + (index * 100)),
-          tween: Tween(begin: 0.0, end: 1.0),
-          curve: Curves.easeOutBack,
-          builder: (context, value, child) {
-            final clampedValue = value.clamp(0.0, 1.0);
-            return Transform.scale(
-              scale: 0.7 + (clampedValue * 0.3),
-              child: Opacity(opacity: clampedValue, child: child),
-            );
-          },
-          child: _buildDetailCard(detail, isMobile),
-        );
-      },
-    );
-  }
-
-  Widget _buildDetailCard(PersonalDetail detail, bool isMobile) {
-    return Container(
-      padding: EdgeInsets.all(isMobile ? 16 : 20),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            AppColors.gray800.withValues(alpha: 0.5),
-            AppColors.gray800.withValues(alpha: 0.3),
-          ],
-        ),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: AppColors.primaryOrange.withValues(alpha: 0.25),
-          width: 1.5,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.primaryOrange.withValues(alpha: 0.08),
-            blurRadius: 15,
-            offset: const Offset(0, 5),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          Container(
-            padding: EdgeInsets.all(isMobile ? 10 : 12),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  AppColors.primaryOrange,
-                  AppColors.primaryOrange.withValues(alpha: 0.7),
-                ],
-              ),
-              borderRadius: BorderRadius.circular(14),
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.primaryOrange.withValues(alpha: 0.3),
-                  blurRadius: 10,
-                  offset: const Offset(0, 3),
-                ),
-              ],
-            ),
-            child: Icon(
-              _getIconData(detail.icon),
-              size: isMobile ? 20 : 24,
-              color: Colors.white,
-            ),
-          ),
-          const SizedBox(width: 14),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  detail.label,
-                  style: TextStyle(
-                    fontFamily: 'Urbanist',
-                    fontSize: isMobile ? 12 : 14,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.white.withValues(alpha: 0.6),
-                    letterSpacing: -0.2,
-                  ),
-                ),
-                const SizedBox(height: 6),
-                Text(
-                  detail.value,
-                  style: TextStyle(
-                    fontFamily: 'Urbanist',
-                    fontSize: isMobile ? 15 : 17,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white,
-                    letterSpacing: -0.3,
-                  ),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(isMobile ? 30 : 30),
+      child: Image.asset(AppAssets.labibProfile, fit: BoxFit.cover),
     );
   }
 }

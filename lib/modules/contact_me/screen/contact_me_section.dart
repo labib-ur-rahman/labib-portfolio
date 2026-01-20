@@ -173,9 +173,7 @@ class ContactMeSection extends StatelessWidget {
               ),
             ),
           );
-        }).toList(),
-        SizedBox(height: isMobile ? 20 : 40),
-        _buildSocialLinks(isMobile),
+        }),
       ],
     );
   }
@@ -198,8 +196,8 @@ class ContactMeSection extends StatelessWidget {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-                AppColors.primaryOrange.withOpacity(0.2),
-                AppColors.primaryOrange.withOpacity(0.05),
+                AppColors.primaryOrange.withValues(alpha: 0.2),
+                AppColors.primaryOrange.withValues(alpha: 0.05),
               ],
             ),
           ),
@@ -232,60 +230,6 @@ class ContactMeSection extends StatelessWidget {
     );
   }
 
-  Widget _buildSocialLinks(bool isMobile) {
-    final socialLinks = [
-      {'icon': Iconsax.global, 'delay': 0},
-      {'icon': Iconsax.instagram, 'delay': 50},
-      {'icon': Iconsax.send_2, 'delay': 100},
-      {'icon': Iconsax.link, 'delay': 150},
-    ];
-
-    return TweenAnimationBuilder<double>(
-      duration: const Duration(milliseconds: 1000),
-      tween: Tween(begin: 0.0, end: 1.0),
-      curve: Curves.easeOutCubic,
-      builder: (context, value, child) {
-        return Opacity(opacity: value, child: child);
-      },
-      child: Wrap(
-        alignment: isMobile ? WrapAlignment.center : WrapAlignment.start,
-        spacing: 16,
-        children: socialLinks.map((link) {
-          return TweenAnimationBuilder<double>(
-            duration: Duration(milliseconds: 800 + (link['delay'] as int)),
-            tween: Tween(begin: 0.0, end: 1.0),
-            curve: Curves.elasticOut,
-            builder: (context, value, child) {
-              return Transform.scale(scale: value, child: child);
-            },
-            child: MouseRegion(
-              cursor: SystemMouseCursors.click,
-              child: GestureDetector(
-                onTap: () {},
-                child: Container(
-                  width: 48,
-                  height: 48,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: AppColors.primaryOrange.withOpacity(0.3),
-                      width: 1.5,
-                    ),
-                  ),
-                  child: Icon(
-                    link['icon'] as IconData,
-                    color: AppColors.primaryOrange,
-                    size: 20,
-                  ),
-                ),
-              ),
-            ),
-          );
-        }).toList(),
-      ),
-    );
-  }
-
   Widget _buildContactForm(
     ContactMeController controller,
     bool isMobile,
@@ -305,9 +249,9 @@ class ContactMeSection extends StatelessWidget {
         padding: EdgeInsets.all(isMobile ? 24 : 40),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(24),
-          color: AppColors.gray800.withOpacity(0.5),
+          color: AppColors.gray800.withValues(alpha: 0.5),
           border: Border.all(
-            color: AppColors.gray700.withOpacity(0.5),
+            color: AppColors.gray700.withValues(alpha: 0.5),
             width: 1,
           ),
         ),
@@ -392,14 +336,14 @@ class ContactMeSection extends StatelessWidget {
                   ? [AppColors.gray700, AppColors.gray800]
                   : [
                       AppColors.primaryOrange,
-                      AppColors.primaryOrange.withOpacity(0.8),
+                      AppColors.primaryOrange.withValues(alpha: 0.8),
                     ],
             ),
             boxShadow: [
               BoxShadow(
                 color: controller.isSubmitting.value
                     ? Colors.transparent
-                    : AppColors.primaryOrange.withOpacity(0.3),
+                    : AppColors.primaryOrange.withValues(alpha: 0.3),
                 blurRadius: 20,
                 offset: const Offset(0, 10),
               ),
@@ -493,17 +437,17 @@ class _ContactInputFieldState extends State<_ContactInputField> {
         duration: const Duration(milliseconds: 200),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
-          color: AppColors.gray900.withOpacity(0.55),
+          color: AppColors.gray900.withValues(alpha: 0.55),
           border: Border.all(
             color: isActive
                 ? AppColors.primaryOrange
-                : AppColors.gray700.withOpacity(0.5),
+                : AppColors.gray700.withValues(alpha: 0.5),
             width: 1.2,
           ),
           boxShadow: isActive
               ? [
                   BoxShadow(
-                    color: AppColors.primaryOrange.withOpacity(0.2),
+                    color: AppColors.primaryOrange.withValues(alpha: 0.2),
                     blurRadius: 18,
                     offset: const Offset(0, 8),
                   ),

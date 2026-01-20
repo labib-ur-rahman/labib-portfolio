@@ -4,6 +4,8 @@ class AppAssets {
   // Images
   static const String profileImage = 'assets/images/profile.png';
   static const String logoImage = 'assets/images/logo.png';
+  static const String labibPortfolio = 'assets/images/labib_portfolio.png';
+  static const String labibProfile = 'assets/images/labib_profile.png';
 
   // Vectors/SVGs
   static const String decorativeWave = 'assets/vectors/wave.svg';
@@ -44,9 +46,6 @@ class AppAssets {
       'assets/images/item-service-cover-border.png';
 
   static const String project1 = 'assets/images/project1.png';
-
-
-
 
 
 

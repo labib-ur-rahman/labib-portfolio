@@ -242,7 +242,7 @@ class _ServicesSectionState extends State<ServicesSection> {
 
     if (isMobile) {
       // Show one card at a time on mobile with PageView
-      return Container(
+      return SizedBox(
         height: 400,
         child: PageView.builder(
           onPageChanged: controller.changePage,

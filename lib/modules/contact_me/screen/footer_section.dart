@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../core/constants/app_colors.dart';
 
@@ -14,29 +15,90 @@ class FooterSection extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: const BoxDecoration(color: Colors.black),
+      // child: Column(children: [_buildSocialLinks(isMobile)]),
       child: Column(children: [_buildBottomBar(isMobile)]),
     );
   }
 
-  Widget _buildBottomBar(bool isMobile) {
-    final actions = [
-      _FooterAction(
-        icon: FontAwesomeIcons.github,
-        label: 'GitHub',
-        onTap: () => _launchUrl('https://github.com/labib-ur-rahman'),
-      ),
-      _FooterAction(
-        icon: FontAwesomeIcons.linkedin,
-        label: 'LinkedIn',
-        onTap: () => _launchUrl('https://www.linkedin.com/in/labib-ur-rahman'),
-      ),
-      _FooterAction(
-        icon: FontAwesomeIcons.envelope,
-        label: 'Email',
-        onTap: () => _launchUrl('mailto:contact.labibur@gmail.com'),
-      ),
+  Widget _buildSocialLinks(bool isMobile) {
+    final socialLinks = [
+      {
+        'icon': FontAwesomeIcons.github,
+        'label': 'GitHub',
+        'onTap': () => _launchUrl('https://github.com/labib-ur-rahman'),
+        'delay': 0,
+      },
+      {
+        'icon': FontAwesomeIcons.linkedin,
+        'label': 'LinkedIn',
+        'onTap': () =>
+            _launchUrl('https://www.linkedin.com/in/labib-ur-rahman'),
+        'delay': 50,
+      },
+      {
+        'icon': FontAwesomeIcons.envelope,
+        'label': 'Email',
+        'onTap': () => _launchUrl('mailto:contact.labibur@gmail.com'),
+        'delay': 100,
+      },
+      {
+        'icon': Iconsax.link,
+        'label': 'Portfolio',
+        'onTap': () => _launchUrl('#'),
+        'delay': 150,
+      },
     ];
 
+    return TweenAnimationBuilder<double>(
+      duration: const Duration(milliseconds: 1000),
+      tween: Tween(begin: 0.0, end: 1.0),
+      curve: Curves.easeOutCubic,
+      builder: (context, value, child) {
+        return Opacity(opacity: value, child: child);
+      },
+      child: Wrap(
+        alignment: isMobile ? WrapAlignment.center : WrapAlignment.start,
+        spacing: 16,
+        children: socialLinks.map((link) {
+          return TweenAnimationBuilder<double>(
+            duration: Duration(milliseconds: 800 + (link['delay'] as int)),
+            tween: Tween(begin: 0.0, end: 1.0),
+            curve: Curves.elasticOut,
+            builder: (context, value, child) {
+              return Transform.scale(scale: value, child: child);
+            },
+            child: MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: Tooltip(
+                message: link['label'] as String,
+                child: GestureDetector(
+                  onTap: () => (link['onTap'] as VoidCallback)(),
+                  child: Container(
+                    width: 48,
+                    height: 48,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: AppColors.primaryOrange.withValues(alpha: 0.3),
+                        width: 1.5,
+                      ),
+                    ),
+                    child: Icon(
+                      link['icon'] as IconData,
+                      color: AppColors.primaryOrange,
+                      size: 20,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
+        }).toList(),
+      ),
+    );
+  }
+
+  Widget _buildBottomBar(bool isMobile) {
     return Container(
       padding: EdgeInsets.symmetric(
         horizontal: isMobile ? 20 : 80,
@@ -54,20 +116,7 @@ class FooterSection extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 12),
-                Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing: 12,
-                  runSpacing: 12,
-                  children: actions
-                      .map(
-                        (action) => _FooterIconButton(
-                          icon: action.icon,
-                          label: action.label,
-                          onTap: action.onTap,
-                        ),
-                      )
-                      .toList(),
-                ),
+                _buildSocialLinks(isMobile),
               ],
             )
           : Row(
@@ -77,22 +126,7 @@ class FooterSection extends StatelessWidget {
                   '© 2025 - 2026 Labib UR Rahman. All rights reserved.',
                   style: TextStyle(fontSize: 14, color: AppColors.gray400),
                 ),
-                Row(
-                  children: [
-                    ...actions
-                        .map(
-                          (action) => Padding(
-                            padding: const EdgeInsets.only(left: 12),
-                            child: _FooterIconButton(
-                              icon: action.icon,
-                              label: action.label,
-                              onTap: action.onTap,
-                            ),
-                          ),
-                        )
-                        .toList(),
-                  ],
-                ),
+                _buildSocialLinks(isMobile),
               ],
             ),
     );
@@ -224,87 +258,6 @@ class _BackToTopFloatingButtonState extends State<BackToTopFloatingButton> {
                 ),
               ),
             ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _FooterAction {
-  const _FooterAction({
-    required this.icon,
-    required this.label,
-    required this.onTap,
-  });
-
-  final IconData icon;
-  final String label;
-  final VoidCallback onTap;
-}
-
-class _FooterIconButton extends StatefulWidget {
-  const _FooterIconButton({
-    required this.icon,
-    required this.label,
-    required this.onTap,
-  });
-
-  final IconData icon;
-  final String label;
-  final VoidCallback onTap;
-
-  @override
-  State<_FooterIconButton> createState() => _FooterIconButtonState();
-}
-
-class _FooterIconButtonState extends State<_FooterIconButton> {
-  bool _isHovering = false;
-
-  @override
-  Widget build(BuildContext context) {
-    final isActive = _isHovering;
-
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      onEnter: (_) => setState(() => _isHovering = true),
-      onExit: (_) => setState(() => _isHovering = false),
-      child: Tooltip(
-        message: widget.label,
-        child: GestureDetector(
-          onTap: widget.onTap,
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
-            width: 44,
-            height: 44,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              color: isActive
-                  ? AppColors.primaryOrange.withOpacity(0.15)
-                  : AppColors.gray900.withOpacity(0.4),
-              border: Border.all(
-                color: isActive
-                    ? AppColors.primaryOrange
-                    : AppColors.gray700.withOpacity(0.5),
-                width: 1.2,
-              ),
-              boxShadow: isActive
-                  ? [
-                      BoxShadow(
-                        color: AppColors.primaryOrange.withOpacity(0.25),
-                        blurRadius: 12,
-                        offset: const Offset(0, 6),
-                      ),
-                    ]
-                  : [],
-            ),
-            child: Center(
-              child: FaIcon(
-                widget.icon,
-                size: 18,
-                color: isActive ? AppColors.primaryOrange : AppColors.gray300,
-              ),
-            ),
           ),
         ),
       ),

@@ -4,7 +4,7 @@ class ExperienceController extends GetxController {
   final List<ExperienceModel> experiences = [
     ExperienceModel(
       company: 'Softvence Agency, Dhaka',
-      duration: 'Dec 2024 - Present',
+      duration: 'Aug 2025 - Present',
       role: 'Jr. Flutter Developer',
       description:
           'Building cross-platform mobile applications with Flutter. Working on various client projects with clean architecture and state management.',
@@ -12,7 +12,7 @@ class ExperienceController extends GetxController {
     ),
     ExperienceModel(
       company: 'Uttara University',
-      duration: '2021 - Present',
+      duration: '2025 - Present',
       role: 'BSc in CSE',
       description:
           'Studying Computer Science and Engineering. Learning advanced programming concepts, data structures, and software engineering principles.',

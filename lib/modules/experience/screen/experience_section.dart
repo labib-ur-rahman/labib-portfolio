@@ -241,7 +241,7 @@ class ExperienceSection extends StatelessWidget {
     bool isLast,
   ) {
     return Container(
-      margin: EdgeInsets.only(bottom: isLast ? 0 : 24),
+      margin: EdgeInsets.only(bottom: isLast ? 0 : 20),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

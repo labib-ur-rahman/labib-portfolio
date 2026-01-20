@@ -151,7 +151,7 @@ class _NotesSectionState extends State<NotesSection> {
             borderRadius: BorderRadius.circular(60),
             boxShadow: [
               BoxShadow(
-                color: AppColors.primaryOrange.withOpacity(0.3),
+                color: AppColors.primaryOrange.withValues(alpha: 0.3),
                 blurRadius: 20,
                 offset: const Offset(0, 8),
               ),
@@ -290,8 +290,8 @@ class _NotesSectionState extends State<NotesSection> {
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
-                    AppColors.primaryOrange.withOpacity(0.1),
-                    AppColors.gray700.withOpacity(0.1),
+                    AppColors.primaryOrange.withValues(alpha: 0.1),
+                    AppColors.gray700.withValues(alpha: 0.1),
                   ],
                 ),
               ),

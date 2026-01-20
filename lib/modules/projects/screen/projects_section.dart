@@ -567,7 +567,7 @@ class _ProjectsSectionState extends State<ProjectsSection> {
                 isLeft: isLeft,
               ),
             );
-          }).toList(),
+          }),
           if (isMobile) ...[
             const SizedBox(height: 20),
             _buildViewAllButton(isMobile),

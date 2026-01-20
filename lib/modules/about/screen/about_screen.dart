@@ -481,6 +481,11 @@ class AboutScreen extends StatelessWidget {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(0),
+                // child: Image.asset(
+                //   AppAssets.labibPortfolio,
+                //   fit: BoxFit.contain,
+                //   alignment: Alignment.bottomCenter,
+                // ),
                 child: Image.network(
                   'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=1000&fit=crop&crop=face',
                   fit: BoxFit.contain,

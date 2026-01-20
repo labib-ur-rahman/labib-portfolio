@@ -150,10 +150,12 @@ class ContactMeController extends GetxController {
     required String message,
     required bool isError,
   }) {
-    final accentColor =
-        isError ? const Color(0xFFE5484D) : const Color(0xFF22C55E);
-    final backgroundBase =
-        isError ? const Color(0xFF2B0F14) : const Color(0xFF0B1F14);
+    final accentColor = isError
+        ? const Color(0xFFE5484D)
+        : const Color(0xFF22C55E);
+    final backgroundBase = isError
+        ? const Color(0xFF2B0F14)
+        : const Color(0xFF0B1F14);
 
     Get.showSnackbar(
       GetSnackBar(
@@ -169,7 +171,7 @@ class ContactMeController extends GetxController {
         messageText: Text(
           message,
           style: TextStyle(
-            color: Colors.white.withOpacity(0.85),
+            color: Colors.white.withValues(alpha: 0.85),
             fontSize: 13.5,
             height: 1.5,
             fontWeight: FontWeight.w400,
@@ -187,8 +189,11 @@ class ContactMeController extends GetxController {
           height: 48,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: accentColor.withOpacity(0.15),
-            border: Border.all(color: accentColor.withOpacity(0.5), width: 1.5),
+            color: accentColor.withValues(alpha: 0.15),
+            border: Border.all(
+              color: accentColor.withValues(alpha: 0.5),
+              width: 1.5,
+            ),
           ),
           child: Center(
             child: Icon(
@@ -198,17 +203,17 @@ class ContactMeController extends GetxController {
             ),
           ),
         ),
-        borderColor: accentColor.withOpacity(0.4),
+        borderColor: accentColor.withValues(alpha: 0.4),
         borderWidth: 1.5,
         boxShadows: [
           BoxShadow(
-            color: accentColor.withOpacity(0.35),
+            color: accentColor.withValues(alpha: 0.35),
             blurRadius: 32,
             offset: const Offset(0, 16),
             spreadRadius: 4,
           ),
           BoxShadow(
-            color: accentColor.withOpacity(0.15),
+            color: accentColor.withValues(alpha: 0.15),
             blurRadius: 16,
             offset: const Offset(0, 4),
             spreadRadius: 0,
@@ -218,8 +223,8 @@ class ContactMeController extends GetxController {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            backgroundBase.withOpacity(0.95),
-            AppColors.backgroundDark.withOpacity(0.95),
+            backgroundBase.withValues(alpha: 0.95),
+            AppColors.backgroundDark.withValues(alpha: 0.95),
           ],
         ),
         duration: const Duration(seconds: 4),

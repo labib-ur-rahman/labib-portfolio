@@ -58,7 +58,7 @@ class TimelineNode extends StatelessWidget {
 
           // Bottom line
           if (!isLast)
-            Container(
+            SizedBox(
               width: 2,
               height: isMobile ? 40 : 60,
               child: CustomPaint(painter: DashedLinePainter()),
