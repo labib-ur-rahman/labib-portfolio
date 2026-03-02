@@ -50,7 +50,7 @@ class ExperienceSection extends StatelessWidget {
         children: const [
           TextSpan(
             text: 'My ',
-            style: TextStyle(color: AppColors.gray700),
+            style: TextStyle(color: AppColors.gray400),
           ),
           TextSpan(
             text: 'Work Experience',
@@ -91,6 +91,7 @@ class ExperienceSection extends StatelessWidget {
     bool isLast,
     bool isTablet,
   ) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final nodeSize = isTablet ? 40.0 : 48.0;
     // Increased height to accommodate description text properly
     final itemHeight = isTablet ? 180.0 : 220.0;
@@ -114,7 +115,7 @@ class ExperienceSection extends StatelessWidget {
                       fontFamily: 'Urbanist',
                       fontSize: isTablet ? 28 : 40,
                       fontWeight: FontWeight.w700,
-                      color: AppColors.gray900,
+                      color: Theme.of(context).colorScheme.onSurface,
                       letterSpacing: -0.6,
                     ),
                   ),
@@ -141,7 +142,13 @@ class ExperienceSection extends StatelessWidget {
               children: [
                 // Top line
                 if (!isFirst)
-                  Container(width: 2, height: 20, color: AppColors.gray400),
+                  Container(
+                    width: 2,
+                    height: 20,
+                    color: isDark
+                        ? AppColors.borderDarkMode
+                        : AppColors.gray400,
+                  ),
                 if (isFirst) const SizedBox(height: 20),
 
                 // Node
@@ -151,11 +158,15 @@ class ExperienceSection extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: experience.isActive
                         ? AppColors.primaryOrange
+                        : isDark
+                        ? AppColors.cardDarkElevated
                         : AppColors.gray900,
                     shape: BoxShape.circle,
                     border: Border.all(
                       color: experience.isActive
                           ? AppColors.primaryOrange
+                          : isDark
+                          ? AppColors.borderDarkMode
                           : AppColors.gray700,
                       width: 3,
                     ),
@@ -188,7 +199,9 @@ class ExperienceSection extends StatelessWidget {
                       fontFamily: 'Urbanist',
                       fontSize: isTablet ? 28 : 40,
                       fontWeight: FontWeight.w600,
-                      color: AppColors.gray700,
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? AppColors.textDarkSecondary
+                          : AppColors.gray700,
                       letterSpacing: -0.6,
                     ),
                   ),
@@ -254,11 +267,15 @@ class ExperienceSection extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: experience.isActive
                       ? AppColors.primaryOrange
+                      : Theme.of(context).brightness == Brightness.dark
+                      ? AppColors.cardDarkElevated
                       : AppColors.gray900,
                   shape: BoxShape.circle,
                   border: Border.all(
                     color: experience.isActive
                         ? AppColors.primaryOrange
+                        : Theme.of(context).brightness == Brightness.dark
+                        ? AppColors.borderDarkMode
                         : AppColors.gray700,
                     width: 2,
                   ),
@@ -281,11 +298,13 @@ class ExperienceSection extends StatelessWidget {
               children: [
                 Text(
                   experience.company,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontFamily: 'Urbanist',
                     fontSize: 20,
                     fontWeight: FontWeight.w600,
-                    color: AppColors.gray700,
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? AppColors.textDarkPrimary
+                        : AppColors.gray700,
                     letterSpacing: -0.3,
                   ),
                 ),

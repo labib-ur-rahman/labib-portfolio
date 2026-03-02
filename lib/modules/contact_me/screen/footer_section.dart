@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../core/constants/app_colors.dart';
 
@@ -42,7 +41,7 @@ class FooterSection extends StatelessWidget {
         'delay': 100,
       },
       {
-        'icon': Iconsax.link,
+        'icon': FontAwesomeIcons.link,
         'label': 'Portfolio',
         'onTap': () => _launchUrl('#'),
         'delay': 150,

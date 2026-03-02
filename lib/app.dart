@@ -1,3 +1,4 @@
+import 'package:DeveloperLabib/core/theme/theme_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'core/core.dart';
@@ -8,10 +9,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Initialize ThemeController globally
+    final themeController = Get.put(ThemeController());
+
     return GetMaterialApp(
-      title: 'Md Labibur Rahman - Portfolio',
+      title: 'Dev Labib',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: themeController.themeMode,
       defaultTransition: Transition.fadeIn,
       home: const HomeScreen(),
     );

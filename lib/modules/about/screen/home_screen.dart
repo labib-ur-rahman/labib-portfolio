@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:portfolio/modules/projects/widgets/animated_skills_marquee.dart';
+import 'package:DeveloperLabib/modules/projects/widgets/animated_skills_marquee.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../../core/core.dart';
 import '../controller/controller.dart';
 import '../widgets/widgets.dart';
@@ -21,6 +22,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  static const String _logoImageUrl =
+      'https://i.ibb.co.com/Zp4KGZmk/L-logo.png';
+  static const String _labibPortfolioImageUrl =
+      'https://i.ibb.co.com/wZqFKNL6/labib-portfolio-transparent.png';
+  static const String _labibProfileImageUrl =
+      'https://i.ibb.co.com/84rFpH5X/labib-profile-squre.png';
+
   static const double _contactOverlap = 40;
   static const double _cursorFollowerSize = 48;
   final GlobalKey _cursorRegionKey = GlobalKey();
@@ -30,11 +38,37 @@ class _HomeScreenState extends State<HomeScreen> {
   final ScrollController _scrollController = ScrollController();
   Offset _cursorPosition = Offset.zero;
   bool _showCursorFollower = false;
+  bool _hasStartedImagePreload = false;
+  bool _areCriticalImagesLoaded = false;
 
   @override
   void initState() {
     super.initState();
     _controller = Get.put(AboutController());
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_hasStartedImagePreload) return;
+    _hasStartedImagePreload = true;
+    _preloadCriticalImages();
+  }
+
+  Future<void> _preloadCriticalImages() async {
+    try {
+      await Future.wait([
+        precacheImage(const NetworkImage(_logoImageUrl), context),
+        precacheImage(const NetworkImage(_labibPortfolioImageUrl), context),
+        precacheImage(const NetworkImage(_labibProfileImageUrl), context),
+      ]);
+    } catch (_) {
+      // Continue so users are not blocked by a failed image preload.
+    }
+
+    if (!mounted) return;
+    setState(() => _areCriticalImagesLoaded = true);
+    hideWebLoader();
   }
 
   @override
@@ -79,113 +113,168 @@ class _HomeScreenState extends State<HomeScreen> {
     final controller = _controller;
     final contactHeight = _contactHeight > 0 ? _contactHeight : 800.0;
 
-    return Scaffold(
-      backgroundColor: AppColors.backgroundLight,
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          final isMobile = ResponsiveUtils.isMobile(context);
-          final isTablet = ResponsiveUtils.isTablet(context);
+    return Obx(() {
+      final isDark = _controller.themeController.isDark;
+      return Scaffold(
+        backgroundColor: isDark
+            ? const Color(0xFF25232E)
+            : AppColors.backgroundLight,
+        body: LayoutBuilder(
+          builder: (context, constraints) {
+            final isMobile = ResponsiveUtils.isMobile(context);
+            final isTablet = ResponsiveUtils.isTablet(context);
 
-          return MouseRegion(
-            onExit: (_) => setState(() => _showCursorFollower = false),
-            child: Listener(
-              key: _cursorRegionKey,
-              behavior: HitTestBehavior.translucent,
-              onPointerHover: _updateCursorFollower,
-              onPointerMove: _updateCursorFollower,
-              onPointerDown: _updateCursorFollower,
-              child: Stack(
-                children: [
-                  SingleChildScrollView(
-                    controller: _scrollController,
-                    child: Column(
+            return Stack(
+              children: [
+                MouseRegion(
+                  onExit: (_) => setState(() => _showCursorFollower = false),
+                  child: Listener(
+                    key: _cursorRegionKey,
+                    behavior: HitTestBehavior.translucent,
+                    onPointerHover: _updateCursorFollower,
+                    onPointerMove: _updateCursorFollower,
+                    onPointerDown: _updateCursorFollower,
+                    child: Stack(
                       children: [
-                        // Hero Section
-                        Container(
-                          // decoration: BoxDecoration(color: Colors.amberAccent),
-                          key: controller.aboutKey,
-                          child: _buildHeroSection(
-                            context,
-                            controller,
-                            constraints,
-                          ),
-                        ),
-
-                        // About Section
-                        const PersonalInfoSection(),
-
-                        const SizedBox(height: 40),
-
-                        // Work Experience Section
-                        Container(
-                          key: controller.experienceKey,
-                          child: const ExperienceSection(),
-                        ),
-
-                        const SizedBox(height: 40),
-
-                        // Skills Section
-                        Container(
-                          key: controller.skillsKey,
-                          child: const ProjectsSection(),
-                        ),
-
-                        // SizedBox(height: isMobile ? 20 : 30),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: isMobile ? 12 : (isTablet ? 30 : 40),
-                            vertical: isMobile ? 20 : (isTablet ? 30 : 40),
-                          ),
-                          child: _buildAnimatedSkillsBanner(),
-                        ),
-
-                        // Projects Section
-                        const ModernSkillsSection(),
-
-                        // Contact Me Section (overlap Projects by 40)
-                        SizedBox(
-                          height: contactHeight - _contactOverlap,
-                          child: Stack(
-                            clipBehavior: Clip.none,
+                        SingleChildScrollView(
+                          controller: _scrollController,
+                          child: Column(
                             children: [
-                              Positioned(
-                                top: -_contactOverlap,
-                                left: 0,
-                                right: 0,
-                                child: KeyedSubtree(
-                                  key: _contactKey,
-                                  child: const ContactMeSection(),
+                              // Hero Section
+                              Container(
+                                key: controller.homeKey,
+                                child: _buildHeroSection(
+                                  context,
+                                  controller,
+                                  constraints,
                                 ),
                               ),
+
+                              // About Section
+                              Container(
+                                key: controller.aboutKey,
+                                child: const RepaintBoundary(
+                                  child: PersonalInfoSection(),
+                                ),
+                              ),
+
+                              const SizedBox(height: 40),
+
+                              // Work Experience Section
+                              Container(
+                                key: controller.experienceKey,
+                                child: const RepaintBoundary(
+                                  child: ExperienceSection(),
+                                ),
+                              ),
+
+                              const SizedBox(height: 40),
+
+                              // Projects Section
+                              Container(
+                                key: controller.projectsKey,
+                                child: const RepaintBoundary(
+                                  child: ProjectsSection(),
+                                ),
+                              ),
+
+                              // SizedBox(height: isMobile ? 20 : 30),
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: isMobile
+                                      ? 12
+                                      : (isTablet ? 30 : 40),
+                                  vertical: isMobile
+                                      ? 20
+                                      : (isTablet ? 30 : 40),
+                                ),
+                                child: _buildAnimatedSkillsBanner(),
+                              ),
+
+                              // Skills Section
+                              Container(
+                                key: controller.skillsKey,
+                                child: const RepaintBoundary(
+                                  child: ModernSkillsSection(),
+                                ),
+                              ),
+
+                              // Contact Me Section (overlap Projects by 40)
+                              SizedBox(
+                                height: contactHeight - _contactOverlap,
+                                child: Stack(
+                                  clipBehavior: Clip.none,
+                                  children: [
+                                    Positioned(
+                                      top: -_contactOverlap,
+                                      left: 0,
+                                      right: 0,
+                                      child: KeyedSubtree(
+                                        key: _contactKey,
+                                        child: Container(
+                                          key: controller.contactKey,
+                                          child: const ContactMeSection(),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+
+                              // Footer Section
+                              const FooterSection(),
                             ],
                           ),
                         ),
-
-                        // Footer Section
-                        const FooterSection(),
+                        Positioned(
+                          right: isMobile ? 16 : 32,
+                          bottom: isMobile ? 24 : 32,
+                          child: SafeArea(
+                            child: BackToTopFloatingButton(
+                              scrollController: _scrollController,
+                            ),
+                          ),
+                        ),
+                        if (!isMobile)
+                          _CursorFollower(
+                            position: _cursorPosition,
+                            size: _cursorFollowerSize,
+                            isVisible: _showCursorFollower,
+                          ),
                       ],
                     ),
                   ),
-                  Positioned(
-                    right: isMobile ? 16 : 32,
-                    bottom: isMobile ? 24 : 32,
-                    child: SafeArea(
-                      child: BackToTopFloatingButton(
-                        scrollController: _scrollController,
-                      ),
-                    ),
-                  ),
-                  if (!isMobile)
-                    _CursorFollower(
-                      position: _cursorPosition,
-                      size: _cursorFollowerSize,
-                      isVisible: _showCursorFollower,
-                    ),
-                ],
+                ),
+                if (!_areCriticalImagesLoaded) _buildStartupLoader(isDark),
+              ],
+            );
+          },
+        ),
+      );
+    });
+  }
+
+  Widget _buildStartupLoader(bool isDark) {
+    return Positioned.fill(
+      child: Container(
+        color: isDark ? const Color(0xFF0D0D0D) : AppColors.backgroundLight,
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Image.network(_logoImageUrl, width: 80, height: 80),
+              const SizedBox(height: 24),
+              const SizedBox(
+                width: 36,
+                height: 36,
+                child: CircularProgressIndicator(
+                  strokeWidth: 3,
+                  color: AppColors.primaryOrange,
+                ),
               ),
-            ),
-          );
-        },
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -259,9 +348,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildNavbar(BuildContext context, AboutController controller) {
     final isMobile = ResponsiveUtils.isMobile(context);
     final isTablet = ResponsiveUtils.isTablet(context);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     if (isMobile || isTablet) {
-      return _buildMobileNavbar(context, controller);
+      return _buildMobileNavbar(context, controller, isDark);
     }
 
     return Obx(
@@ -279,8 +369,10 @@ class _HomeScreenState extends State<HomeScreen> {
             height: 86,
             margin: const EdgeInsets.symmetric(horizontal: 60),
             padding: const EdgeInsets.symmetric(horizontal: 24),
-            backgroundColor: AppColors.gray900,
-            borderColor: AppColors.borderLight,
+            backgroundColor: isDark
+                ? const Color(0xFF1A1A1A).withValues(alpha: 0.9)
+                : AppColors.gray900,
+            borderColor: isDark ? AppColors.borderDark : AppColors.borderLight,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -301,7 +393,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
 
                 // Theme Toggle Button
-                _buildThemeToggle(context, controller),
+                _buildThemeToggle(context, controller, isDark),
               ],
             ),
           ),
@@ -366,20 +458,29 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  Widget _buildThemeToggle(BuildContext context, AboutController controller) {
+  Widget _buildThemeToggle(
+    BuildContext context,
+    AboutController controller,
+    bool isDark,
+  ) {
     return Obx(
       () => AnimatedContainer(
         duration: const Duration(milliseconds: 300),
         decoration: BoxDecoration(
-          color: AppColors.gray900.withValues(alpha: 0.5),
+          color: isDark
+              ? AppColors.gray900.withValues(alpha: 0.5)
+              : AppColors.gray900.withValues(alpha: 0.5),
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: AppColors.borderLight, width: 1),
+          border: Border.all(
+            color: const Color.fromARGB(255, 99, 40, 0),
+            width: 1,
+          ),
         ),
         child: IconButton(
-          icon: Icon(
+          icon: FaIcon(
             controller.themeController.isDarkMode.value
-                ? Iconsax.sun_1
-                : Iconsax.moon,
+                ? FontAwesomeIcons.solidSun
+                : FontAwesomeIcons.solidMoon,
             color: AppColors.primaryOrange,
             size: 20,
           ),
@@ -390,7 +491,11 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildMobileNavbar(BuildContext context, AboutController controller) {
+  Widget _buildMobileNavbar(
+    BuildContext context,
+    AboutController controller,
+    bool isDark,
+  ) {
     return Obx(
       () => AnimatedOpacity(
         opacity: controller.showContent.value ? 1.0 : 0.0,
@@ -398,8 +503,10 @@ class _HomeScreenState extends State<HomeScreen> {
         child: GlassContainer(
           height: 70,
           padding: const EdgeInsets.symmetric(horizontal: 20),
-          backgroundColor: AppColors.gray900,
-          borderColor: AppColors.borderLight,
+          backgroundColor: isDark
+              ? const Color(0xFF1A1A1A).withValues(alpha: 0.9)
+              : AppColors.gray900,
+          borderColor: isDark ? AppColors.borderDark : AppColors.borderLight,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -409,18 +516,20 @@ class _HomeScreenState extends State<HomeScreen> {
                   // Theme Toggle
                   Container(
                     decoration: BoxDecoration(
-                      color: AppColors.gray900.withValues(alpha: 0.5),
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(
-                        color: AppColors.borderLight,
-                        width: 1,
-                      ),
+                      color: isDark
+                          ? AppColors.gray900.withValues(alpha: 0.5)
+                          : AppColors.gray900.withValues(alpha: 0.5),
+                      borderRadius: BorderRadius.circular(12),
+                      // border: Border.all(
+                      //   color: const Color.fromARGB(255, 99, 40, 0),
+                      //   width: 1,
+                      // ),
                     ),
                     child: IconButton(
-                      icon: Icon(
+                      icon: FaIcon(
                         controller.themeController.isDarkMode.value
-                            ? Iconsax.sun_1
-                            : Iconsax.moon,
+                            ? FontAwesomeIcons.solidSun
+                            : FontAwesomeIcons.solidMoon,
                         color: AppColors.primaryOrange,
                         size: 20,
                       ),
@@ -430,10 +539,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(width: 12),
                   // Menu Button
                   IconButton(
-                    icon: const Icon(
-                      Iconsax.menu,
+                    icon: const FaIcon(
+                      FontAwesomeIcons.bars,
                       color: AppColors.textWhite,
-                      size: 28,
+                      size: 24,
                     ),
                     onPressed: () => _showMobileMenu(context, controller),
                   ),
@@ -464,7 +573,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text(
-                    'Menu',
+                    'Navigation Menu',
                     style: TextStyle(
                       fontFamily: 'Urbanist',
                       fontSize: 24,
@@ -473,8 +582,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   IconButton(
-                    icon: const Icon(
-                      Iconsax.close_circle,
+                    icon: const FaIcon(
+                      FontAwesomeIcons.solidCircleXmark,
                       color: AppColors.textWhite,
                     ),
                     onPressed: () => Navigator.pop(context),
@@ -514,8 +623,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     trailing: controller.selectedNavIndex.value == index
-                        ? const Icon(
-                            Iconsax.tick_circle,
+                        ? const FaIcon(
+                            FontAwesomeIcons.solidCircleCheck,
                             color: AppColors.primaryOrange,
                           )
                         : null,
@@ -542,17 +651,16 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Image.asset(AppAssets.logoImage, width: 25, height: 25),
+          Image.network(_logoImageUrl, width: 25, height: 25),
           Transform.translate(
-            offset: const Offset(0, 1),
+            offset: const Offset(0, 0),
             child: Text(
               'ABIB',
-              style: TextStyle(
-                fontFamily: 'Urbanist',
-                fontSize: isMobile ? 16 : 23,
+              style: GoogleFonts.k2d(
+                fontSize: isMobile ? 23 : 23,
                 fontWeight: FontWeight.w900,
                 color: AppColors.primaryOrange,
-                letterSpacing: 2,
+                letterSpacing: 2.5,
               ),
             ),
           ),
@@ -567,6 +675,7 @@ class _HomeScreenState extends State<HomeScreen> {
   ) {
     final isDesktop = ResponsiveUtils.isDesktop(context);
     final isMobile = ResponsiveUtils.isMobile(context);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return SizedBox(
       width: double.infinity,
@@ -593,23 +702,23 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Column(
                             children: [
                               SizedBox(height: isMobile ? 30 : 10),
-                              _buildHelloBadge(context),
+                              _buildHelloBadge(context, isDark),
                               SizedBox(height: isMobile ? 24 : 10),
                               isMobile
                                   ? Transform.translate(
-                                      offset: const Offset(0, -15),
+                                      offset: const Offset(0, 0),
                                       child: Padding(
                                         padding: EdgeInsets.symmetric(
                                           horizontal: isMobile ? 20 : 60,
                                         ),
-                                        child: _buildMainTitle(context),
+                                        child: _buildMainTitle(context, isDark),
                                       ),
                                     )
                                   : Padding(
                                       padding: EdgeInsets.symmetric(
                                         horizontal: isMobile ? 20 : 60,
                                       ),
-                                      child: _buildMainTitle(context),
+                                      child: _buildMainTitle(context, isDark),
                                     ),
                               SizedBox(height: isMobile ? 30 : 50),
                             ],
@@ -707,7 +816,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildHelloBadge(BuildContext context) {
+  Widget _buildHelloBadge(BuildContext context, bool isDark) {
     return Stack(
       clipBehavior: Clip.none,
       children: [
@@ -717,17 +826,21 @@ class _HomeScreenState extends State<HomeScreen> {
             vertical: 12.745,
           ),
           decoration: BoxDecoration(
-            color: AppColors.backgroundGlass,
+            color: isDark
+                ? AppColors.backgroundGlassDark
+                : AppColors.backgroundGlass,
             borderRadius: BorderRadius.circular(38.235),
-            border: Border.all(color: AppColors.borderDark, width: 1.275),
+            border: Border.all(
+              color: isDark ? AppColors.borderLight : AppColors.borderDark,
+              width: 1.275,
+            ),
           ),
-          child: const Text(
+          child: Text(
             'Hello!',
-            style: TextStyle(
-              fontFamily: 'Urbanist',
+            style: GoogleFonts.urbanist(
               fontSize: 20, // Figma: 20px
               fontWeight: FontWeight.w500,
-              color: AppColors.textPrimary,
+              color: isDark ? AppColors.textDarkPrimary : AppColors.textPrimary,
               letterSpacing: -0.3,
             ),
           ),
@@ -750,12 +863,12 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildMainTitle(BuildContext context) {
+  Widget _buildMainTitle(BuildContext context, bool isDark) {
     final isTablet = ResponsiveUtils.isTablet(context);
     final isMobile = ResponsiveUtils.isMobile(context);
 
     // Improved mobile font size for better readability
-    final fontSize = isMobile ? 52.0 : (isTablet ? 52.0 : 92.0);
+    final fontSize = isMobile ? 60.0 : (isTablet ? 52.0 : 92.0);
 
     return RichText(
       textAlign: TextAlign.center,
@@ -764,15 +877,19 @@ class _HomeScreenState extends State<HomeScreen> {
           fontFamily: 'Urbanist',
           fontSize: fontSize,
           fontWeight: FontWeight.w600,
-          color: AppColors.textPrimary,
+          color: isDark ? AppColors.textDarkPrimary : AppColors.textPrimary,
           letterSpacing: isMobile ? -0.8 : -1.4335,
           height: isMobile ? 1.2 : 1.0,
         ),
-        children: const [
+        children: [
           TextSpan(text: "It's "),
           TextSpan(
             text: 'Labibur',
-            style: TextStyle(color: AppColors.primaryOrange),
+            style: TextStyle(
+              color: isDark
+                  ? const Color.fromARGB(255, 255, 98, 0)
+                  : AppColors.primaryOrange,
+            ),
           ),
           TextSpan(text: ',\nJr. Flutter Developer'),
         ],
@@ -790,6 +907,12 @@ class _HomeScreenState extends State<HomeScreen> {
         // Quote Icon
         SvgPicture.asset(
           AppAssets.quoteIcon,
+          colorFilter: _controller.themeController.isDark
+              ? const ColorFilter.mode(
+                  AppColors.textDarkSecondary,
+                  BlendMode.srcIn,
+                )
+              : const ColorFilter.mode(AppColors.gray700, BlendMode.srcIn),
           width: isDesktop ? 36 : 28,
           height: isDesktop ? 36 : 28,
         ),
@@ -799,9 +922,11 @@ class _HomeScreenState extends State<HomeScreen> {
           AppStrings.testimonialText,
           style: TextStyle(
             fontFamily: 'Urbanist',
-            fontSize: isDesktop ? 20 : 16, // Figma: 20px
+            fontSize: isDesktop ? 20 : 16,
             fontWeight: FontWeight.w500,
-            color: AppColors.gray700,
+            color: _controller.themeController.isDark
+                ? AppColors.textDarkSecondary
+                : AppColors.gray700,
             letterSpacing: -0.3,
             height: 1.5,
           ),
@@ -837,21 +962,25 @@ class _HomeScreenState extends State<HomeScreen> {
           AppStrings.yearsExperience,
           style: TextStyle(
             fontFamily: 'Urbanist',
-            fontSize: isDesktop ? 47 : 36, // Figma: 47px
+            fontSize: isDesktop ? 47 : 36,
             fontWeight: FontWeight.w700,
-            color: AppColors.textPrimary,
+            color: _controller.themeController.isDark
+                ? AppColors.textDarkPrimary
+                : AppColors.textPrimary,
             letterSpacing: -0.705,
           ),
         ),
         const SizedBox(height: 5),
-        // Label - Figma: 20px
+        // Label
         Text(
           AppStrings.experienceLabel,
           style: TextStyle(
             fontFamily: 'Urbanist',
-            fontSize: isDesktop ? 20 : 16, // Figma: 20px
+            fontSize: isDesktop ? 20 : 16,
             fontWeight: FontWeight.w400,
-            color: AppColors.textPrimary,
+            color: _controller.themeController.isDark
+                ? AppColors.textDarkPrimary
+                : AppColors.textPrimary,
             letterSpacing: -0.3,
           ),
         ),
@@ -885,13 +1014,13 @@ class _HomeScreenState extends State<HomeScreen> {
         ? screenWidth * 0.9
         : (isTablet ? 600.0 : 952.402);
     final profileHeight = isMobile
-        ? screenWidth * 1.1
+        ? screenWidth * 1.4
         : (isTablet ? 870.0 : 1236.0);
     final ellipseWidth = isMobile
-        ? screenWidth * 0.85
+        ? screenWidth * 0.5
         : (isTablet ? 500.0 : 811.779);
     final ellipseHeight = isMobile
-        ? screenWidth * 0.45
+        ? screenWidth * 0.5
         : (isTablet ? 250.0 : 405.889);
 
     // Responsive bottom positioning for profile image
@@ -925,25 +1054,28 @@ class _HomeScreenState extends State<HomeScreen> {
           // Profile Image from assets
           Positioned(
             bottom: profileBottom,
-            child: SizedBox(
-              width: profileWidth,
-              height: profileHeight,
-              child: Image.asset(
-                AppAssets.labibPortfolio,
-                fit: BoxFit.contain,
-                alignment: Alignment.bottomCenter,
-                errorBuilder: (context, error, stackTrace) {
-                  return Container(
-                    color: AppColors.gray300,
-                    child: Center(
-                      child: Icon(
-                        Iconsax.user,
-                        size: isMobile ? 100 : (isTablet ? 150 : 200),
-                        color: AppColors.gray700,
+            child: Transform.translate(
+              offset: const Offset(0, 60),
+              child: SizedBox(
+                width: isMobile ? profileWidth * 1.3 : profileWidth,
+                height: isMobile ? profileHeight * 1.2 : profileHeight,
+                child: Image.network(
+                  _labibPortfolioImageUrl,
+                  fit: BoxFit.contain,
+                  alignment: Alignment.bottomCenter,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      color: AppColors.gray300,
+                      child: Center(
+                        child: FaIcon(
+                          FontAwesomeIcons.solidUser,
+                          size: isMobile ? 100 : (isTablet ? 150 : 200),
+                          color: AppColors.gray700,
+                        ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
             ),
           ),
@@ -1010,7 +1142,7 @@ class _HomeScreenState extends State<HomeScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                AppStrings.resumeBtn,
+                isMobile ? AppStrings.resumeMobileBtn : AppStrings.resumeBtn,
                 style: TextStyle(
                   fontFamily: 'Urbanist',
                   fontSize: isMobile ? 16 : 22, // Figma: 25.692px
@@ -1042,7 +1174,8 @@ class _HomeScreenState extends State<HomeScreen> {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
-        onTap: controller.onHireMeTap,
+        onTap: () => controller.onNavItemTap(3), // Navigate to Contact section
+        // onTap: controller.onHireMeTap,
         child: Container(
           height: double.infinity,
           alignment: Alignment.center,

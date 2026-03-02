@@ -16,13 +16,22 @@ class AboutController extends GetxController {
   final themeController = Get.put(ThemeController());
 
   // Scroll keys for navigation
+  final homeKey = GlobalKey();
   final aboutKey = GlobalKey();
-  final servicesKey = GlobalKey();
   final experienceKey = GlobalKey();
+  final projectsKey = GlobalKey();
   final skillsKey = GlobalKey();
+  final contactKey = GlobalKey();
 
   // Navigation items
-  final List<String> navItems = ['About', 'Services', 'Experience', 'Skills'];
+  final List<String> navItems = [
+    'Home',
+    'About',
+    'Experience',
+    'Projects',
+    'Skills',
+    'Contact',
+  ];
 
   @override
   void onInit() {
@@ -44,20 +53,25 @@ class AboutController extends GetxController {
   void onNavItemTap(int index) {
     selectedNavIndex.value = index;
 
-    // Scroll to section
     GlobalKey? targetKey;
     switch (index) {
       case 0:
-        targetKey = aboutKey;
+        targetKey = homeKey;
         break;
       case 1:
-        targetKey = servicesKey;
+        targetKey = aboutKey;
         break;
       case 2:
         targetKey = experienceKey;
         break;
       case 3:
+        targetKey = projectsKey;
+        break;
+      case 4:
         targetKey = skillsKey;
+        break;
+      case 5:
+        targetKey = contactKey;
         break;
     }
 
@@ -79,20 +93,24 @@ class AboutController extends GetxController {
   }
 
   void onPortfolioTap() {
-    // Navigate to portfolio section
-    Get.snackbar(
-      'Portfolio',
-      'Navigating to Portfolio section',
-      snackPosition: SnackPosition.BOTTOM,
-    );
+    // Scroll to projects section
+    if (projectsKey.currentContext != null) {
+      Scrollable.ensureVisible(
+        projectsKey.currentContext!,
+        duration: const Duration(milliseconds: 800),
+        curve: Curves.easeInOut,
+      );
+    }
   }
 
   void onHireMeTap() {
-    // Navigate to contact or hire me section
-    Get.snackbar(
-      'Hire Me',
-      'Navigating to Contact section',
-      snackPosition: SnackPosition.BOTTOM,
-    );
+    // Scroll to contact section
+    if (contactKey.currentContext != null) {
+      Scrollable.ensureVisible(
+        contactKey.currentContext!,
+        duration: const Duration(milliseconds: 800),
+        curve: Curves.easeInOut,
+      );
+    }
   }
 }

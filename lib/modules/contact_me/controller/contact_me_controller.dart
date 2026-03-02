@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
-import 'package:iconsax/iconsax.dart';
 import '../../../core/constants/app_colors.dart';
 
 class ContactMeController extends GetxController {
@@ -197,7 +197,9 @@ class ContactMeController extends GetxController {
           ),
           child: Center(
             child: Icon(
-              isError ? Iconsax.close_circle : Iconsax.tick_circle,
+              isError
+                  ? FontAwesomeIcons.solidCircleXmark
+                  : FontAwesomeIcons.solidCircleCheck,
               color: accentColor,
               size: 26,
             ),

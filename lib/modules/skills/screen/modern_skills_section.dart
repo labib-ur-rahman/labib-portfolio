@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
 import '../../../core/core.dart';
 
 class ModernSkillsSection extends StatefulWidget {
@@ -38,7 +38,7 @@ class _ModernSkillsSectionState extends State<ModernSkillsSection>
   final List<Map<String, dynamic>> _skillCategories = [
     {
       'title': 'Mobile Application Development',
-      'icon': Iconsax.mobile,
+      'icon': FontAwesomeIcons.mobileScreen,
       'color': const Color(0xFF6366F1),
       'skills': [
         'Flutter & Dart (Cross-platform)',
@@ -49,7 +49,7 @@ class _ModernSkillsSectionState extends State<ModernSkillsSection>
     },
     {
       'title': 'State Management & Architecture',
-      'icon': Iconsax.layer,
+      'icon': FontAwesomeIcons.layerGroup,
       'color': const Color(0xFF8B5CF6),
       'skills': [
         'GetX (State, DI, Routing)',
@@ -59,7 +59,7 @@ class _ModernSkillsSectionState extends State<ModernSkillsSection>
     },
     {
       'title': 'UI / UX Engineering',
-      'icon': Iconsax.brush,
+      'icon': FontAwesomeIcons.paintbrush,
       'color': const Color(0xFFEC4899),
       'skills': [
         'Material Design Guidelines',
@@ -70,7 +70,7 @@ class _ModernSkillsSectionState extends State<ModernSkillsSection>
     },
     {
       'title': 'Backend Integration & APIs',
-      'icon': Iconsax.code_circle,
+      'icon': FontAwesomeIcons.code,
       'color': const Color(0xFF10B981),
       'skills': [
         'RESTful API Integration',
@@ -81,7 +81,7 @@ class _ModernSkillsSectionState extends State<ModernSkillsSection>
     },
     {
       'title': 'Cloud & Database Services',
-      'icon': Iconsax.cloud,
+      'icon': FontAwesomeIcons.cloud,
       'color': const Color(0xFF3B82F6),
       'skills': [
         'Firebase (Firestore, Realtime DB)',
@@ -92,7 +92,7 @@ class _ModernSkillsSectionState extends State<ModernSkillsSection>
     },
     {
       'title': 'Third-Party Integration',
-      'icon': Iconsax.box,
+      'icon': FontAwesomeIcons.cube,
       'color': const Color(0xFFF59E0B),
       'skills': [
         'Google Maps SDK',
@@ -102,7 +102,7 @@ class _ModernSkillsSectionState extends State<ModernSkillsSection>
     },
     {
       'title': 'Development Tools & Version Control',
-      'icon': Iconsax.setting_2,
+      'icon': FontAwesomeIcons.gear,
       'color': const Color(0xFF14B8A6),
       'skills': [
         'Git & GitHub',
@@ -113,7 +113,7 @@ class _ModernSkillsSectionState extends State<ModernSkillsSection>
     },
     {
       'title': 'App Deployment & Distribution',
-      'icon': Iconsax.cloud_add,
+      'icon': FontAwesomeIcons.cloudArrowUp,
       'color': AppColors.primaryOrange,
       'skills': [
         'Google Play Store Publishing',
@@ -132,48 +132,60 @@ class _ModernSkillsSectionState extends State<ModernSkillsSection>
       () => AnimatedOpacity(
         opacity: _showContent.value ? 1.0 : 0.0,
         duration: const Duration(milliseconds: 1000),
-        child: Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                const Color.fromARGB(255, 255, 237, 222),
-                const Color(0xFFF5F5F7),
-                Colors.white,
-                const Color(0xFFF8F9FA),
-              ],
-              stops: const [0.0, 0.4, 0.6, 1.0],
-            ),
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30),
-              topRight: Radius.circular(30),
-            ),
-          ),
-          child: Stack(
-            children: [
-              // Animated Background Gradient Orbs
-              _buildAnimatedBackground(),
-
-              // Main Content
-              Padding(
-                padding: EdgeInsets.only(
-                  left: isMobile ? 20 : (isTablet ? 40 : 80),
-                  right: isMobile ? 20 : (isTablet ? 40 : 80),
-                  top: isMobile ? 50 : 80,
-                  bottom: isMobile ? 50 : 150,
+        child: Builder(
+          builder: (context) {
+            final isDark = Theme.of(context).brightness == Brightness.dark;
+            return Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: isDark
+                      ? [
+                          AppColors.surfaceDarkElevated,
+                          AppColors.cardDark,
+                          AppColors.surfaceDark,
+                          AppColors.cardDark,
+                        ]
+                      : [
+                          const Color.fromARGB(255, 255, 237, 222),
+                          const Color(0xFFF5F5F7),
+                          Colors.white,
+                          const Color(0xFFF8F9FA),
+                        ],
+                  stops: const [0.0, 0.4, 0.6, 1.0],
                 ),
-                child: Column(
-                  children: [
-                    _buildHeader(isMobile, isTablet),
-                    SizedBox(height: isMobile ? 40 : 60),
-                    _buildSkillsGrid(isMobile, isTablet),
-                  ],
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30),
+                  topRight: Radius.circular(30),
                 ),
               ),
-            ],
-          ),
+              child: Stack(
+                children: [
+                  // Animated Background Gradient Orbs
+                  _buildAnimatedBackground(),
+
+                  // Main Content
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: isMobile ? 20 : (isTablet ? 40 : 80),
+                      right: isMobile ? 20 : (isTablet ? 40 : 80),
+                      top: isMobile ? 50 : 80,
+                      bottom: isMobile ? 50 : 150,
+                    ),
+                    child: Column(
+                      children: [
+                        _buildHeader(isMobile, isTablet),
+                        SizedBox(height: isMobile ? 40 : 60),
+                        _buildSkillsGrid(isMobile, isTablet),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );
@@ -181,86 +193,88 @@ class _ModernSkillsSectionState extends State<ModernSkillsSection>
 
   Widget _buildAnimatedBackground() {
     return Positioned.fill(
-      child: AnimatedBuilder(
-        animation: _animationController,
-        builder: (context, child) {
-          return Stack(
-            children: [
-              // Floating orb 1
-              Positioned(
-                top: 80 + (40 * _animationController.value),
-                left: -50 + (25 * _animationController.value),
-                child: Container(
-                  width: 350,
-                  height: 350,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: RadialGradient(
-                      colors: [
-                        const Color(0xFF6366F1).withValues(alpha: 0.15),
-                        const Color(0xFF6366F1).withValues(alpha: 0.0),
-                      ],
+      child: RepaintBoundary(
+        child: AnimatedBuilder(
+          animation: _animationController,
+          builder: (context, child) {
+            return Stack(
+              children: [
+                // Floating orb 1
+                Positioned(
+                  top: 80 + (40 * _animationController.value),
+                  left: -50 + (25 * _animationController.value),
+                  child: Container(
+                    width: 350,
+                    height: 350,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: RadialGradient(
+                        colors: [
+                          const Color(0xFF6366F1).withValues(alpha: 0.15),
+                          const Color(0xFF6366F1).withValues(alpha: 0.0),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              // Floating orb 2
-              Positioned(
-                bottom: 100 - (70 * _animationController.value),
-                right: -80 + (30 * _animationController.value),
-                child: Container(
-                  width: 450,
-                  height: 450,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: RadialGradient(
-                      colors: [
-                        AppColors.primaryOrange.withValues(alpha: 0.1),
-                        AppColors.primaryOrange.withValues(alpha: 0.0),
-                      ],
+                // Floating orb 2
+                Positioned(
+                  bottom: 100 - (70 * _animationController.value),
+                  right: -80 + (30 * _animationController.value),
+                  child: Container(
+                    width: 450,
+                    height: 450,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: RadialGradient(
+                        colors: [
+                          AppColors.primaryOrange.withValues(alpha: 0.1),
+                          AppColors.primaryOrange.withValues(alpha: 0.0),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              // Floating orb 3
-              Positioned(
-                top: 200 - (50 * _animationController.value),
-                right: 150 + (15 * _animationController.value),
-                child: Container(
-                  width: 300,
-                  height: 300,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: RadialGradient(
-                      colors: [
-                        const Color(0xFFEC4899).withValues(alpha: 0.08),
-                        const Color(0xFFEC4899).withValues(alpha: 0.0),
-                      ],
+                // Floating orb 3
+                Positioned(
+                  top: 200 - (50 * _animationController.value),
+                  right: 150 + (15 * _animationController.value),
+                  child: Container(
+                    width: 300,
+                    height: 300,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: RadialGradient(
+                        colors: [
+                          const Color(0xFFEC4899).withValues(alpha: 0.08),
+                          const Color(0xFFEC4899).withValues(alpha: 0.0),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              // Floating orb 4
-              Positioned(
-                bottom: 250 + (35 * _animationController.value),
-                left: 200 - (20 * _animationController.value),
-                child: Container(
-                  width: 280,
-                  height: 280,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: RadialGradient(
-                      colors: [
-                        const Color(0xFF10B981).withValues(alpha: 0.09),
-                        const Color(0xFF10B981).withValues(alpha: 0.0),
-                      ],
+                // Floating orb 4
+                Positioned(
+                  bottom: 250 + (35 * _animationController.value),
+                  left: 200 - (20 * _animationController.value),
+                  child: Container(
+                    width: 280,
+                    height: 280,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: RadialGradient(
+                        colors: [
+                          const Color(0xFF10B981).withValues(alpha: 0.09),
+                          const Color(0xFF10B981).withValues(alpha: 0.0),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          );
-        },
+              ],
+            );
+          },
+        ),
       ),
     );
   }
@@ -291,14 +305,14 @@ class _ModernSkillsSectionState extends State<ModernSkillsSection>
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(
-                  Iconsax.code_1,
+                FaIcon(
+                  FontAwesomeIcons.terminal,
                   color: AppColors.primaryOrange,
                   size: isMobile ? 16 : 18,
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  'Skills & Expertise',
+                  'Excellence & Expertise',
                   style: TextStyle(
                     fontSize: isMobile ? 13 : 14,
                     fontWeight: FontWeight.w600,
@@ -319,12 +333,12 @@ class _ModernSkillsSectionState extends State<ModernSkillsSection>
                   style: TextStyle(
                     fontSize: isMobile ? 32 : (isTablet ? 42 : 56),
                     fontWeight: FontWeight.w700,
-                    color: AppColors.gray900,
+                    color: Theme.of(context).colorScheme.onSurface,
                     height: 1.2,
                   ),
                 ),
                 TextSpan(
-                  text: 'Excellence',
+                  text: 'Skills',
                   style: TextStyle(
                     fontSize: isMobile ? 32 : (isTablet ? 42 : 56),
                     fontWeight: FontWeight.w700,
@@ -340,7 +354,9 @@ class _ModernSkillsSectionState extends State<ModernSkillsSection>
             'A comprehensive toolkit for building exceptional digital experiences',
             style: TextStyle(
               fontSize: isMobile ? 14 : 18,
-              color: Colors.grey[600],
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? AppColors.textDarkSecondary
+                  : Colors.grey[600],
               height: 1.6,
             ),
             textAlign: TextAlign.center,
@@ -416,11 +432,15 @@ class _ModernSkillsSectionState extends State<ModernSkillsSection>
             duration: const Duration(milliseconds: 300),
             curve: Curves.easeOutCubic,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? AppColors.cardDarkElevated
+                  : Colors.white,
               borderRadius: BorderRadius.circular(24),
               border: Border.all(
                 color: isHovered
                     ? category['color'].withValues(alpha: 0.5)
+                    : Theme.of(context).brightness == Brightness.dark
+                    ? AppColors.borderDarkMode
                     : AppColors.gray200,
                 width: 1.5,
               ),
@@ -494,7 +514,7 @@ class _ModernSkillsSectionState extends State<ModernSkillsSection>
                           style: TextStyle(
                             fontSize: isMobile ? 17 : 18,
                             fontWeight: FontWeight.w700,
-                            color: AppColors.gray900,
+                            color: Theme.of(context).colorScheme.onSurface,
                             height: 1.2,
                           ),
                           maxLines: 2,
@@ -528,7 +548,11 @@ class _ModernSkillsSectionState extends State<ModernSkillsSection>
                                       skill,
                                       style: TextStyle(
                                         fontSize: isMobile ? 13 : 14,
-                                        color: Colors.grey[600],
+                                        color:
+                                            Theme.of(context).brightness ==
+                                                Brightness.dark
+                                            ? AppColors.textDarkSecondary
+                                            : Colors.grey[600],
                                         height: 1.5,
                                         fontWeight: FontWeight.w500,
                                       ),

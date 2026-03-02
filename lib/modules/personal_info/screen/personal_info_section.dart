@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
 import '../../../core/core.dart';
 import '../controller/controller.dart';
 
@@ -290,8 +290,8 @@ class _PersonalInfoSectionState extends State<PersonalInfoSection>
                     color: AppColors.primaryOrange.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: Icon(
-                    Iconsax.user_octagon,
+                  child: FaIcon(
+                    FontAwesomeIcons.solidAddressCard,
                     color: AppColors.primaryOrange,
                     size: isMobile ? 20 : 24,
                   ),

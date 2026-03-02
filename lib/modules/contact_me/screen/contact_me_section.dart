@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
 import '../../../core/constants/app_colors.dart';
 import '../controller/contact_me_controller.dart';
 
@@ -128,19 +128,19 @@ class ContactMeSection extends StatelessWidget {
   Widget _buildContactInfo(bool isMobile, bool isTablet) {
     final contactItems = [
       {
-        'icon': Iconsax.call,
+        'icon': FontAwesomeIcons.phone,
         'title': 'Phone',
         'value': '+880 1602475999',
         'delay': 0,
       },
       {
-        'icon': Iconsax.sms,
+        'icon': FontAwesomeIcons.solidEnvelope,
         'title': 'Email',
         'value': 'contact.labibur@gmail.com',
         'delay': 100,
       },
       {
-        'icon': Iconsax.location,
+        'icon': FontAwesomeIcons.locationDot,
         'title': 'Address',
         'value': 'Nikunja 2, Khilkhet, Dhaka, Bangladesh',
         'delay': 200,
@@ -260,7 +260,7 @@ class ContactMeSection extends StatelessWidget {
           children: [
             _buildInputField(
               'Your Name',
-              Iconsax.user,
+              FontAwesomeIcons.solidUser,
               false,
               controller.nameTextController,
               (value) => controller.setName(value),
@@ -269,7 +269,7 @@ class ContactMeSection extends StatelessWidget {
             const SizedBox(height: 24),
             _buildInputField(
               'Your Email',
-              Iconsax.sms,
+              FontAwesomeIcons.solidEnvelope,
               false,
               controller.emailTextController,
               (value) => controller.setEmail(value),
@@ -278,7 +278,7 @@ class ContactMeSection extends StatelessWidget {
             const SizedBox(height: 24),
             _buildInputField(
               'Subject',
-              Iconsax.note,
+              FontAwesomeIcons.solidNoteSticky,
               false,
               controller.subjectTextController,
               (value) => controller.setSubject(value),
@@ -287,7 +287,7 @@ class ContactMeSection extends StatelessWidget {
             const SizedBox(height: 24),
             _buildInputField(
               'Your Message',
-              Iconsax.message_text,
+              FontAwesomeIcons.solidComment,
               true,
               controller.messageTextController,
               (value) => controller.setMessage(value),
@@ -362,7 +362,11 @@ class ContactMeSection extends StatelessWidget {
                 : const Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(Iconsax.send_2, size: 18, color: Colors.white),
+                      FaIcon(
+                        FontAwesomeIcons.solidPaperPlane,
+                        size: 18,
+                        color: Colors.white,
+                      ),
                       SizedBox(width: 10),
                       Text(
                         'Send Message',

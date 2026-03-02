@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "883505518638",
+    "project_id": "devlabib",
+    "storage_bucket": "devlabib.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:883505518638:android:99718867c0d6271e92a7bf",
+        "android_client_info": {
+          "package_name": "com.dev.labib"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6SAw3rTE7vBu7IwPLuhOpbf5WvluPZBI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

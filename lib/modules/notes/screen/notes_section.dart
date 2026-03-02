@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
 import '../../../core/core.dart';
 import '../controller/notes_controller.dart';
 import '../../projects/widgets/animated_skills_marquee.dart';
@@ -296,8 +296,8 @@ class _NotesSectionState extends State<NotesSection> {
                 ),
               ),
               child: Center(
-                child: Icon(
-                  Iconsax.document_text,
+                child: FaIcon(
+                  FontAwesomeIcons.fileLines,
                   size: isMobile ? 60 : 80,
                   color: AppColors.gray400,
                 ),
@@ -454,7 +454,7 @@ class _NotesSectionState extends State<NotesSection> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           _buildNavigationButton(
-            icon: Iconsax.arrow_left_2,
+            icon: FontAwesomeIcons.chevronLeft,
             onTap: controller.previousNote,
             enabled: controller.currentPage.value > 0,
           ),
@@ -462,7 +462,7 @@ class _NotesSectionState extends State<NotesSection> {
           _buildDots(),
           const SizedBox(width: 20),
           _buildNavigationButton(
-            icon: Iconsax.arrow_right_3,
+            icon: FontAwesomeIcons.chevronRight,
             onTap: controller.nextNote,
             enabled: controller.currentPage.value < maxPageIndex,
           ),

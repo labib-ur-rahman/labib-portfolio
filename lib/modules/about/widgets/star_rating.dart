@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../core/core.dart';
 
 class StarRating extends StatelessWidget {
@@ -26,7 +26,11 @@ class StarRating extends StatelessWidget {
           builder: (context, value, child) {
             return Transform.scale(
               scale: value,
-              child: Icon(Iconsax.star1, size: size, color: color),
+              child: FaIcon(
+                FontAwesomeIcons.solidStar,
+                size: size,
+                color: color,
+              ),
             );
           },
         ),

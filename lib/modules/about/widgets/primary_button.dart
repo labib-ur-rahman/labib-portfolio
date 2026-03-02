@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../core/core.dart';
 
 class PrimaryButton extends StatefulWidget {
@@ -114,8 +114,8 @@ class _PrimaryButtonState extends State<PrimaryButton>
                 ),
                 if (widget.showArrow) ...[
                   const SizedBox(width: 4),
-                  Icon(
-                    Iconsax.arrow_right_1,
+                  FaIcon(
+                    FontAwesomeIcons.arrowRight,
                     color: AppColors.textWhite,
                     size: isDesktop ? 24 : 20,
                   ),

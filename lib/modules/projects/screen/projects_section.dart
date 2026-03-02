@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../core/core.dart';
 import '../controller/controller.dart';
@@ -84,6 +83,7 @@ class _ProjectsSectionState extends State<ProjectsSection> {
   Widget build(BuildContext context) {
     final isMobile = ResponsiveUtils.isMobile(context);
     final isTablet = ResponsiveUtils.isTablet(context);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return AnimatedOpacity(
       duration: const Duration(milliseconds: 800),
@@ -94,11 +94,17 @@ class _ProjectsSectionState extends State<ProjectsSection> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFFFFF8F0), // Light peach background
-              Color(0xFFFFF3E8), // Slightly darker peach
-              AppColors.primaryOrange.withValues(alpha: 0.08),
-            ],
+            colors: isDark
+                ? [
+                    AppColors.cardDark,
+                    AppColors.surfaceDarkElevated,
+                    AppColors.surfaceDark,
+                  ]
+                : [
+                    Color(0xFFFFF8F0),
+                    Color(0xFFFFF3E8),
+                    AppColors.primaryOrange.withValues(alpha: 0.08),
+                  ],
           ),
           borderRadius: BorderRadius.circular(50),
         ),
@@ -440,7 +446,7 @@ class _ProjectsSectionState extends State<ProjectsSection> {
           children: [
             TextSpan(
               text: 'My ',
-              style: TextStyle(color: Colors.black),
+              style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
             ),
             TextSpan(
               text: 'Projects',
@@ -610,6 +616,8 @@ class _ProjectsSectionState extends State<ProjectsSection> {
                 border: Border.all(
                   color: isSelected
                       ? AppColors.primaryOrange
+                      : Theme.of(context).brightness == Brightness.dark
+                      ? AppColors.borderDarkMode
                       : AppColors.gray200,
                   width: isSelected ? 2 : 1.5,
                 ),
@@ -668,7 +676,9 @@ class _ProjectsSectionState extends State<ProjectsSection> {
             style: TextStyle(
               fontSize: isMobile ? 18 : (isTablet ? 20 : 22),
               fontWeight: FontWeight.w400,
-              color: AppColors.gray700,
+              color: Theme.of(
+                context,
+              ).colorScheme.onSurface.withValues(alpha: 0.7),
               height: 1.3,
             ),
           ),
@@ -697,7 +707,9 @@ class _ProjectsSectionState extends State<ProjectsSection> {
           style: TextStyle(
             fontSize: isMobile ? 18 : (isTablet ? 20 : 22),
             fontWeight: FontWeight.w400,
-            color: AppColors.gray700,
+            color: Theme.of(
+              context,
+            ).colorScheme.onSurface.withValues(alpha: 0.7),
             height: 1.3,
           ),
         ),
@@ -1017,8 +1029,8 @@ class _ProjectsSectionState extends State<ProjectsSection> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(
-                              Iconsax.mobile,
+                            FaIcon(
+                              FontAwesomeIcons.mobileScreen,
                               size: isMobile ? 60 : 80,
                               color: Colors.white.withValues(alpha: 0.9),
                             ),

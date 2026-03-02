@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
 import 'dart:math' as math;
 
 class AnimatedSkillsMarquee extends StatefulWidget {
@@ -9,9 +8,9 @@ class AnimatedSkillsMarquee extends StatefulWidget {
   State<AnimatedSkillsMarquee> createState() => _AnimatedSkillsMarqueeState();
 }
 
-class _AnimatedSkillsMarqueeState extends State<AnimatedSkillsMarquee> {
-  late ScrollController _scrollController;
-  Timer? _scrollTimer;
+class _AnimatedSkillsMarqueeState extends State<AnimatedSkillsMarquee>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
 
   final List<String> skills = [
     'Play Store',
@@ -36,56 +35,67 @@ class _AnimatedSkillsMarqueeState extends State<AnimatedSkillsMarquee> {
   @override
   void initState() {
     super.initState();
-    _scrollController = ScrollController();
-
-    // Start auto-scrolling after a small delay
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _startAutoScroll();
-    });
-  }
-
-  void _startAutoScroll() {
-    _scrollTimer = Timer.periodic(const Duration(milliseconds: 30), (timer) {
-      if (_scrollController.hasClients) {
-        final maxScroll = _scrollController.position.maxScrollExtent;
-        final currentScroll = _scrollController.offset;
-
-        // Smoothly scroll
-        final nextScroll = currentScroll + 1.0;
-
-        // Reset to beginning when reaching the end for infinite loop
-        if (nextScroll >= maxScroll / 2) {
-          _scrollController.jumpTo(0);
-        } else {
-          _scrollController.jumpTo(nextScroll);
-        }
-      }
-    });
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 90),
+    )..repeat();
   }
 
   @override
   void dispose() {
-    _scrollTimer?.cancel();
-    _scrollController.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Transform.rotate(
-      angle: -0.044, // About -2.5 degrees (357.5 degrees in the design)
-      child: SingleChildScrollView(
-        controller: _scrollController,
-        scrollDirection: Axis.horizontal,
-        physics: const NeverScrollableScrollPhysics(),
-        child: Row(
-          children: [
-            ...List.generate(skills.length * 2, (index) {
-              final skill = skills[index % skills.length];
-              return _buildSkillItem(skill);
-            }),
-          ],
+      angle: -0.044,
+      child: RepaintBoundary(
+        child: AnimatedBuilder(
+          animation: _controller,
+          builder: (context, child) {
+            return ClipRect(
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  return child!;
+                },
+              ),
+            );
+          },
+          child: OverflowBox(
+            maxWidth: double.infinity,
+            alignment: Alignment.centerLeft,
+            child: _MarqueeContent(controller: _controller, skills: skills),
+          ),
         ),
+      ),
+    );
+  }
+}
+
+class _MarqueeContent extends AnimatedWidget {
+  final List<String> skills;
+
+  const _MarqueeContent({
+    required AnimationController controller,
+    required this.skills,
+  }) : super(listenable: controller);
+
+  @override
+  Widget build(BuildContext context) {
+    final animation = listenable as AnimationController;
+    // We build items in a Row, translate by animation value
+    return FractionalTranslation(
+      translation: Offset(-animation.value, 0),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ...List.generate(skills.length * 3, (index) {
+            final skill = skills[index % skills.length];
+            return _buildSkillItem(skill);
+          }),
+        ],
       ),
     );
   }

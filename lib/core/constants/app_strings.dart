@@ -30,6 +30,7 @@ class AppStrings {
 
   // Buttons
   static const String resumeBtn = "View Resume";
+  static const String resumeMobileBtn = "My Resume";
   static const String myWorkBtn = "My Work";
   static const String workBtn = "Work";
 

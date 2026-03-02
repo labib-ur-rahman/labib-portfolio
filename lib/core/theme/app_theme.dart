@@ -19,13 +19,31 @@ class AppTheme {
         onSecondary: AppColors.textPrimary,
         onSurface: AppColors.textPrimary,
       ),
-      textTheme: _textTheme,
+      textTheme: _lightTextTheme,
     );
   }
 
-  static TextTheme get _textTheme {
+  static ThemeData get darkTheme {
+    return ThemeData(
+      useMaterial3: true,
+      brightness: Brightness.dark,
+      scaffoldBackgroundColor: AppColors.surfaceDark,
+      primaryColor: AppColors.primaryOrange,
+      colorScheme: const ColorScheme.dark(
+        primary: AppColors.primaryOrange,
+        secondary: AppColors.primaryOrangeLight,
+        surface: AppColors.surfaceDark,
+        onPrimary: AppColors.textWhite,
+        onSecondary: AppColors.textDarkPrimary,
+        onSurface: AppColors.textDarkPrimary,
+        surfaceContainerHighest: AppColors.cardDarkElevated,
+      ),
+      textTheme: _darkTextTheme,
+    );
+  }
+
+  static TextTheme get _lightTextTheme {
     return TextTheme(
-      // Display - Large Headlines
       displayLarge: GoogleFonts.urbanist(
         fontSize: AppDimensions.fontSizeXXL,
         fontWeight: FontWeight.w600,
@@ -39,35 +57,83 @@ class AppTheme {
         color: AppColors.textPrimary,
         letterSpacing: -0.705,
       ),
-
-      // Headlines
       headlineLarge: _lufgaTextStyle(
         fontSize: AppDimensions.fontSizeL,
         fontWeight: FontWeight.w500,
+        color: AppColors.textPrimary,
       ),
       headlineMedium: _lufgaTextStyle(
         fontSize: AppDimensions.fontSizeM,
         fontWeight: FontWeight.w700,
+        color: AppColors.textPrimary,
       ),
-
-      // Body
       bodyLarge: _lufgaTextStyle(
         fontSize: AppDimensions.fontSizeM,
         fontWeight: FontWeight.w500,
+        color: AppColors.textPrimary,
       ),
       bodyMedium: _lufgaTextStyle(
         fontSize: AppDimensions.fontSizeM,
         fontWeight: FontWeight.w400,
+        color: AppColors.textPrimary,
       ),
-
-      // Labels
       labelLarge: _lufgaTextStyle(
         fontSize: AppDimensions.fontSizeL,
         fontWeight: FontWeight.w300,
+        color: AppColors.textPrimary,
       ),
       labelMedium: _lufgaTextStyle(
         fontSize: AppDimensions.fontSizeM,
         fontWeight: FontWeight.w400,
+        color: AppColors.textPrimary,
+      ),
+    );
+  }
+
+  static TextTheme get _darkTextTheme {
+    return TextTheme(
+      displayLarge: GoogleFonts.urbanist(
+        fontSize: AppDimensions.fontSizeXXL,
+        fontWeight: FontWeight.w600,
+        color: AppColors.textDarkPrimary,
+        letterSpacing: -1.4335,
+        height: 1.0,
+      ),
+      displayMedium: GoogleFonts.urbanist(
+        fontSize: AppDimensions.fontSizeXL,
+        fontWeight: FontWeight.w700,
+        color: AppColors.textDarkPrimary,
+        letterSpacing: -0.705,
+      ),
+      headlineLarge: _lufgaTextStyle(
+        fontSize: AppDimensions.fontSizeL,
+        fontWeight: FontWeight.w500,
+        color: AppColors.textDarkPrimary,
+      ),
+      headlineMedium: _lufgaTextStyle(
+        fontSize: AppDimensions.fontSizeM,
+        fontWeight: FontWeight.w700,
+        color: AppColors.textDarkPrimary,
+      ),
+      bodyLarge: _lufgaTextStyle(
+        fontSize: AppDimensions.fontSizeM,
+        fontWeight: FontWeight.w500,
+        color: AppColors.textDarkPrimary,
+      ),
+      bodyMedium: _lufgaTextStyle(
+        fontSize: AppDimensions.fontSizeM,
+        fontWeight: FontWeight.w400,
+        color: AppColors.textDarkPrimary,
+      ),
+      labelLarge: _lufgaTextStyle(
+        fontSize: AppDimensions.fontSizeL,
+        fontWeight: FontWeight.w300,
+        color: AppColors.textDarkPrimary,
+      ),
+      labelMedium: _lufgaTextStyle(
+        fontSize: AppDimensions.fontSizeM,
+        fontWeight: FontWeight.w400,
+        color: AppColors.textDarkPrimary,
       ),
     );
   }
@@ -75,12 +141,12 @@ class AppTheme {
   static TextStyle _lufgaTextStyle({
     required double fontSize,
     required FontWeight fontWeight,
+    required Color color,
   }) {
-    // Using Urbanist as a close alternative to Lufga
     return GoogleFonts.urbanist(
       fontSize: fontSize,
       fontWeight: fontWeight,
-      color: AppColors.textPrimary,
+      color: color,
       letterSpacing: -0.3,
     );
   }

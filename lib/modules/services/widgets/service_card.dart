@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+// import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../core/core.dart';
 
 class ServiceCard extends StatefulWidget {
@@ -137,8 +138,8 @@ class _ServiceCardState extends State<ServiceCard> {
                                     return Container(
                                       color: AppColors.gray700,
                                       child: const Center(
-                                        child: Icon(
-                                          Iconsax.image,
+                                        child: FaIcon(
+                                          FontAwesomeIcons.image,
                                           size: 60,
                                           color: Colors.white54,
                                         ),
