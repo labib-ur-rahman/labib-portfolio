@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
     final themeController = Get.put(ThemeController());
 
     return GetMaterialApp(
-      title: 'Dev Labib',
+      title: 'Developer Labib',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,

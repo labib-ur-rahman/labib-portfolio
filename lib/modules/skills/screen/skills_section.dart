@@ -167,7 +167,7 @@ class SkillsSection extends StatelessWidget {
     return RichText(
       text: TextSpan(
         style: TextStyle(
-          fontFamily: 'Urbanist',
+          fontFamily: 'Montserrat',
           fontSize: isMobile ? 36 : (isTablet ? 48 : 64),
           fontWeight: FontWeight.w600,
           letterSpacing: -0.96,
@@ -193,7 +193,7 @@ class SkillsSection extends StatelessWidget {
     return Text(
       'I bring 5+ years of mobile development expertise with Flutter, creating high-performance apps with clean architecture and beautiful UI/UX design.',
       style: TextStyle(
-        fontFamily: 'Urbanist',
+        fontFamily: 'Montserrat',
         fontSize: isMobile ? 14 : 20,
         fontWeight: FontWeight.w400,
         color: AppColors.gray400,
@@ -224,7 +224,7 @@ class SkillsSection extends StatelessWidget {
                     Text(
                       stat.count,
                       style: TextStyle(
-                        fontFamily: 'Urbanist',
+                        fontFamily: 'Montserrat',
                         fontSize: isMobile ? 28 : 36,
                         fontWeight: FontWeight.w500,
                         color: const Color(0xFF1D2939),
@@ -236,7 +236,7 @@ class SkillsSection extends StatelessWidget {
                     Text(
                       stat.label,
                       style: TextStyle(
-                        fontFamily: 'Urbanist',
+                        fontFamily: 'Montserrat',
                         fontSize: isMobile ? 14 : 20,
                         fontWeight: FontWeight.w400,
                         color: const Color(0xFF667085),

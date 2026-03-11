@@ -71,7 +71,7 @@ class _NavItemState extends State<NavItem> with SingleTickerProviderStateMixin {
             child: Text(
               widget.title,
               style: TextStyle(
-                fontFamily: 'Urbanist',
+                fontFamily: 'Montserrat',
                 fontSize: AppDimensions.fontSizeM,
                 fontWeight: widget.isSelected
                     ? FontWeight.w700

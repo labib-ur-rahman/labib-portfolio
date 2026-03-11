@@ -36,21 +36,24 @@ class ExperienceSection extends StatelessWidget {
   Widget _buildTitle(BuildContext context) {
     final isMobile = ResponsiveUtils.isMobile(context);
     final isTablet = ResponsiveUtils.isTablet(context);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return RichText(
       textAlign: TextAlign.center,
       text: TextSpan(
         style: TextStyle(
-          fontFamily: 'Urbanist',
+          fontFamily: 'Montserrat',
           fontSize: isMobile ? 36 : (isTablet ? 48 : 64),
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.w600,
           letterSpacing: -0.96,
           height: 1.0,
         ),
-        children: const [
+        children: [
           TextSpan(
             text: 'My ',
-            style: TextStyle(color: AppColors.gray400),
+            style: TextStyle(
+              color: isDark ? AppColors.textDarkPrimary : AppColors.textPrimary,
+            ),
           ),
           TextSpan(
             text: 'Work Experience',
@@ -112,7 +115,7 @@ class ExperienceSection extends StatelessWidget {
                   Text(
                     experience.company,
                     style: TextStyle(
-                      fontFamily: 'Urbanist',
+                      fontFamily: 'Montserrat',
                       fontSize: isTablet ? 28 : 40,
                       fontWeight: FontWeight.w700,
                       color: Theme.of(context).colorScheme.onSurface,
@@ -123,7 +126,7 @@ class ExperienceSection extends StatelessWidget {
                   Text(
                     experience.duration,
                     style: TextStyle(
-                      fontFamily: 'Urbanist',
+                      fontFamily: 'Montserrat',
                       fontSize: isTablet ? 18 : 24,
                       fontWeight: FontWeight.w400,
                       color: const Color(0xFF98A2B3),
@@ -196,7 +199,7 @@ class ExperienceSection extends StatelessWidget {
                   Text(
                     experience.role,
                     style: TextStyle(
-                      fontFamily: 'Urbanist',
+                      fontFamily: 'Montserrat',
                       fontSize: isTablet ? 28 : 40,
                       fontWeight: FontWeight.w600,
                       color: Theme.of(context).brightness == Brightness.dark
@@ -210,7 +213,7 @@ class ExperienceSection extends StatelessWidget {
                     Text(
                       experience.description,
                       style: TextStyle(
-                        fontFamily: 'Urbanist',
+                        fontFamily: 'Montserrat',
                         fontSize: isTablet ? 16 : 20,
                         fontWeight: FontWeight.w500,
                         color: const Color(0xFF98A2B3),
@@ -299,7 +302,7 @@ class ExperienceSection extends StatelessWidget {
                 Text(
                   experience.company,
                   style: TextStyle(
-                    fontFamily: 'Urbanist',
+                    fontFamily: 'Montserrat',
                     fontSize: 20,
                     fontWeight: FontWeight.w600,
                     color: Theme.of(context).brightness == Brightness.dark
@@ -312,7 +315,7 @@ class ExperienceSection extends StatelessWidget {
                 Text(
                   experience.duration,
                   style: const TextStyle(
-                    fontFamily: 'Urbanist',
+                    fontFamily: 'Montserrat',
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
                     color: Color(0xFF98A2B3),
@@ -322,7 +325,7 @@ class ExperienceSection extends StatelessWidget {
                 Text(
                   experience.role,
                   style: const TextStyle(
-                    fontFamily: 'Urbanist',
+                    fontFamily: 'Montserrat',
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
                     color: AppColors.primaryOrange,
@@ -333,7 +336,7 @@ class ExperienceSection extends StatelessWidget {
                   Text(
                     experience.description,
                     style: const TextStyle(
-                      fontFamily: 'Urbanist',
+                      fontFamily: 'Montserrat',
                       fontSize: 14,
                       fontWeight: FontWeight.w400,
                       color: Color(0xFF98A2B3),

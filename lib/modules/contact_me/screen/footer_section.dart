@@ -110,7 +110,7 @@ class FooterSection extends StatelessWidget {
           ? Column(
               children: [
                 Text(
-                  '© 2025 - 2026 Labib UR Rahman. All rights reserved.',
+                  '© 2025 - 2026 Labib UR Rahman. Crafted with ❤️ by Flutter.',
                   style: TextStyle(fontSize: 14, color: AppColors.gray400),
                   textAlign: TextAlign.center,
                 ),
@@ -122,7 +122,7 @@ class FooterSection extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '© 2025 - 2026 Labib UR Rahman. All rights reserved.',
+                  '© 2025 - 2026 Labib UR Rahman. Crafted with ❤️ by Flutter.',
                   style: TextStyle(fontSize: 14, color: AppColors.gray400),
                 ),
                 _buildSocialLinks(isMobile),

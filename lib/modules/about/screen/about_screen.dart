@@ -263,7 +263,7 @@ class AboutScreen extends StatelessWidget {
               child: Text(
                 'LR',
                 style: TextStyle(
-                  fontFamily: 'Urbanist',
+                  fontFamily: 'Montserrat',
                   fontSize: isMobile ? 14 : 18,
                   fontWeight: FontWeight.w800,
                   color: AppColors.textWhite,
@@ -276,7 +276,7 @@ class AboutScreen extends StatelessWidget {
           Text(
             'LABIB',
             style: TextStyle(
-              fontFamily: 'Urbanist',
+              fontFamily: 'Montserrat',
               fontSize: isMobile ? 16 : 20,
               fontWeight: FontWeight.w700,
               color: AppColors.textWhite,
@@ -420,7 +420,7 @@ class AboutScreen extends StatelessWidget {
       textAlign: TextAlign.center,
       text: TextSpan(
         style: TextStyle(
-          fontFamily: 'Urbanist',
+          fontFamily: 'Montserrat',
           fontSize: fontSize,
           fontWeight: FontWeight.w600,
           color: AppColors.textPrimary,

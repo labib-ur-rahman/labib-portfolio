@@ -103,7 +103,7 @@ class _PrimaryButtonState extends State<PrimaryButton>
                 Text(
                   widget.text,
                   style: TextStyle(
-                    fontFamily: 'Urbanist',
+                    fontFamily: 'Montserrat',
                     fontSize: fontSize,
                     fontWeight: FontWeight.w500,
                     color: widget.isOutlined
@@ -168,7 +168,7 @@ class _SecondaryButtonState extends State<SecondaryButton> {
           child: Text(
             widget.text,
             style: TextStyle(
-              fontFamily: 'Urbanist',
+              fontFamily: 'Montserrat',
               fontSize: fontSize,
               fontWeight: FontWeight.w300,
               color: AppColors.textWhite,

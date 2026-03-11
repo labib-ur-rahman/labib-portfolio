@@ -24,7 +24,7 @@ class HelloBadge extends StatelessWidget {
           child: Text(
             text,
             style: const TextStyle(
-              fontFamily: 'Urbanist',
+              fontFamily: 'Montserrat',
               fontSize: AppDimensions.fontSizeM,
               fontWeight: FontWeight.w500,
               color: AppColors.textPrimary,

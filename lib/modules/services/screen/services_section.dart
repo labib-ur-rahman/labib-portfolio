@@ -197,7 +197,7 @@ class _ServicesSectionState extends State<ServicesSection> {
     return RichText(
       text: TextSpan(
         style: TextStyle(
-          fontFamily: 'Urbanist',
+          fontFamily: 'Montserrat',
           fontSize: isMobile ? 32 : (isTablet ? 40 : 48), // Figma: 48px desktop
           fontWeight: FontWeight.w600,
           letterSpacing: -0.72,
@@ -223,7 +223,7 @@ class _ServicesSectionState extends State<ServicesSection> {
     return Text(
       'I specialize in building cross-platform mobile applications with Flutter and native Android apps with Kotlin.',
       style: TextStyle(
-        fontFamily: 'Urbanist',
+        fontFamily: 'Montserrat',
         fontSize: isMobile ? 14 : 20, // Figma: 20px desktop
         fontWeight: FontWeight.w500,
         color: Colors.white,

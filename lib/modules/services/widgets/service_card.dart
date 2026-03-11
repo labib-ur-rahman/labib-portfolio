@@ -64,7 +64,7 @@ class _ServiceCardState extends State<ServiceCard> {
                     child: Text(
                       widget.title,
                       style: TextStyle(
-                        fontFamily: 'Urbanist',
+                        fontFamily: 'Montserrat',
                         fontSize: isMobile ? 24 : 32, // Figma: 32px desktop
                         fontWeight: FontWeight.w500,
                         color: Colors.white,

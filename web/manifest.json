@@ -1,11 +1,11 @@
 {
-     "name": "Developer Labib",
-     "short_name": "Developer Labib",
+     "name": "Labib | Mobile Software Engineer",
+     "short_name": "Labib",
      "start_url": ".",
      "display": "standalone",
-     "background_color": "#0175C2",
-     "theme_color": "#0175C2",
-     "description": "Md Labibur Rahman | Mobile Software Engineer.",
+     "background_color": "#0D0D0D",
+     "theme_color": "#FF6B35",
+     "description": "Flutter Developer specialising in cross-platform mobile & web apps.",
      "orientation": "portrait-primary",
      "prefer_related_applications": false,
      "icons": [

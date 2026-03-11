@@ -1,3 +1,4 @@
+import 'package:DeveloperLabib/core/utils/cursor_follower.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -56,6 +57,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _preloadCriticalImages() async {
+    // Dismiss the HTML splash immediately — the Flutter in-app loader takes over.
+    hideWebLoader();
+
     try {
       await Future.wait([
         precacheImage(const NetworkImage(_logoImageUrl), context),
@@ -68,7 +72,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
     if (!mounted) return;
     setState(() => _areCriticalImagesLoaded = true);
-    hideWebLoader();
   }
 
   @override
@@ -236,7 +239,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         if (!isMobile)
-                          _CursorFollower(
+                          CursorFollower(
                             position: _cursorPosition,
                             size: _cursorFollowerSize,
                             isVisible: _showCursorFollower,
@@ -440,7 +443,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: AnimatedDefaultTextStyle(
               duration: const Duration(milliseconds: 300),
               style: TextStyle(
-                fontFamily: 'Urbanist',
+                fontFamily: 'Montserrat',
                 fontSize: 16,
                 fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
                 color: isSelected
@@ -575,7 +578,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   const Text(
                     'Navigation Menu',
                     style: TextStyle(
-                      fontFamily: 'Urbanist',
+                      fontFamily: 'Montserrat',
                       fontSize: 24,
                       fontWeight: FontWeight.w700,
                       color: AppColors.textWhite,
@@ -612,7 +615,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     title: Text(
                       controller.navItems[index],
                       style: TextStyle(
-                        fontFamily: 'Urbanist',
+                        fontFamily: 'Montserrat',
                         color: controller.selectedNavIndex.value == index
                             ? AppColors.primaryOrange
                             : AppColors.textWhite,
@@ -837,7 +840,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           child: Text(
             'Hello!',
-            style: GoogleFonts.urbanist(
+            style: GoogleFonts.montserrat(
               fontSize: 20, // Figma: 20px
               fontWeight: FontWeight.w500,
               color: isDark ? AppColors.textDarkPrimary : AppColors.textPrimary,
@@ -874,7 +877,7 @@ class _HomeScreenState extends State<HomeScreen> {
       textAlign: TextAlign.center,
       text: TextSpan(
         style: TextStyle(
-          fontFamily: 'Urbanist',
+          fontFamily: 'Montserrat',
           fontSize: fontSize,
           fontWeight: FontWeight.w600,
           color: isDark ? AppColors.textDarkPrimary : AppColors.textPrimary,
@@ -921,7 +924,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Text(
           AppStrings.testimonialText,
           style: TextStyle(
-            fontFamily: 'Urbanist',
+            fontFamily: 'Montserrat',
             fontSize: isDesktop ? 20 : 16,
             fontWeight: FontWeight.w500,
             color: _controller.themeController.isDark
@@ -961,7 +964,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Text(
           AppStrings.yearsExperience,
           style: TextStyle(
-            fontFamily: 'Urbanist',
+            fontFamily: 'Montserrat',
             fontSize: isDesktop ? 47 : 36,
             fontWeight: FontWeight.w700,
             color: _controller.themeController.isDark
@@ -975,7 +978,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Text(
           AppStrings.experienceLabel,
           style: TextStyle(
-            fontFamily: 'Urbanist',
+            fontFamily: 'Montserrat',
             fontSize: isDesktop ? 20 : 16,
             fontWeight: FontWeight.w400,
             color: _controller.themeController.isDark
@@ -1032,7 +1035,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ? profileHeight + 80
           : (isTablet)
           ? profileHeight - 150
-          : profileHeight - 320, // Old 180
+          : profileHeight - 400, // Old 180
       child: Stack(
         alignment: Alignment.bottomCenter,
         clipBehavior: Clip.none,
@@ -1144,7 +1147,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Text(
                 isMobile ? AppStrings.resumeMobileBtn : AppStrings.resumeBtn,
                 style: TextStyle(
-                  fontFamily: 'Urbanist',
+                  fontFamily: 'Montserrat',
                   fontSize: isMobile ? 16 : 22, // Figma: 25.692px
                   fontWeight: FontWeight.w500,
                   color: AppColors.textWhite,
@@ -1187,71 +1190,11 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Text(
             isMobile ? AppStrings.workBtn : AppStrings.myWorkBtn,
             style: TextStyle(
-              fontFamily: 'Urbanist',
+              fontFamily: 'Montserrat',
               fontSize: isMobile ? 18 : 22, // Figma: 25.692px
               fontWeight: FontWeight.w300,
               color: AppColors.textWhite,
               letterSpacing: -0.3854,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _CursorFollower extends StatelessWidget {
-  const _CursorFollower({
-    required this.position,
-    required this.size,
-    required this.isVisible,
-  });
-
-  final Offset position;
-  final double size;
-  final bool isVisible;
-
-  @override
-  Widget build(BuildContext context) {
-    final left = position.dx - size / 2;
-    final top = position.dy - size / 2;
-
-    return AnimatedPositioned(
-      duration: const Duration(milliseconds: 120),
-      curve: Curves.easeOutCubic,
-      left: left,
-      top: top,
-      child: IgnorePointer(
-        child: AnimatedOpacity(
-          duration: const Duration(milliseconds: 150),
-          opacity: isVisible ? 1 : 0,
-          child: Container(
-            width: size,
-            height: size,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: AppColors.primaryOrange.withValues(alpha: 0.12),
-              border: Border.all(
-                color: AppColors.primaryOrange.withValues(alpha: 0.55),
-                width: 1.2,
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.primaryOrange.withValues(alpha: 0.25),
-                  blurRadius: 22,
-                  spreadRadius: 2,
-                ),
-              ],
-            ),
-            child: Center(
-              child: Container(
-                width: size * 0.3,
-                height: size * 0.3,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: AppColors.primaryOrange.withValues(alpha: 0.85),
-                ),
-              ),
             ),
           ),
         ),

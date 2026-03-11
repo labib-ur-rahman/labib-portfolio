@@ -24,7 +24,7 @@ class ExperienceCard extends StatelessWidget {
         Text(
           years,
           style: TextStyle(
-            fontFamily: 'Urbanist',
+            fontFamily: 'Montserrat',
             fontSize: isMobile ? 28 : (isDesktop ? 47 : 36),
             fontWeight: FontWeight.w700,
             color: AppColors.textPrimary,
@@ -36,7 +36,7 @@ class ExperienceCard extends StatelessWidget {
         Text(
           label,
           style: TextStyle(
-            fontFamily: 'Urbanist',
+            fontFamily: 'Montserrat',
             fontSize: isMobile ? 14 : (isDesktop ? 20 : 16),
             fontWeight: FontWeight.w400,
             color: AppColors.textPrimary,

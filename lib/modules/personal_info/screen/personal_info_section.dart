@@ -186,7 +186,7 @@ class _PersonalInfoSectionState extends State<PersonalInfoSection>
           RichText(
             text: TextSpan(
               style: TextStyle(
-                fontFamily: 'Urbanist',
+                fontFamily: 'Montserrat',
                 fontSize: isMobile ? 36 : (isTablet ? 44 : 52),
                 fontWeight: FontWeight.w700,
                 letterSpacing: -0.8,
@@ -300,7 +300,7 @@ class _PersonalInfoSectionState extends State<PersonalInfoSection>
                 Text(
                   'About Me',
                   style: TextStyle(
-                    fontFamily: 'Urbanist',
+                    fontFamily: 'Montserrat',
                     fontSize: isMobile ? 22 : 28,
                     fontWeight: FontWeight.w600,
                     color: Colors.white,
@@ -313,7 +313,7 @@ class _PersonalInfoSectionState extends State<PersonalInfoSection>
             Text(
               controller.aboutMe,
               style: TextStyle(
-                fontFamily: 'Urbanist',
+                fontFamily: 'Montserrat',
                 fontSize: isMobile ? 15 : 17,
                 fontWeight: FontWeight.w400,
                 color: Colors.white.withValues(alpha: 0.85),

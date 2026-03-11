@@ -51,11 +51,56 @@ class AppAssets {
 
   /// -- Project 1 : Deep Quran App --
   static const String deepQuranSS01 = 'assets/screenshorts/DeepQuranSS-01.png';
-  static const String deepQuranSS02 = 'assets/screenshorts/DeepQuranSS-02.png';
+  static const String deepQuranSS02 = 'assets/screenshorts/DeepQuranSS-02-1.jpeg';
   static const String deepQuranSS03 = 'assets/screenshorts/DeepQuranSS-03.png';
   static const String deepQuranSS04 = 'assets/screenshorts/DeepQuranSS-04.png';
   static const String deepQuranSS05 = 'assets/screenshorts/DeepQuranSS-05.png';
   static const String deepQuranSS06 = 'assets/screenshorts/DeepQuranSS-06.png';
   static const String deepQuranSS07 = 'assets/screenshorts/DeepQuranSS-07.png';
+
+  /// -- Project 2 : Go Get a Genie --
+  static const String gggSS01 = 'assets/screenshorts/GGG-SS-01.png';
+  static const String gggSS02 = 'assets/screenshorts/GGG-SS-02.png';
+  static const String gggSS03 = 'assets/screenshorts/GGG-SS-03.png';
+  static const String gggSS04 = 'assets/screenshorts/GGG-SS-04.png';
+  static const String gggSS05 = 'assets/screenshorts/GGG-SS-05.png';
+  static const String gggSS06 = 'assets/screenshorts/GGG-SS-06.png';
+  static const String gggSS07 = 'assets/screenshorts/GGG-SS-07.png';
+
+  /// -- Project 3 : JED Rapid Intel --
+  static const String jedSS01 = 'assets/screenshorts/JED-SS-01.jpeg';
+  static const String jedSS02 = 'assets/screenshorts/JED-SS-02.jpeg';
+  static const String jedSS03 = 'assets/screenshorts/JED-SS-03.jpeg';
+  static const String jedSS04 = 'assets/screenshorts/JED-SS-04.jpeg';
+  static const String jedSS05 = 'assets/screenshorts/JED-SS-05.jpeg';
+
+  /// -- Project 4 : Smart Engineer --
+  static const String smartEngineerSS01 = 'assets/screenshorts/Smart-Engr-SS-01.png';
+  static const String smartEngineerSS02 = 'assets/screenshorts/Smart-Engr-SS-02.png';
+  static const String smartEngineerSS03 = 'assets/screenshorts/Smart-Engr-SS-03.png';
+  static const String smartEngineerSS04 = 'assets/screenshorts/Smart-Engr-SS-04.png';
+  static const String smartEngineerSS05 = 'assets/screenshorts/Smart-Engr-SS-05.png';
+  static const String smartEngineerSS06 = 'assets/screenshorts/Smart-Engr-SS-06.png';
+  static const String smartEngineerSS07 = 'assets/screenshorts/Smart-Engr-SS-07.png';
+  static const String smartEngineerSS08 = 'assets/screenshorts/Smart-Engr-SS-08.png';
+
+  /// -- Project 5 : SHIRAH --
+  static const String shirahSS01 = 'assets/screenshorts/SHIRAH-SS-01.png';
+  static const String shirahSS02 = 'assets/screenshorts/SHIRAH-SS-02.png';
+  static const String shirahSS03 = 'assets/screenshorts/SHIRAH-SS-03.png';
+  static const String shirahSS04 = 'assets/screenshorts/SHIRAH-SS-04.png';
+  static const String shirahSS05 = 'assets/screenshorts/SHIRAH-SS-05.png';
+  static const String shirahSS06 = 'assets/screenshorts/SHIRAH-SS-06.png';
+
+  /// -- Project 6 : Safenex Inspire --
+  static const String safenexInsSS01 = 'assets/screenshorts/Safenex-Ins-SS-01.png';
+  static const String safenexInsSS02 = 'assets/screenshorts/Safenex-Ins-SS-02.png';
+  static const String safenexInsSS03 = 'assets/screenshorts/Safenex-Ins-SS-03.png';
+  static const String safenexInsSS04 = 'assets/screenshorts/Safenex-Ins-SS-04.png';
+  static const String safenexInsSS05 = 'assets/screenshorts/Safenex-Ins-SS-05.png';
+  static const String safenexInsSS06 = 'assets/screenshorts/Safenex-Ins-SS-06.png';
+  static const String safenexInsSS07 = 'assets/screenshorts/Safenex-Ins-SS-07.png';
+  static const String safenexInsSS08 = 'assets/screenshorts/Safenex-Ins-SS-08.png';
+
 
 }

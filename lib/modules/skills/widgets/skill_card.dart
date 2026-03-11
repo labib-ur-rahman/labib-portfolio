@@ -115,7 +115,7 @@ class _SkillCardState extends State<SkillCard>
                           child: Text(
                             widget.skillName,
                             style: TextStyle(
-                              fontFamily: 'Urbanist',
+                              fontFamily: 'Montserrat',
                               fontSize: isMobile ? 16 : 18,
                               fontWeight: FontWeight.w600,
                               color: AppColors.gray900,
@@ -143,7 +143,7 @@ class _SkillCardState extends State<SkillCard>
                           child: Text(
                             widget.category,
                             style: TextStyle(
-                              fontFamily: 'Urbanist',
+                              fontFamily: 'Montserrat',
                               fontSize: 9,
                               fontWeight: FontWeight.w500,
                               color: AppColors.primaryOrange,
@@ -167,7 +167,7 @@ class _SkillCardState extends State<SkillCard>
                           child: Text(
                             widget.category,
                             style: TextStyle(
-                              fontFamily: 'Urbanist',
+                              fontFamily: 'Montserrat',
                               fontSize: 10,
                               fontWeight: FontWeight.w500,
                               color: AppColors.primaryOrange,
@@ -232,7 +232,7 @@ class _SkillCardState extends State<SkillCard>
                   return Text(
                     '$percentage%',
                     style: TextStyle(
-                      fontFamily: 'Urbanist',
+                      fontFamily: 'Montserrat',
                       fontSize: isMobile ? 14 : 16,
                       fontWeight: FontWeight.w500,
                       color: AppColors.gray400,

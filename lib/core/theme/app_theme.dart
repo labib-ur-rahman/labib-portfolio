@@ -44,14 +44,14 @@ class AppTheme {
 
   static TextTheme get _lightTextTheme {
     return TextTheme(
-      displayLarge: GoogleFonts.urbanist(
+      displayLarge: GoogleFonts.montserrat(
         fontSize: AppDimensions.fontSizeXXL,
         fontWeight: FontWeight.w600,
         color: AppColors.textPrimary,
         letterSpacing: -1.4335,
         height: 1.0,
       ),
-      displayMedium: GoogleFonts.urbanist(
+      displayMedium: GoogleFonts.montserrat(
         fontSize: AppDimensions.fontSizeXL,
         fontWeight: FontWeight.w700,
         color: AppColors.textPrimary,
@@ -92,14 +92,14 @@ class AppTheme {
 
   static TextTheme get _darkTextTheme {
     return TextTheme(
-      displayLarge: GoogleFonts.urbanist(
+      displayLarge: GoogleFonts.montserrat(
         fontSize: AppDimensions.fontSizeXXL,
         fontWeight: FontWeight.w600,
         color: AppColors.textDarkPrimary,
         letterSpacing: -1.4335,
         height: 1.0,
       ),
-      displayMedium: GoogleFonts.urbanist(
+      displayMedium: GoogleFonts.montserrat(
         fontSize: AppDimensions.fontSizeXL,
         fontWeight: FontWeight.w700,
         color: AppColors.textDarkPrimary,
@@ -143,7 +143,7 @@ class AppTheme {
     required FontWeight fontWeight,
     required Color color,
   }) {
-    return GoogleFonts.urbanist(
+    return GoogleFonts.montserrat(
       fontSize: fontSize,
       fontWeight: fontWeight,
       color: color,

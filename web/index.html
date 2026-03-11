@@ -18,26 +18,75 @@
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="Md Labibur Rahman | Mobile Software Engineert.">
+  <meta name="description" content="Labib UR Rahman — Flutter Developer specialising in cross-platform mobile & web apps. Building clean, performant experiences with Flutter, Dart, and GetX.">
+  <meta name="keywords" content="Flutter Developer, Dart, Mobile Developer, Cross-Platform, Portfolio, Labib, Jr Developer">
+  <meta name="author" content="Labib UR Rahman">
 
   <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="portfolio">
+  <meta name="apple-mobile-web-app-title" content="Labib | Mobile Software Engineer">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
 
-  <title>Labib UR Rahman - Portfolio</title>
+  <!-- Open Graph (Facebook, WhatsApp, LinkedIn, Telegram) -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://devlabib.web.app/">
+  <meta property="og:title" content="Labib | Mobile Software Engineer">
+  <meta property="og:description" content="Flutter Developer specialising in cross-platform mobile & web apps. Building clean, performant experiences with Flutter, Dart, and GetX.">
+  <meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/devlabib.firebasestorage.app/o/L_logo.png?alt=media&token=9ef17a46-8c67-45b6-a04a-311edc913b4e">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Labib UR Rahman Portfolio">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://devlabib.web.app/">
+  <meta name="twitter:title" content="Labib | Mobile Software Engineer">
+  <meta name="twitter:description" content="Flutter Developer specialising in cross-platform mobile & web apps. Building clean, performant experiences with Flutter, Dart, and GetX.">
+  <meta name="twitter:image" content="https://firebasestorage.googleapis.com/v0/b/devlabib.firebasestorage.app/o/L_logo.png?alt=media&token=9ef17a46-8c67-45b6-a04a-311edc913b4e">
+
+  <title>Labib | Mobile Software Engineer</title>
   <link rel="manifest" href="manifest.json">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=K2D:wght@400;600&display=swap" rel="stylesheet">
 
   <style>
+    * { box-sizing: border-box; }
+
     body {
       margin: 0;
       padding: 0;
       background-color: #0D0D0D;
       overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    /* ── ambient glow blobs ── */
+    #loading::before,
+    #loading::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+    }
+    #loading::before {
+      width: 340px;
+      height: 340px;
+      background: radial-gradient(circle, rgba(255,107,53,0.18) 0%, transparent 70%);
+      top: calc(50% - 260px);
+      left: calc(50% - 170px);
+    }
+    #loading::after {
+      width: 240px;
+      height: 240px;
+      background: radial-gradient(circle, rgba(255,107,53,0.10) 0%, transparent 70%);
+      bottom: calc(50% - 220px);
+      right: calc(50% - 120px);
     }
 
     #loading {
@@ -48,8 +97,9 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      gap: 0;
       background-color: #0D0D0D;
-      transition: opacity 0.5s ease-out;
+      transition: opacity 0.6s ease-out;
     }
 
     #loading.fade-out {
@@ -57,38 +107,218 @@
       pointer-events: none;
     }
 
-    #loading img {
+    /* ── logo ── */
+    .loader-logo-wrap {
+      margin-bottom: 36px;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .loader-logo-wrap img {
       width: 80px;
       height: 80px;
       object-fit: contain;
-      margin-bottom: 32px;
-      animation: pulse 2s ease-in-out infinite;
+      display: block;
+      filter: drop-shadow(0 0 18px rgba(255,107,53,0.45));
     }
 
-    .spinner {
-      width: 40px;
-      height: 40px;
-      border: 3px solid rgba(255, 255, 255, 0.1);
-      border-top-color: #FF6B35;
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
+    /* ── progress row: bar + percentage ── */
+    .loader-progress-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 28px;
     }
 
-    @keyframes spin {
-      to { transform: rotate(360deg); }
+    .loader-bar-track {
+      width: 160px;
+      height: 3px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 99px;
+      overflow: hidden;
     }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.7; transform: scale(0.95); }
+    .loader-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #FF6B35, #FF9A5C);
+      border-radius: 99px;
+      transition: width 0.25s ease-out;
+    }
+
+    .loader-pct {
+      font-size: 11px;
+      font-weight: 600;
+      color: #FF8C57;
+      letter-spacing: 0.06em;
+      min-width: 34px;
+      text-align: right;
+      opacity: 0;
+      animation: fadeUp 0.6s ease-out 0.15s forwards;
+    }
+
+    /* ── text block ── */
+    .loader-name {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: #FFFFFF;
+      margin-bottom: 10px;
+      font-family: 'K2D', sans-serif;
+      opacity: 0;
+      animation: fadeUp 0.6s ease-out 0.2s forwards;
+    }
+
+    .loader-tagline {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      animation: fadeUp 0.6s ease-out 0.4s forwards;
+    }
+
+    .loader-tagline span.label {
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.38);
+      font-family: 'K2D', sans-serif;
+    }
+
+    .loader-tagline span.badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      border-radius: 99px;
+      background: rgba(255,107,53,0.12);
+      border: 1px solid rgba(255,107,53,0.28);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: #FF8C57;
+      font-family: 'K2D', sans-serif;
+    }
+
+    /* flutter "F" icon inside badge */
+    .flutter-icon {
+      display: inline-block;
+      width: 11px;
+      height: 11px;
+      position: relative;
+    }
+    .flutter-icon svg {
+      width: 11px;
+      height: 11px;
+    }
+
+    /* ── animations ── */
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-6px); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
   <div id="loading">
-    <img src="https://firebasestorage.googleapis.com/v0/b/devlabib.firebasestorage.app/o/L_logo.png?alt=media&token=9ef17a46-8c67-45b6-a04a-311edc913b4e" alt="Logo">
-    <div class="spinner"></div>
+
+    <!-- Logo -->
+    <div class="loader-logo-wrap">
+      <img
+        src="https://firebasestorage.googleapis.com/v0/b/devlabib.firebasestorage.app/o/L_logo.png?alt=media&token=9ef17a46-8c67-45b6-a04a-311edc913b4e"
+        alt="Labib Logo"
+      >
+    </div>
+
+    <!-- Progress bar + percentage -->
+    <div class="loader-progress-row">
+      <div class="loader-bar-track">
+        <div class="loader-bar-fill" id="loader-bar"></div>
+      </div>
+      <span class="loader-pct" id="loader-pct">0%</span>
+    </div>
+
+    <!-- Name -->
+    <p class="loader-name">Labib UR Rahman</p>
+
+    <!-- "Crafted with Flutter" badge -->
+    <div class="loader-tagline">
+      <span class="label">Crafted with ❤️ by</span>
+      <span class="badge">
+        <img src="/assets/vectors/icon_flutter.svg" alt="Flutter" class="flutter-icon" id="flutter-icon">
+        Flutter
+      </span>
+    </div>
+
   </div>
+
+  <script>
+    // Fallback SVG loader for the Flutter icon
+    (function () {
+      var icon = document.getElementById('flutter-icon');
+      if (icon) {
+        icon.onerror = function () {
+          // If SVG fails to load, try alternative path
+          if (!icon.src.includes('?retry')) {
+            icon.src = 'assets/vectors/icon_flutter.svg?retry=1';
+          } else {
+            // Last resort: inline SVG
+            var parent = icon.parentElement;
+            icon.style.display = 'none';
+            var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            svg.setAttribute('class', 'flutter-icon');
+            svg.setAttribute('viewBox', '0 0 48 48');
+            svg.innerHTML = '<polygon points="14,0 48,0 26,22 12,22" fill="#54C5F8"/><polygon points="12,22 26,22 14,34 0,34" fill="#29B6F6"/><polygon points="14,34 28,34 20,42 6,42" fill="#01579B"/><polygon points="20,42 34,28 28,34" fill="#29B6F6"/>';
+            parent.insertBefore(svg, icon);
+          }
+        };
+      }
+    })();
+  </script>
+
+  <script>
+    (function () {
+      var bar = document.getElementById('loader-bar');
+      var pct = document.getElementById('loader-pct');
+      var start = Date.now();
+      var duration = 2600;
+      var stopped = false;
+
+      function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+
+      function tick() {
+        if (stopped) return;
+        var elapsed = Date.now() - start;
+        var t = Math.min(elapsed / duration, 1);
+        var value = Math.round(easeOut(t) * 90);
+        bar.style.width = value + '%';
+        pct.textContent = value + '%';
+        if (t < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+
+      // When Flutter calls hideWebLoader() it adds 'fade-out' — snap to 100%.
+      var loading = document.getElementById('loading');
+      if (loading) {
+        new MutationObserver(function (mutations) {
+          mutations.forEach(function (m) {
+            if (m.target.classList.contains('fade-out')) {
+              stopped = true;
+              bar.style.transition = 'width 0.3s ease-out';
+              bar.style.width = '100%';
+              pct.textContent = '100%';
+            }
+          });
+        }).observe(loading, { attributes: true, attributeFilter: ['class'] });
+      }
+    })();
+  </script>
+
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>

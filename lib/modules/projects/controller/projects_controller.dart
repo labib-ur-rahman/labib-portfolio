@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:DeveloperLabib/core/constants/app_assets.dart';
 import 'package:get/get.dart';
 
 class ProjectModel {
@@ -76,102 +77,130 @@ class ProjectsController extends GetxController {
   }
 
   final List<ProjectModel> projects = [
+    /// -- Deep Quran App --
     ProjectModel(
-      title: '*Deep Quran*: All-in-one platform for Quran reading',
+      title: '*Deep Quran*: Digital Quran Recitation & Study Platform',
       description:
-          'Comprehensive Islamic app featuring Quran reading, translations, audio recitations, and daily prayers',
-      technologies: ['Flutter', 'Firebase', 'Dart', 'SQLite'],
-      image: 'assets/images/project1.png',
+          'Islamic learning platform featuring audio recitation, translations, and optimized reading experience with focus on performance and accessibility.',
+      technologies: ['Flutter', 'Firebase', 'Dart', 'SQLite', 'RestAPI'],
+      image: AppAssets.deepQuranSS01,
       screenshots: [
-        'assets/screenshorts/DeepQuranSS-01.png',
-        'assets/screenshorts/DeepQuranSS-02.png',
-        'assets/screenshorts/DeepQuranSS-03.png',
-        'assets/screenshorts/DeepQuranSS-04.png',
-        'assets/screenshorts/DeepQuranSS-05.png',
-        'assets/screenshorts/DeepQuranSS-06.png',
-        'assets/screenshorts/DeepQuranSS-07.png',
+        AppAssets.deepQuranSS01,
+        AppAssets.deepQuranSS02,
+        AppAssets.deepQuranSS03,
+        AppAssets.deepQuranSS04,
+        AppAssets.deepQuranSS05,
+        AppAssets.deepQuranSS06,
+        AppAssets.deepQuranSS07,
       ],
-      link: 'https://example.com/deep-quran',
+      link: 'https://play.google.com/store/apps/details?id=com.deepquran.app',
       linkLabel: 'Play Store',
       isPublished: true,
     ),
+
+    /// -- Go Get a Genie --
     ProjectModel(
-      title: '*FoodHub*: Restaurant Delivery Platform',
+      title: '*Go Get a Genie*: AI-Powered Project & Task Management App',
       description:
-          'On-demand food delivery app connecting restaurants with hungry customers',
+          'An AI-powered project and task management application built with Flutter. Boost your productivity with intelligent task planning, AI-assisted project creation, and smart chatbot assistance.',
       technologies: ['Flutter', 'Firebase', 'Dart', 'RestAPI'],
-      image: 'assets/images/project1.png',
+      image: AppAssets.gggSS01,
       screenshots: [
-        'assets/screenshorts/DeepQuranSS-01.png',
-        'assets/screenshorts/DeepQuranSS-02.png',
-        'assets/screenshorts/DeepQuranSS-03.png',
-        'assets/screenshorts/DeepQuranSS-04.png',
-        'assets/screenshorts/DeepQuranSS-05.png',
+        AppAssets.gggSS01,
+        AppAssets.gggSS02,
+        AppAssets.gggSS03,
+        AppAssets.gggSS04,
+        AppAssets.gggSS05,
+        AppAssets.gggSS06,
+        AppAssets.gggSS07,
       ],
-      link: 'https://example.com/foodhub',
-      linkLabel: 'GitHub',
+      link: 'https://play.google.com/store/apps/details?id=com.gogetagenie.app',
+      linkLabel: 'Play Store',
+      isPublished: true,
     ),
+
+    /// -- SHIRAH --
     ProjectModel(
-      title: '*HealthTrack*: Medical Record Management',
+      title:
+          '*SHIRAH*: Business & Community Super App for Learning, Earning & Networking',
       description:
-          'Digital health records platform for hospitals and clinics with secure data management',
-      technologies: ['Flutter', 'SQL', 'Dart', 'PHP'],
-      image: 'assets/images/project1.png',
+          'SHIRAH is a Business & Community Super App for Bangladesh where users can: Learn business skills, Use digital services (recharge, telecom offers), Sell products without inventory, Complete small tasks (micro jobs), Earn money through real work, Build a trusted verified network',
+      technologies: ['Flutter', 'Firebase', 'Dart', 'Google Cloud', 'RestAPI'],
+      image: AppAssets.shirahSS01,
       screenshots: [
-        'assets/screenshorts/DeepQuranSS-02.png',
-        'assets/screenshorts/DeepQuranSS-03.png',
-        'assets/screenshorts/DeepQuranSS-04.png',
-        'assets/screenshorts/DeepQuranSS-05.png',
+        AppAssets.shirahSS01,
+        AppAssets.shirahSS02,
+        AppAssets.shirahSS03,
+        AppAssets.shirahSS04,
+        AppAssets.shirahSS05,
+        AppAssets.shirahSS06,
       ],
-      link: 'https://example.com/healthtrack',
+      link: 'https://github.com/labib-ur-rahman/#SHIRAH',
       linkLabel: 'GitHub',
     ),
+
+    /// -- Safenex Inspire --
     ProjectModel(
-      title: '*ShopEase*: E-commerce Mobile App',
+      title: '*Safenex Inspire*: Digital Business & Earning Platform',
       description:
-          'Full-featured shopping app with payment integration and inventory management',
-      technologies: ['Flutter', 'Kotlin', 'Dart', 'SQL'],
-      image: 'assets/images/project1.png',
+          'Safenex Inspire is a digital business app for earning via product reselling, offers, and micro-jobs, with secure login, offline access, and an admin panel for managing users and payouts.',
+      technologies: ['Kotlin', 'XML', 'Firebase', 'RestAPI'],
+      image: AppAssets.safenexInsSS01,
       screenshots: [
-        'assets/screenshorts/DeepQuranSS-03.png',
-        'assets/screenshorts/DeepQuranSS-04.png',
-        'assets/screenshorts/DeepQuranSS-05.png',
-        'assets/screenshorts/DeepQuranSS-06.png',
+        AppAssets.safenexInsSS01,
+        AppAssets.safenexInsSS02,
+        AppAssets.safenexInsSS03,
+        AppAssets.safenexInsSS04,
+        AppAssets.safenexInsSS05,
+        AppAssets.safenexInsSS06,
+        AppAssets.safenexInsSS07,
+        AppAssets.safenexInsSS08,
       ],
-      link: 'https://example.com/shopease',
+      link: 'https://github.com/labib-ur-rahman/#Safenex-Inspire',
       linkLabel: 'GitHub',
     ),
+  
+    /// -- JED Rapid Intel --
     ProjectModel(
-      title: '*TravelMate*: Trip Planning & Booking',
+      title:
+          '*JED Rapid Intel*: Logistics Dispatch & Live Driver Tracking System',
       description:
-          'Comprehensive travel companion with booking, itinerary planning, and local recommendations',
-      technologies: ['Flutter', 'Firebase', 'Dart', 'RestAPI'],
-      image: 'assets/images/project1.png',
+          'A logistics management system where dispatchers create and assign delivery loads, and drivers complete deliveries while being tracked in real time through live map location monitoring.',
+      technologies: ['Flutter', 'Dart', 'Google Maps API', 'RestAPI'],
+      image: AppAssets.jedSS01,
       screenshots: [
-        'assets/screenshorts/DeepQuranSS-04.png',
-        'assets/screenshorts/DeepQuranSS-05.png',
-        'assets/screenshorts/DeepQuranSS-06.png',
-        'assets/screenshorts/DeepQuranSS-07.png',
+        AppAssets.jedSS01,
+        AppAssets.jedSS02,
+        AppAssets.jedSS03,
+        AppAssets.jedSS04,
+        AppAssets.jedSS05,
       ],
-      link: 'https://example.com/travelmate',
+      link: 'https://github.com/labib-ur-rahman/#JED-Rapid-Intel',
       linkLabel: 'GitHub',
     ),
+
+    /// -- Smart Engineer --
     ProjectModel(
-      title: '*ShopEase*: E-commerce Mobile App',
+      title:
+          '*Smart Engineer*: BTEB Polytechnic Student Academic Companion App',
       description:
-          'Full-featured shopping app with payment integration and inventory management',
-      technologies: ['Flutter', 'Kotlin', 'Dart', 'SQL'],
-      image: 'assets/images/project1.png',
+          'All-in-one academic app for BTEB polytechnic engineering students with textbooks, tools, and notices in one place.',
+      technologies: ['Kotlin', 'XML', 'Firebase', 'RestAPI'],
+      image: AppAssets.smartEngineerSS01,
       screenshots: [
-        'assets/screenshorts/DeepQuranSS-03.png',
-        'assets/screenshorts/DeepQuranSS-04.png',
-        'assets/screenshorts/DeepQuranSS-05.png',
-        'assets/screenshorts/DeepQuranSS-06.png',
+        AppAssets.smartEngineerSS01,
+        AppAssets.smartEngineerSS02,
+        AppAssets.smartEngineerSS03,
+        AppAssets.smartEngineerSS04,
+        AppAssets.smartEngineerSS05,
+        AppAssets.smartEngineerSS06,
+        AppAssets.smartEngineerSS07,
+        AppAssets.smartEngineerSS08,
       ],
-      link: 'https://example.com/shopease',
+      link: 'https://github.com/labib-ur-rahman/Smart-Engineer-App',
       linkLabel: 'GitHub',
     ),
-  ];
+];
 
   void changePage(int index) {
     stopAutoScroll();

@@ -920,8 +920,8 @@ class _ProjectsSectionState extends State<ProjectsSection> {
       },
       child: Center(
         child: Container(
-          width: isMobile ? 300 : (isTablet ? 320 : 325),
-          height: isMobile ? 600 : (isTablet ? 640 : 720),
+          width: isMobile ? 300 : (isTablet ? 320 : 330),
+          height: isMobile ? 660 : (isTablet ? 640 : 720),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(40),
             boxShadow: [

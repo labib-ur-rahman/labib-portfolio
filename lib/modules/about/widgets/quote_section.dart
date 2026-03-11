@@ -25,7 +25,7 @@ class QuoteSection extends StatelessWidget {
         Text(
           quoteText,
           style: TextStyle(
-            fontFamily: 'Urbanist',
+            fontFamily: 'Montserrat',
             fontSize: isMobile ? 14 : (isDesktop ? 20 : 16),
             fontWeight: FontWeight.w500,
             color: AppColors.gray700,
