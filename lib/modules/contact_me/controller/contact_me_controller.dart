@@ -196,7 +196,7 @@ class ContactMeController extends GetxController {
             ),
           ),
           child: Center(
-            child: Icon(
+            child: FaIcon(
               isError
                   ? FontAwesomeIcons.solidCircleXmark
                   : FontAwesomeIcons.solidCircleCheck,

@@ -847,7 +847,7 @@ class _ProjectsSectionState extends State<ProjectsSection> {
     );
   }
 
-  IconData _getProjectLinkIcon(String label) {
+  FaIconData _getProjectLinkIcon(String label) {
     switch (label.toLowerCase()) {
       case 'github':
         return FontAwesomeIcons.github;

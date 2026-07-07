@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../core/core.dart';
 
 class SkillCard extends StatefulWidget {
@@ -6,7 +7,7 @@ class SkillCard extends StatefulWidget {
   final int level;
   final String category;
   final int index;
-  final IconData? icon;
+  final FaIconData? icon;
 
   const SkillCard({
     super.key,
@@ -104,7 +105,7 @@ class _SkillCardState extends State<SkillCard>
                               ),
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            child: Icon(
+                            child: FaIcon(
                               widget.icon,
                               size: 20,
                               color: AppColors.primaryOrange,

@@ -506,7 +506,7 @@ class _NotesSectionState extends State<NotesSection> {
   }
 
   Widget _buildNavigationButton({
-    required IconData icon,
+    required FaIconData icon,
     required VoidCallback onTap,
     required bool enabled,
   }) {
@@ -521,10 +521,12 @@ class _NotesSectionState extends State<NotesSection> {
             color: enabled ? AppColors.primaryOrange : AppColors.gray200,
             shape: BoxShape.circle,
           ),
-          child: Icon(
-            icon,
-            color: enabled ? Colors.white : AppColors.gray400,
-            size: 24,
+          child: Center(
+            child: FaIcon(
+              icon,
+              color: enabled ? Colors.white : AppColors.gray400,
+              size: 24,
+            ),
           ),
         ),
       ),

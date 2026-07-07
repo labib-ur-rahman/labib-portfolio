@@ -15,7 +15,7 @@ dependencies:
   google_fonts: ^6.2.1
   flutter_svg: ^2.0.17
   url_launcher: ^6.3.2
-  font_awesome_flutter: ^10.8.0
+  font_awesome_flutter: ^11.0.0
   http: ^1.2.2
   lottie: ^3.1.2
   rename_app: ^1.6.5

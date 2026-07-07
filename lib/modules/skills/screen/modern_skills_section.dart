@@ -500,10 +500,12 @@ class _ModernSkillsSectionState extends State<ModernSkillsSection>
                               width: 1.5,
                             ),
                           ),
-                          child: Icon(
-                            category['icon'],
-                            color: category['color'],
-                            size: isMobile ? 26 : 28,
+                          child: Center(
+                            child: FaIcon(
+                              category['icon'],
+                              color: category['color'],
+                              size: isMobile ? 26 : 28,
+                            ),
                           ),
                         ),
                         const SizedBox(height: 18),

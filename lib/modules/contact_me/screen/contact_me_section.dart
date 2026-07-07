@@ -166,7 +166,7 @@ class ContactMeSection extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(bottom: 32),
               child: _buildContactItem(
-                item['icon'] as IconData,
+                item['icon'] as FaIconData,
                 item['title'] as String,
                 item['value'] as String,
                 isMobile,
@@ -179,7 +179,7 @@ class ContactMeSection extends StatelessWidget {
   }
 
   Widget _buildContactItem(
-    IconData icon,
+    FaIconData icon,
     String title,
     String value,
     bool isMobile,
@@ -201,7 +201,7 @@ class ContactMeSection extends StatelessWidget {
               ],
             ),
           ),
-          child: Icon(icon, color: AppColors.primaryOrange, size: 24),
+          child: Center(child: FaIcon(icon, color: AppColors.primaryOrange, size: 24)),
         ),
         const SizedBox(width: 20),
         Column(
@@ -303,7 +303,7 @@ class ContactMeSection extends StatelessWidget {
 
   Widget _buildInputField(
     String hint,
-    IconData icon,
+    FaIconData icon,
     bool isMultiLine,
     TextEditingController controller,
     Function(String) onChanged,
@@ -396,7 +396,7 @@ class _ContactInputField extends StatefulWidget {
   });
 
   final String hint;
-  final IconData icon;
+  final FaIconData icon;
   final bool isMultiLine;
   final TextEditingController controller;
   final Function(String) onChanged;
@@ -472,7 +472,7 @@ class _ContactInputFieldState extends State<_ContactInputField> {
             hintStyle: TextStyle(color: AppColors.gray400, fontSize: 16),
             prefixIcon: Padding(
               padding: const EdgeInsets.all(16),
-              child: Icon(
+              child: FaIcon(
                 widget.icon,
                 color: AppColors.primaryOrange,
                 size: 20,

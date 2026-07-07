@@ -82,10 +82,12 @@ class FooterSection extends StatelessWidget {
                         width: 1.5,
                       ),
                     ),
-                    child: Icon(
-                      link['icon'] as IconData,
-                      color: AppColors.primaryOrange,
-                      size: 20,
+                    child: Center(
+                      child: FaIcon(
+                        link['icon'] as FaIconData,
+                        color: AppColors.primaryOrange,
+                        size: 20,
+                      ),
                     ),
                   ),
                 ),

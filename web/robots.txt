@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://devlabib.shirah.top/sitemap.xml
